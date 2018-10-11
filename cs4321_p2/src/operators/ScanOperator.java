@@ -5,6 +5,7 @@ import java.io.PrintStream;
 import java.util.*;
 import java.io.FileReader;
 
+import jnio.TupleReader;
 import util.*;
 
 /**
@@ -15,7 +16,8 @@ import util.*;
 public class ScanOperator extends Operator {
 
     Table tb;
-    private BufferedReader lines;
+    private TupleReader lines;
+    //private BufferedReader lines;
 
     /**
      * constructs a ScanOperator
@@ -46,18 +48,17 @@ public class ScanOperator extends Operator {
      * @see    Tuple
      */
     public Tuple getNextTuple() {
+        Tuple tp;
         try {
-            String line = lines.readLine();
-            if(line == null) return null;
-            String[] cols = line.split(",");
-            List<Integer> elements = new ArrayList<>();
-            for(int i = 0; i < cols.length;i++) {
-                elements.add(Integer.valueOf(cols[i]));
+            // String line = lines.read();
+            //if(line == null) return null;
+            //String[] cols = line.split(",");
+            //List<Integer> elements = new ArrayList<>();
+            //for(int i = 0; i < cols.length;i++) {
+            //  elements.add(Integer.valueOf(cols[i]));
 
-            }
-            return new Tuple(elements);
-
-        } catch(IOException e) {
+            return lines.read();
+       }catch(IOException e) {
             e.printStackTrace();
         }
         return null;

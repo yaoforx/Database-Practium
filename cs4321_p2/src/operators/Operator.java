@@ -1,7 +1,10 @@
 package operators;
 
 
+import jnio.TupleWriter;
 import util.Tuple;
+
+import java.io.IOException;
 import java.util.*;
 import java.io.PrintStream;
 /**
@@ -26,6 +29,11 @@ public abstract class Operator {
         }
 
     }
-
+    public void dump(TupleWriter writer) throws IOException {
+        Tuple t;
+        while((t = this.getNextTuple()) != null) {
+            writer.write(t);
+        }
+    }
 
 }

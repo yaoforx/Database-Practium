@@ -1,9 +1,8 @@
 package util;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import jnio.TupleReader;
+
+import java.io.*;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -25,6 +24,8 @@ public class DBCatalog {
     public static String schemadir;
     public static String dbdir;
     public static String querydir;
+    public static String config;
+
 
     /**
      * @return the database catalog
@@ -47,6 +48,7 @@ public class DBCatalog {
         dbdir = inputdir + "db/data/";
         schemadir = input + "/db/" + "schema.txt";
         querydir = inputdir + "/queries.sql";
+       config = inputdir + "plan_builder_config.txt";
         createSchema();
 
     }
@@ -93,7 +95,7 @@ public class DBCatalog {
             realname = DBCatalog.alias.get(tableName);
         }
         String readFrom = realname == null ? tableName : realname;
-        BufferedReader br = tableReader(readFrom);
+        TupleReader br = tableReader(readFrom);
         if (br == null) return null;
         return new Table(tableName, getSchema(readFrom));
     }
@@ -106,7 +108,24 @@ public class DBCatalog {
      * @return         a BufferedReader starting at the beginning of table "fileName"
      *                 null if fileName does not refer to a table in DBCatalog
      */
-    public static BufferedReader tableReader(String fileName) {
+//    public static BufferedReader tableReader(String fileName) {
+//        String tablePath;
+//        if(alias.containsKey(fileName)) {
+//            fileName = alias.get(fileName);
+//            tablePath =dbdir + fileName ;
+//        }
+//        else {
+//            tablePath = dbdir + fileName;
+//        }
+//        try{
+//            BufferedReader bf = new BufferedReader(new FileReader(tablePath));
+//            return bf;
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
+    public static TupleReader tableReader(String fileName) {
         String tablePath;
         if(alias.containsKey(fileName)) {
             fileName = alias.get(fileName);
@@ -116,9 +135,9 @@ public class DBCatalog {
             tablePath = dbdir + fileName;
         }
         try{
-            BufferedReader bf = new BufferedReader(new FileReader(tablePath));
+            TupleReader bf = new TupleReader(new File(tablePath));
             return bf;
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

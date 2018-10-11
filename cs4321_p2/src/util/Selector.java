@@ -1,15 +1,35 @@
 package util;
-import java.util.*;
-
-import javafx.util.converter.ShortStringConverter;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.lang.invoke.StringConcatFactory;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 import net.sf.jsqlparser.expression.BinaryExpression;
 import net.sf.jsqlparser.expression.Expression;
-
 import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
-import net.sf.jsqlparser.statement.*;
-import net.sf.jsqlparser.statement.select.*;
-import operators.*;
-import net.sf.jsqlparser.schema.*;
+import net.sf.jsqlparser.schema.Column;
+import net.sf.jsqlparser.statement.Statement;
+import net.sf.jsqlparser.statement.select.Distinct;
+import net.sf.jsqlparser.statement.select.FromItem;
+import net.sf.jsqlparser.statement.select.Join;
+import net.sf.jsqlparser.statement.select.OrderByElement;
+import net.sf.jsqlparser.statement.select.PlainSelect;
+import net.sf.jsqlparser.statement.select.Select;
+import net.sf.jsqlparser.statement.select.SelectBody;
+import net.sf.jsqlparser.statement.select.SelectItem;
+import operators.LogicalEliminator;
+import operators.LogicalJoin;
+import operators.LogicalOperator;
+import operators.LogicalProject;
+import operators.LogicalScan;
+import operators.LogicalSelect;
+import operators.LogicalSort;
+import operators.Operator;
+import util.DBCatalog;
+import util.Table;
+import visitors.PhysicalPlanBuilder;
 
 
 /**
@@ -50,7 +70,7 @@ public class Selector {
      *
      * @param statement the SQL query to be parsed by Selector
      */
-    public Selector(Statement statement) {
+    public Selector(Statement statement) throws IOException{
         sel = (Select) statement;
         PlainSelect ps = (PlainSelect) sel.getSelectBody();
 
@@ -64,7 +84,6 @@ public class Selector {
         distinct = ps.getDistinct();
 
         exps = getAndExpressions(where);
-        System.out.println(exps);
          selectPlan = new HashMap<>();
          joinPlan = new HashMap<>();
 
@@ -98,9 +117,9 @@ public class Selector {
 
         }
 
-        for (String tab : fromItems) {
-            selectPlan.put(tab, new ArrayList<>());
-            joinPlan.put(tab, new ArrayList<>());
+        for (String table : fromItems) {
+            selectPlan.put(table, new ArrayList<>());
+            joinPlan.put(table, new ArrayList<>());
         }
 
         List<Expression> andExpressions = getAndExpressions(where);
@@ -169,56 +188,53 @@ public class Selector {
     private Expression getJoinCondition(int idx) {
         return joinCondition.get(fromItems.get(idx));
     }
-    private int rightMost(List<String> tabs) {
-        if (tabs == null) return fromItems.size() - 1;
+
+    /**
+     * Find the right most table index in FromItems sequence
+     * @param tables list
+     * @return idx
+     */
+    private int rightMost(List<String> tables) {
+
+        if (tables == null) return fromItems.size() - 1;
         int idx = 0;
-        for (String tab : tabs) {
-            idx = Math.min(idx, fromItems.indexOf(tab));
+        for (String table : tables) {
+            idx = Math.min(idx, fromItems.indexOf(table));
         }
         return idx;
     }
     /**
      * builds the operator tree based on the query
      */
-    public void buildTree() {
-        Operator curRoot = new ScanOperator(getTable(0));
-        if(getSelectCondition(0) != null)
-            curRoot = new SelectOperator(getSelectCondition(0),(ScanOperator)curRoot);
-
-        //Building left-deep Tree based on fromItems sequence
-        System.out.println(fromItems);
-        for(int i = 1; i < fromItems.size(); i++) {
-            System.out.println(getTable(i).tableName);
-            Operator op = new ScanOperator(getTable(i));
-            if(getSelectCondition(i) != null) {
-                op = new SelectOperator(getSelectCondition(i),(ScanOperator) op);
+    public void buildTree() throws IOException {
+        LogicalOperator curRoot = new LogicalScan(this.getTable(0));
+        if (getSelectCondition(0) != null) {
+            curRoot = new LogicalSelect(this.getSelectCondition(0), curRoot);
+        }
+        for (int i = 1; i < this.fromItems.size(); ++i) {
+            LogicalOperator op = new LogicalScan(this.getTable(i));
+            if (getSelectCondition(i) != null) {
+                op = new LogicalSelect(this.getSelectCondition(i), op);
+                curRoot = new LogicalJoin(this.getJoinCondition(i),  curRoot, op);
             }
-//            System.out.println(getJoinCondition(i).toString());
-            curRoot = new JoinOperator(getJoinCondition(i), curRoot, op);
-        }
-        if(selects != null) {
-            curRoot = new ProjectOperator(selects,curRoot);
-        }
-
-
-
-        if(sort != null) {
-            curRoot = new SortOperator(curRoot,sort);
-        }
-        if(distinct != null) {
-
-            if(sort == null) {
-                curRoot = new SortOperator(curRoot, new ArrayList<>());
+            if (selects != null) {
+                curRoot = new LogicalProject(selects, curRoot);
             }
-            curRoot = new DuplicateEliminationOperator(curRoot);
+            if (sort != null) {
+                curRoot = new LogicalSort(sort,  curRoot);
+            }
+            if (distinct != null) {
+                if (sort == null) {
+                    curRoot = new LogicalSort(sort, curRoot);
+                }
+                curRoot = new LogicalEliminator( curRoot);
+            }
+
+
         }
-
-
-
-
-
-        root = curRoot;
-
+        PhysicalPlanBuilder planBuilder = new PhysicalPlanBuilder(DBCatalog.config);
+        curRoot.accept(planBuilder);
+        this.root = planBuilder.getRoot();
     }
 
     /**

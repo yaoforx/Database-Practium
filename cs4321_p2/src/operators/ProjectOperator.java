@@ -67,7 +67,7 @@ public class ProjectOperator extends Operator{
         for(SelectItem item : selectItems) {
             Column column = (Column)((SelectExpressionItem) item).getExpression();
             String tableName = column.getTable().getName();
-            System.out.println("table name is " + tableName);
+           // System.out.println("table name is " + tableName);
 
             String colName  = column.getColumnName();
             //If the expression is Sailors.A, Sailors.B
@@ -117,15 +117,20 @@ public class ProjectOperator extends Operator{
     @Override
     public Tuple getNextTuple() {
         projectChild = selectChild;
-        if(projectChild == null) projectChild = scanChild;
-        if(projectChild == null) projectChild = joinChild;
+        if (projectChild == null) projectChild = scanChild;
+        if (projectChild == null) projectChild = joinChild;
         Tuple tp = projectChild.getNextTuple();
-        if(tp == null) return null;
-        List<Integer> columns  = new ArrayList<>();
-
-        for(String sch : schema) {
-            columns.add(getValue(tp,sch,projectChild.schema).intValue());
+        if (tp == null) {
+            return null;
         }
+        List<Integer> columns = new ArrayList<>();
+
+        for (String sch : schema) {
+            columns.add(getValue(tp, sch, projectChild.schema).intValue());
+        }
+
+
+
 
         return new Tuple(columns);
     }

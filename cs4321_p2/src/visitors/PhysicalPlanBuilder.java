@@ -67,8 +67,8 @@ public class PhysicalPlanBuilder
             root = new SortOperator(root, logSort.order);
     }
 
-    public void visit(LogicalJoin logJoin) { operators.Operator[] child = new operators.Operator[2];
-        root = null;
+    public void visit(LogicalJoin logJoin) {
+        operators.Operator[] child = new operators.Operator[2];
         logJoin.left.accept(this);
         child[0] = root;
         root = null;

@@ -32,17 +32,21 @@ public class SortOperator extends Operator {
      * @param ties
      */
     public SortOperator(Operator child, List<OrderByElement> ties) {
-        Tuple tp = null;
+        Tuple tp;
         inputs = new ArrayList<>();
         sort = new ArrayList<>();
-        while((tp = child.getNextTuple()) != null) inputs.add(tp);
-        for(OrderByElement element : ties) {
-            sort.add(getColIdx(element,child.schema));
+        while((tp = child.getNextTuple()) != null) {
+            inputs.add(tp);
+        }
+        if(!ties.isEmpty()) {
+            for (OrderByElement element : ties) {
+                sort.add(getColIdx(element, child.schema));
+            }
         }
         //Override lambda function for comparison
         //work on java 8
         //TODO: need to check with TA to see if we are running java 8
-        System.out.println(sort.toString());
+    //    System.out.println(sort.toString());
         Collections.sort(inputs,new Comparator<Tuple>(){
 
             /**
@@ -55,7 +59,7 @@ public class SortOperator extends Operator {
             public int compare(Tuple t1,Tuple t2){
 
                 HashSet<Integer> orderby = new HashSet<>(sort);
-                System.out.println(sort.toString());
+              //  System.out.println(sort.toString());
 
                 for(int i = 0; i < sort.size(); i++) {
                     int v1 = t1.getValue(sort.get(i));

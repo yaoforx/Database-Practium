@@ -2,6 +2,7 @@ package Interpreter;
 
 import java.io.*;
 
+import jnio.TupleWriter;
 import net.sf.jsqlparser.parser.CCJSqlParser;
 import net.sf.jsqlparser.statement.Statement;
 
@@ -34,15 +35,19 @@ public class Harness {
             Statement statement;
             int counter = 1;
             while((statement = parser.Statement()) !=null ) {
-
-                PrintStream ps = new PrintStream(new BufferedOutputStream(
-                        new FileOutputStream(DBCatalog.outputdir + "query" + counter + ".txt")));
+                System.out.println();
+                String out  = DBCatalog.outputdir + "query" + counter + ".txt";
+                TupleWriter writer = new TupleWriter(out);
+                System.out.println(out);
+             //   PrintStream ps = new PrintStream(new BufferedOutputStream(
+               //         new FileOutputStream(DBCatalog.outputdir + "query" + counter + ".txt")));
                 System.out.println("Parsing: " + statement);
                 Selector select = new Selector(statement);
                 counter++;
-                select.root.dump(ps);
 
-                ps.close();
+                select.root.dump(writer);
+
+                writer.close();
             }
 
 
@@ -65,7 +70,7 @@ public class Harness {
     public void main() {
        Harness itpr = new Harness();
 
-        itpr.harness("/Users/yaoxiao/Documents/cs4321/cs4321_p1/samples/input","/Users/yaoxiao/Documents/cs4321/cs4321_p1");
+        itpr.harness("/Users/yaoxiao/Documents/cs4321/cs4321_p2/samples/input","/Users/yaoxiao/Documents/cs4321/cs4321_p2");
 
     }
 }
