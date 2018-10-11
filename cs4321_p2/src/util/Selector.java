@@ -212,11 +212,12 @@ public class Selector {
             curRoot = new LogicalSelect(this.getSelectCondition(0), curRoot);
         }
         for (int i = 1; i < this.fromItems.size(); ++i) {
-            LogicalOperator op = new LogicalScan(this.getTable(i));
+            LogicalOperator op = new LogicalScan(getTable(i));
             if (getSelectCondition(i) != null) {
-                op = new LogicalSelect(this.getSelectCondition(i), op);
-                curRoot = new LogicalJoin(this.getJoinCondition(i),  curRoot, op);
+                op = new LogicalSelect(getSelectCondition(i), op);
+                curRoot = new LogicalJoin(getJoinCondition(i), curRoot, op);
             }
+        }
             if (selects != null) {
                 curRoot = new LogicalProject(selects, curRoot);
             }
@@ -225,16 +226,16 @@ public class Selector {
             }
             if (distinct != null) {
                 if (sort == null) {
-                    curRoot = new LogicalSort(sort, curRoot);
+                    curRoot = new LogicalSort(new ArrayList<>(), curRoot);
                 }
                 curRoot = new LogicalEliminator( curRoot);
             }
 
 
-        }
+
         PhysicalPlanBuilder planBuilder = new PhysicalPlanBuilder(DBCatalog.config);
         curRoot.accept(planBuilder);
-        this.root = planBuilder.getRoot();
+        root = planBuilder.getRoot();
     }
 
     /**

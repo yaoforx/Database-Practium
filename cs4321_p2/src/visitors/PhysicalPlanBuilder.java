@@ -5,16 +5,16 @@ import java.io.IOException;
 
 import operators.*;
 import java.io.BufferedReader;
-public class PhysicalPlanBuilder
-{
-    private operators.Operator root = null;
+public class PhysicalPlanBuilder {
+    private Operator root = null;
     private BufferedReader reader;
     private int joinMethod = -1;
     private int sortMethod = -1;
     private int joinPage = -1;
     private int sortPage = -1;
 
-    private void setUp() throws IOException { int[][] info = new int[2][2];
+    private void setUp() throws IOException {
+        int[][] info = new int[2][2];
         for (int i = 0; i < 2; i++) {
             String[] temp = reader.readLine().split(" ");
             info[i][0] = Integer.parseInt(temp[0]);
@@ -33,7 +33,8 @@ public class PhysicalPlanBuilder
     }
 
     public PhysicalPlanBuilder(String input) throws IOException {
-        try { reader = new java.io.BufferedReader(new FileReader(input));
+        try {
+            reader = new BufferedReader(new FileReader(input));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -44,9 +45,11 @@ public class PhysicalPlanBuilder
         return root;
     }
 
-    public void visit(LogicalScan logScan) throws IOException { root = new ScanOperator(logScan.table); }
+    public void visit(LogicalScan logScan) {
+        root = new ScanOperator(logScan.table);
+    }
 
-    public void visit(LogicalSelect logSelect) throws IOException {
+    public void visit(LogicalSelect logSelect)  {
         logSelect.scan.accept(this);
         root = new SelectOperator(logSelect.exp, (ScanOperator)root);
     }
@@ -68,10 +71,9 @@ public class PhysicalPlanBuilder
     }
 
     public void visit(LogicalJoin logJoin) {
-        operators.Operator[] child = new operators.Operator[2];
+        Operator[] child = new operators.Operator[2];
         logJoin.left.accept(this);
         child[0] = root;
-        root = null;
         logJoin.right.accept(this);
         child[1] = root;
         if (joinMethod == 0) {

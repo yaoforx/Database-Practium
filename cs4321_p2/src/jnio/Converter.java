@@ -26,7 +26,9 @@ public class Converter {
 
        // writer = new BufferedWriter(new FileWriter(in)))
         try {
-            writer = new BufferedWriter(new FileWriter(in + "_test.txt") );
+            File file  = new File(in.substring(0,in.length() - 4) + "_test.txt");
+            file.createNewFile();
+            writer = new BufferedWriter(new FileWriter(file));
             reader = new TupleReader(new File(in));
             while((tp = reader.read()) != null) {
                 writer.write(tp.toString() + "\n");
@@ -43,10 +45,10 @@ public class Converter {
         String expected = "/User/yaoxiao/Documents/cs4321/cs4321_p2/samples/expected/";
         for(int i = 1; i <= 16; i++) {
             String target = input + "query" + i + ".txt";
-            String exp = expected + "query" + i + "_humanreadble";
-            binaryToReadable(target);
+            String exp = expected + "query" + i;
+           // binaryToReadable(target);
 
-            assertFalse(FileUtils.contentEquals(new File(target + "_test.txt"), new File(exp)));
+            assertTrue(FileUtils.contentEquals(new File(target), new File(exp)));
         }
     }
 }

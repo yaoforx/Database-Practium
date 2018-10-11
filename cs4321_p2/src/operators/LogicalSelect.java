@@ -10,14 +10,10 @@ public class LogicalSelect
     public Expression exp;
     public LogicalScan scan;
 
-    public void accept(PhysicalPlanBuilder phyplan)
-    {
-        try
-        {
+    public void accept(PhysicalPlanBuilder phyplan) {
+
             phyplan.visit(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public LogicalSelect(Expression expression, LogicalOperator scan) { exp = expression;

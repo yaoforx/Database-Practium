@@ -35,9 +35,8 @@ public class SortOperator extends Operator {
         Tuple tp;
         inputs = new ArrayList<>();
         sort = new ArrayList<>();
-        while((tp = child.getNextTuple()) != null) {
-            inputs.add(tp);
-        }
+        while((tp = child.getNextTuple()) != null) inputs.add(tp);
+
         if(!ties.isEmpty()) {
             for (OrderByElement element : ties) {
                 sort.add(getColIdx(element, child.schema));

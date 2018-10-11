@@ -1,15 +1,20 @@
 package operators;
 
+import net.sf.jsqlparser.statement.select.SelectItem;
 import visitors.PhysicalPlanBuilder;
+
+import java.util.List;
 
 
 public class LogicalProject extends LogicalOperator {
-    public java.util.List<net.sf.jsqlparser.statement.select.SelectItem> selectItems;
+    public List<SelectItem> selectItems;
     public LogicalOperator child;
 
-    public void accept(PhysicalPlanBuilder phyplan) { phyplan.visit(this); }
+    public void accept(PhysicalPlanBuilder phyplan) {
+        phyplan.visit(this);
+    }
 
-    public LogicalProject(java.util.List<net.sf.jsqlparser.statement.select.SelectItem> items, LogicalOperator child) {
+    public LogicalProject(List<SelectItem> items, LogicalOperator child) {
         selectItems = items;
         this.child = child;
     }

@@ -2,17 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="386936f0-0a32-4331-bb6f-60aaed33b5d6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/jnio/Converter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p1/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p1/samples/input/queries.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p1/samples/input/queries.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p1/src/operators/SortOperator.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p1/src/operators/SortOperator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cs4321_p2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/cs4321_p2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/query1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/query1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/query11.txt" beforeDir="false" afterPath="$PROJECT_DIR$/query11.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/query13.txt" beforeDir="false" afterPath="$PROJECT_DIR$/query13.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/query14.txt" beforeDir="false" afterPath="$PROJECT_DIR$/query14.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/query2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/query2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/query3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/query3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/query6.txt" beforeDir="false" afterPath="$PROJECT_DIR$/query6.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/samples/input/queries.sql" beforeDir="false" afterPath="$PROJECT_DIR$/samples/input/queries.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Interpreter/Harness.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Interpreter/Harness.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/operators/Operator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/Operator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/operators/ProjectOperator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/ProjectOperator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/operators/ScanOperator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/ScanOperator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/operators/SelectOperator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/SelectOperator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jnio/Converter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jnio/Converter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/operators/LogicalProject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/LogicalProject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/operators/LogicalScan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/LogicalScan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/operators/LogicalSelect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/LogicalSelect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/operators/LogicalSort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/LogicalSort.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/operators/SortOperator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/SortOperator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/DBCatalog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/DBCatalog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/util/Selector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/Selector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/visitors/PhysicalPlanBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/visitors/PhysicalPlanBuilder.java" afterDir="false" />
     </list>
@@ -27,41 +34,57 @@
     <session id="1299925112">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.4" value="1" />
-          <entry key="project.opened" value="1" />
+          <entry key="project.opened" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="class" value="1" />
-          <entry key="java" value="58" />
+          <entry key="java" value="64" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="1" />
-          <entry key="JAVA" value="58" />
+          <entry key="JAVA" value="64" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="1723" />
+          <entry key="java" value="1971" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="1723" />
+          <entry key="JAVA" value="1971" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/visitors/PhysicalPlanBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="113">
-              <caret line="66" selection-start-line="66" selection-end-line="66" />
+            <state relative-caret-position="247">
+              <caret line="68" selection-start-line="68" selection-end-line="68" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1320#1321#0" expanded="true" />
+                <element signature="e#1374#1375#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/operators/LogicalSelect.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -70,10 +93,14 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/visitors/SelectVisitors.java">
+        <entry file="file://$PROJECT_DIR$/src/operators/LogicalScan.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="14" column="14" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
+            <state relative-caret-position="304">
+              <caret line="16" column="33" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#367#368#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -81,19 +108,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/operators/LogicalProject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="9" column="53" selection-start-line="9" selection-start-column="53" selection-end-line="9" selection-end-column="53" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/operators/LogicalSort.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="15" column="53" selection-start-line="15" selection-start-column="53" selection-end-line="15" selection-end-column="53" />
+            <state relative-caret-position="205">
+              <caret line="14" selection-start-line="14" selection-end-line="14" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#319#320#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -102,44 +121,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/operators/SortOperator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="139">
-              <caret line="37" selection-start-line="37" selection-end-line="37" />
+            <state relative-caret-position="123">
+              <caret line="80" selection-start-line="80" selection-end-line="80" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/operators/Operator.java">
+        <entry file="file://$PROJECT_DIR$/src/operators/LogicalSort.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
-              <caret line="15" selection-start-line="15" selection-end-line="15" />
+            <state relative-caret-position="316">
+              <caret line="19" selection-start-line="19" selection-end-line="19" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/operators/ScanOperator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="60" selection-start-line="60" selection-end-line="60" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/operators/ProjectOperator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="328">
-              <caret line="48" selection-start-line="48" selection-end-line="48" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Interpreter/Harness.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="123">
-              <caret line="54" selection-start-line="54" selection-end-line="54" />
+            <state relative-caret-position="244">
+              <caret line="127" selection-start-line="127" selection-end-line="127" />
             </state>
           </provider>
         </entry>
@@ -147,11 +151,32 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/util/Selector.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="455">
-              <caret line="227" column="40" selection-start-line="227" selection-start-column="40" selection-end-line="227" selection-end-column="40" />
+            <state relative-caret-position="142">
+              <caret line="234" selection-start-line="234" selection-end-line="234" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/jnio/Converter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="50" selection-start-line="50" selection-end-line="50" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Interpreter/Harness.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="286">
+              <caret line="55" selection-start-line="55" selection-end-line="55" />
             </state>
           </provider>
         </entry>
@@ -177,31 +202,30 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/jnio/TupleWriter.java" />
-        <option value="$PROJECT_DIR$/src/operators/LogicalProject.java" />
         <option value="$PROJECT_DIR$/src/operators/LogicalOperator.java" />
-        <option value="$PROJECT_DIR$/src/operators/LogicalScan.java" />
         <option value="$PROJECT_DIR$/src/operators/LogicalJoin.java" />
         <option value="$PROJECT_DIR$/src/operators/LogicalEliminator.java" />
-        <option value="$PROJECT_DIR$/src/operators/LogicalSelect.java" />
-        <option value="$PROJECT_DIR$/src/operators/LogicalSort.java" />
         <option value="$PROJECT_DIR$/src/jnio/SortTuple.java" />
         <option value="$PROJECT_DIR$/src/jnio/TupleReader.java" />
         <option value="$PROJECT_DIR$/src/operators/Operator.java" />
         <option value="$PROJECT_DIR$/src/util/DBCatalog.java" />
-        <option value="$PROJECT_DIR$/src/jnio/Converter.java" />
         <option value="$PROJECT_DIR$/src/Interpreter/Harness.java" />
         <option value="$PROJECT_DIR$/src/operators/SelectOperator.java" />
         <option value="$PROJECT_DIR$/src/operators/ScanOperator.java" />
-        <option value="$PROJECT_DIR$/src/util/Selector.java" />
-        <option value="$PROJECT_DIR$/src/operators/SortOperator.java" />
-        <option value="$PROJECT_DIR$/src/visitors/PhysicalPlanBuilder.java" />
         <option value="$PROJECT_DIR$/src/operators/ProjectOperator.java" />
+        <option value="$PROJECT_DIR$/src/operators/LogicalSort.java" />
+        <option value="$PROJECT_DIR$/src/operators/LogicalProject.java" />
+        <option value="$PROJECT_DIR$/src/operators/LogicalSelect.java" />
+        <option value="$PROJECT_DIR$/src/operators/LogicalScan.java" />
+        <option value="$PROJECT_DIR$/src/visitors/PhysicalPlanBuilder.java" />
+        <option value="$PROJECT_DIR$/src/operators/SortOperator.java" />
+        <option value="$PROJECT_DIR$/src/util/Selector.java" />
+        <option value="$PROJECT_DIR$/src/jnio/Converter.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-22" />
-    <option name="y" value="23" />
+    <option name="y" value="54" />
     <option name="width" value="1440" />
     <option name="height" value="785" />
   </component>
@@ -268,8 +292,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -277,7 +301,7 @@
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
     <property name="SearchEverywhereHistoryKey" value="system&#9;PSI&#9;JAVA://java.lang.System" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1539291544993" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1539301980922" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -295,7 +319,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.Converter">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <method v="2">
@@ -304,6 +328,21 @@
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Converter" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="cs4321_p2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="jnio.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="jnio" />
+      <option name="MAIN_CLASS_NAME" value="jnio.Converter" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -346,8 +385,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="JUnit.Harness" />
+      <item itemvalue="JUnit.Converter" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.Converter" />
         <item itemvalue="JUnit.Harness" />
       </list>
     </recent_temporary>
@@ -366,52 +410,48 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Harness - 2018.10.11 at 16h 37m 59s.xml">
+    <history-entry file="Harness - 2018.10.11 at 19h 37m 56s.xml">
       <configuration name="Harness" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Harness - 2018.10.11 at 16h 38m 31s.xml">
+    <history-entry file="Harness - 2018.10.11 at 19h 42m 44s.xml">
       <configuration name="Harness" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Harness - 2018.10.11 at 16h 39m 30s.xml">
+    <history-entry file="Harness - 2018.10.11 at 19h 43m 14s.xml">
       <configuration name="Harness" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Harness - 2018.10.11 at 16h 42m 54s.xml">
+    <history-entry file="Harness - 2018.10.11 at 19h 43m 38s.xml">
       <configuration name="Harness" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Harness - 2018.10.11 at 16h 47m 40s.xml">
+    <history-entry file="Harness - 2018.10.11 at 19h 44m 04s.xml">
       <configuration name="Harness" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Harness - 2018.10.11 at 16h 48m 24s.xml">
+    <history-entry file="Harness - 2018.10.11 at 19h 44m 46s.xml">
       <configuration name="Harness" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Harness - 2018.10.11 at 16h 51m 55s.xml">
-      <configuration name="Harness" configurationId="JUnit" />
+    <history-entry file="Converter - 2018.10.11 at 19h 45m 01s.xml">
+      <configuration name="Converter" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Harness - 2018.10.11 at 16h 53m 28s.xml">
-      <configuration name="Harness" configurationId="JUnit" />
+    <history-entry file="Converter - 2018.10.11 at 19h 47m 49s.xml">
+      <configuration name="Converter" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Harness - 2018.10.11 at 16h 55m 06s.xml">
-      <configuration name="Harness" configurationId="JUnit" />
+    <history-entry file="Converter - 2018.10.11 at 19h 49m 09s.xml">
+      <configuration name="Converter" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Harness - 2018.10.11 at 16h 55m 12s.xml">
-      <configuration name="Harness" configurationId="JUnit" />
+    <history-entry file="Converter - 2018.10.11 at 19h 50m 03s.xml">
+      <configuration name="Converter" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-22" y="23" width="1440" height="785" extended-state="0" />
+    <frame x="0" y="54" width="1440" height="785" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Image Layers" />
-      <window_info id="Designer" />
-      <window_info id="UI Designer" />
-      <window_info id="Capture Tool" />
-      <window_info id="Favorites" side_tool="true" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24964234" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" weight="0.32900432" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Capture Tool" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32756132" />
@@ -419,14 +459,18 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Palette" />
-      <window_info anchor="right" id="Theme Preview" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="right" id="Palette&#9;" />
-      <window_info anchor="right" id="Maven Projects" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.32900432" />
+      <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.32756132" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="Theme Preview" order="5" />
+      <window_info anchor="right" id="Palette&#9;" order="6" />
+      <window_info anchor="right" id="Maven Projects" order="7" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -436,25 +480,15 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/operators/ProjectOperator.java</url>
-          <line>48</line>
+          <url>file://$PROJECT_DIR$/src/visitors/PhysicalPlanBuilder.java</url>
+          <line>69</line>
           <properties />
-          <option name="timeStamp" value="11" />
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/operators/LogicalSelect.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="25" column="1" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/operators/LogicalOperator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
@@ -480,9 +514,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
           <caret line="24" selection-start-line="24" selection-end-line="24" />
-          <folding>
-            <element signature="e#622#623#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -511,13 +542,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="403">
           <caret line="50" column="53" selection-start-line="50" selection-start-column="53" selection-end-line="50" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/operators/LogicalScan.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="19" column="1" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -570,16 +594,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/jnio/Converter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/jnio/TupleWriter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
@@ -594,9 +608,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="115">
           <caret line="64" column="27" selection-start-line="64" selection-start-column="27" selection-end-line="64" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -607,82 +618,119 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/operators/ScanOperator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="60" selection-start-line="60" selection-end-line="60" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/visitors/SelectVisitors.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
+        <state relative-caret-position="209">
           <caret line="14" column="14" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/util/Selector.java">
+    <entry file="file://$PROJECT_DIR$/src/operators/Operator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="455">
-          <caret line="227" column="40" selection-start-line="227" selection-start-column="40" selection-end-line="227" selection-end-column="40" />
+        <state relative-caret-position="158">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/operators/ScanOperator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/operators/LogicalSelect.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/operators/LogicalScan.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="16" column="33" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#367#368#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/operators/ProjectOperator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="244">
+          <caret line="127" selection-start-line="127" selection-end-line="127" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Interpreter/Harness.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="55" selection-start-line="55" selection-end-line="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/operators/SortOperator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="123">
+          <caret line="80" selection-start-line="80" selection-end-line="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/operators/LogicalProject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#319#320#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/visitors/PhysicalPlanBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="68" selection-start-line="68" selection-end-line="68" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1320#1321#0" expanded="true" />
+            <element signature="e#1374#1375#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/operators/LogicalSort.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="15" column="53" selection-start-line="15" selection-start-column="53" selection-end-line="15" selection-end-column="53" />
+        <state relative-caret-position="316">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/operators/LogicalProject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="9" column="53" selection-start-line="9" selection-start-column="53" selection-end-line="9" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/visitors/PhysicalPlanBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="66" selection-start-line="66" selection-end-line="66" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/operators/Operator.java">
+    <entry file="file://$PROJECT_DIR$/src/util/Selector.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="142">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
+          <caret line="234" selection-start-line="234" selection-end-line="234" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Interpreter/Harness.java">
+    <entry file="file://$PROJECT_DIR$/src/jnio/Converter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="54" selection-start-line="54" selection-end-line="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/operators/SortOperator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="37" selection-start-line="37" selection-end-line="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/operators/ProjectOperator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="48" selection-start-line="48" selection-end-line="48" />
+        <state relative-caret-position="285">
+          <caret line="50" selection-start-line="50" selection-end-line="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

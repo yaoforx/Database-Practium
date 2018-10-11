@@ -42,7 +42,6 @@ public class SortOperator extends Operator {
         //Override lambda function for comparison
         //work on java 8
         //TODO: need to check with TA to see if we are running java 8
-        System.out.println(sort.toString());
         Collections.sort(inputs,new Comparator<Tuple>(){
 
             /**
