@@ -85,7 +85,8 @@ public class AbstractVisitors implements ExpressionVisitor {
 
         rightValue = value;
         condition = (leftValue == rightValue);
-       // System.out.println(equalsTo.getLeftExpression() + ": "+leftValue + " = "
+
+     //   System.out.println(equalsTo.getLeftExpression() + ": "+leftValue + " = "
        //         + equalsTo.getRightExpression() + ": "+ rightValue + " is " + condition);
 //
 

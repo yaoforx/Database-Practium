@@ -1,8 +1,6 @@
 <component name="libraryTable">
   <library name="cs4321_p1">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/cs4321_p1.jar!/" />
-    </CLASSES>
+    <CLASSES />
     <JAVADOC />
     <SOURCES />
   </library>

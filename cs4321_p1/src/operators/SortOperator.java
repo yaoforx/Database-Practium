@@ -54,7 +54,6 @@ public class SortOperator extends Operator {
             public int compare(Tuple t1,Tuple t2){
 
                 HashSet<Integer> orderby = new HashSet<>(sort);
-                System.out.println(sort.toString());
 
                 for(int i = 0; i < sort.size(); i++) {
                     int v1 = t1.getValue(sort.get(i));

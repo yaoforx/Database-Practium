@@ -123,7 +123,7 @@ public class Selector {
         }
 
         List<Expression> andExpressions = getAndExpressions(where);
-        //construct selection and Projection based on FromItems sequence
+   //     construct selection and Projection based on FromItems sequence
         if(where != null) {
             for (Expression exp : andExpressions) {
                 List<String> tables = tableInAnds(exp);
@@ -199,7 +199,7 @@ public class Selector {
         if (tables == null) return fromItems.size() - 1;
         int idx = 0;
         for (String table : tables) {
-            idx = Math.min(idx, fromItems.indexOf(table));
+            idx = Math.max(idx, fromItems.indexOf(table));
         }
         return idx;
     }
@@ -211,12 +211,13 @@ public class Selector {
         if (getSelectCondition(0) != null) {
             curRoot = new LogicalSelect(this.getSelectCondition(0), curRoot);
         }
-        for (int i = 1; i < this.fromItems.size(); ++i) {
+        for (int i = 1; i < fromItems.size(); ++i) {
             LogicalOperator op = new LogicalScan(getTable(i));
             if (getSelectCondition(i) != null) {
                 op = new LogicalSelect(getSelectCondition(i), op);
-                curRoot = new LogicalJoin(getJoinCondition(i), curRoot, op);
             }
+                curRoot = new LogicalJoin(getJoinCondition(i), curRoot, op);
+
         }
             if (selects != null) {
                 curRoot = new LogicalProject(selects, curRoot);

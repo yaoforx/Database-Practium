@@ -36,7 +36,7 @@ public class Harness {
             while((statement = parser.Statement()) !=null ) {
 
                 PrintStream ps = new PrintStream(new BufferedOutputStream(
-                        new FileOutputStream(DBCatalog.outputdir + "query" + counter + ".txt")));
+                        new FileOutputStream(DBCatalog.outputdir + "query" + counter)));
                 System.out.println("Parsing: " + statement);
                 Selector select = new Selector(statement);
                 counter++;
@@ -53,19 +53,19 @@ public class Harness {
     }
 
 
-//    public static void main(String args[]) {
-//        if(args.length < 2) {
-//            throw new IllegalArgumentException("Not enough argument!");
-//        }
-//        Harness interpreter = new Harness();
-//        interpreter.harness(args[0],args[1]);
-//
-//    }
-    @Test
-    public void main() {
-       Harness itpr = new Harness();
-
-        itpr.harness("/Users/yaoxiao/Documents/cs4321/cs4321_p1/samples/input","/Users/yaoxiao/Documents/cs4321/cs4321_p1");
+    public static void main(String args[]) {
+        if(args.length < 2) {
+            throw new IllegalArgumentException("Not enough argument!");
+        }
+        Harness interpreter = new Harness();
+        interpreter.harness(args[0],args[1]);
 
     }
+//    @Test
+//    public void main() {
+//       Harness itpr = new Harness();
+//
+//        itpr.harness("/Users/yaoxiao/Documents/cs4321/cs4321_p1/samples/input","/Users/yaoxiao/Documents/cs4321/cs4321_p1");
+//
+//    }
 }

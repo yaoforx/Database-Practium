@@ -67,7 +67,6 @@ public class ProjectOperator extends Operator{
         for(SelectItem item : selectItems) {
             Column column = (Column)((SelectExpressionItem) item).getExpression();
             String tableName = column.getTable().getName();
-            System.out.println("table name is " + tableName);
 
             String colName  = column.getColumnName();
             //If the expression is Sailors.A, Sailors.B

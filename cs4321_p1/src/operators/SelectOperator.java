@@ -59,7 +59,6 @@ public class SelectOperator extends Operator {
         Tuple tp;
         while((tp = child.getNextTuple()) != null) {
             if(satisfy(expression,sv,tp)) {
-                System.out.println("selecting " + tp.toString());
                 return tp;
             }
         }

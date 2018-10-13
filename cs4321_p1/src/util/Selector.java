@@ -1,5 +1,6 @@
 package util;
 import java.util.*;
+import java.util.stream.StreamSupport;
 
 import javafx.util.converter.ShortStringConverter;
 import net.sf.jsqlparser.expression.BinaryExpression;
@@ -64,7 +65,7 @@ public class Selector {
         distinct = ps.getDistinct();
 
         exps = getAndExpressions(where);
-        System.out.println(exps);
+       // System.out.println(exps);
          selectPlan = new HashMap<>();
          joinPlan = new HashMap<>();
 
@@ -119,8 +120,8 @@ public class Selector {
         }
         for(String table : fromItems) {
             List<Expression> exps1 = joinPlan.get(table);
-            if(!exps1.isEmpty()) {
-            Expression res1 = exps1.get(0);
+            if (!exps1.isEmpty()) {
+                Expression res1 = exps1.get(0);
 
                 for (int i = 1; i < exps1.size(); i++) {
                     res1 = new AndExpression(res1, exps1.get(i));
@@ -129,7 +130,7 @@ public class Selector {
             }
 
             List<Expression> exps2 = selectPlan.get(table);
-            if(!exps2.isEmpty()) {
+            if (!exps2.isEmpty()) {
                 Expression res2 = exps2.get(0);
 
                 for (int i = 1; i < exps2.size(); i++) {
@@ -138,18 +139,15 @@ public class Selector {
                 selectCondition.put(table, res2);
             }
 
+
+
+
         }
-
-
         buildTree();
 
 
-
-
-
-
-
     }
+
 
     /**
      *
@@ -173,7 +171,7 @@ public class Selector {
         if (tabs == null) return fromItems.size() - 1;
         int idx = 0;
         for (String tab : tabs) {
-            idx = Math.min(idx, fromItems.indexOf(tab));
+            idx = Math.max(idx, fromItems.indexOf(tab));
         }
         return idx;
     }
@@ -186,9 +184,9 @@ public class Selector {
             curRoot = new SelectOperator(getSelectCondition(0),(ScanOperator)curRoot);
 
         //Building left-deep Tree based on fromItems sequence
-        System.out.println(fromItems);
+   //     System.out.println(fromItems);
         for(int i = 1; i < fromItems.size(); i++) {
-            System.out.println(getTable(i).tableName);
+          //  System.out.println(getTable(i).tableName);
             Operator op = new ScanOperator(getTable(i));
             if(getSelectCondition(i) != null) {
                 op = new SelectOperator(getSelectCondition(i),(ScanOperator) op);
@@ -251,22 +249,23 @@ public class Selector {
      * @param exp expression containing tables
      * @return a list of tables appeared in this AND
      */
+
     private List<String> tableInAnds(Expression exp) {
         List<String> res = new ArrayList<>();
         Expression left = ((BinaryExpression) exp).getLeftExpression();
         Expression right = ((BinaryExpression) exp).getRightExpression();
         if(left instanceof Column) {
             Column col = (Column)left;
-            if(col.getTable() != null) res.add(col.getTable().getName());
+            if(col.getTable() == null) return null;
+            res.add(col.getTable().getName());
         }
         if(right instanceof Column) {
             Column col = (Column)right;
-            if(col.getTable() != null)
-                if(!res.isEmpty()) {
-
-                    if(col.getTable().getName().equals(res.get(0))) return res;
-                    res.add(col.getTable().getName());
-                }
+            if(col.getTable() == null) return null;
+            if(!res.isEmpty()) {
+                if(col.getTable().getName().equals(res.get(0))) return res;
+                res.add(col.getTable().getName());
+            }
 
         }
         return res;
