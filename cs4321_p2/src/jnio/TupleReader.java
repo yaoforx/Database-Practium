@@ -33,10 +33,10 @@ public class TupleReader {
         tupleInPgae = 0;
     }
 
-    public util.Tuple read() throws IOException {
+    public Tuple read() throws IOException {
         while (!eof) {
             if (newPage) {
-                eof = (fc.read(page) < 0);
+                eof = (fc.read(page) <= 0);
                 if (eof) return null;
                 setPage();
             }

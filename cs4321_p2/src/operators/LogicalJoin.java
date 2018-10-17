@@ -1,5 +1,6 @@
 package operators;
 
+import net.sf.jsqlparser.expression.Expression;
 import visitors.PhysicalPlanBuilder;
 
 
@@ -12,7 +13,7 @@ public class LogicalJoin
 
     public void accept(PhysicalPlanBuilder phyplan) { phyplan.visit(this); }
 
-    public LogicalJoin(net.sf.jsqlparser.expression.Expression exp, LogicalOperator left, LogicalOperator right) {
+    public LogicalJoin(Expression exp, LogicalOperator left, LogicalOperator right) {
         this.left = left;
         this.right = right;
         expression = exp;

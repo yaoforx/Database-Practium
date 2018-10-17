@@ -2,6 +2,7 @@ package Interpreter;
 
 import java.io.*;
 
+import jnio.Converter;
 import jnio.TupleWriter;
 import net.sf.jsqlparser.parser.CCJSqlParser;
 import net.sf.jsqlparser.statement.Statement;
@@ -35,12 +36,8 @@ public class Harness {
             Statement statement;
             int counter = 1;
             while((statement = parser.Statement()) !=null ) {
-                System.out.println();
-                String out  = DBCatalog.outputdir + "query" + counter + ".txt";
+                String out  = DBCatalog.outputdir + "query" + counter;
                 TupleWriter writer = new TupleWriter(out);
-                System.out.println(out);
-             //   PrintStream ps = new PrintStream(new BufferedOutputStream(
-               //         new FileOutputStream(DBCatalog.outputdir + "query" + counter + ".txt")));
                 System.out.println("Parsing: " + statement);
                 Selector select = new Selector(statement);
                 counter++;
@@ -48,6 +45,14 @@ public class Harness {
                 select.root.dump(writer);
 
                 writer.close();
+
+
+            }
+            int num = 1;
+            while(num < counter) {
+                Converter convert = new Converter("query" + num);
+                convert.binaryToReadable();
+                num++;
             }
 
 
@@ -57,7 +62,7 @@ public class Harness {
         }
     }
 
-
+//
 //    public static void main(String args[]) {
 //        if(args.length < 2) {
 //            throw new IllegalArgumentException("Not enough argument!");

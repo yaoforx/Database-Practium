@@ -1,6 +1,8 @@
 package jnio;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import util.Tuple;
 
@@ -14,16 +16,17 @@ public class TupleWriter {
     private int fitInPage;
     private int curIndex;
 
-    public TupleWriter(String outputPath) throws java.io.FileNotFoundException {
+    public TupleWriter(String outputPath) throws FileNotFoundException {
         java.io.File file = new java.io.File(outputPath);
         fo = new FileOutputStream(file, false);
         fc = fo.getChannel();
 
         page = ByteBuffer.allocate(size);
+        fitInPage = 0;
         curIndex = 0;
     }
 
-    public void write(Tuple tuple) throws java.io.IOException {
+    public void write(Tuple tuple) throws IOException {
         colInTuple = tuple.getSize();
         if (!hasHeader) {
             page.putInt(tuple.getSize());
@@ -36,7 +39,11 @@ public class TupleWriter {
                 page.putInt(tuple.getValue(i));
             }
             curIndex += 1;
-        } else {
+        } else if(fitInPage == 0) {
+            page = ByteBuffer.allocate(0);
+
+        }
+        else {
             while (page.hasRemaining()) page.putInt(0);
             page.putInt(4, curIndex);
             page.flip();
@@ -57,9 +64,11 @@ public class TupleWriter {
         page.clear();
     }
 
-    public void close() throws java.io.IOException {
+    public void close() throws IOException {
         while (page.hasRemaining()) page.putInt(0);
-        page.putInt(4, curIndex);
+        if(fitInPage == 0) page.limit(0);
+        if(page.limit() > 0)
+            page.putInt(4, curIndex);
         page.flip();
         fc.write(page);
         fc.close();

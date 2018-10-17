@@ -15,22 +15,19 @@ public class Converter {
     private BufferedWriter writer;
     String input = "/Users/yaoxiao/Documents/cs4321/cs4321_p2/";
     //String output = "";
-   // File in;
-    //File out;
-    public Converter () throws IOException {
-        //in  = new File(input);
-        //writer = new BufferedWriter(new FileWriter(out));
+    File in;
+    public Converter (String fileName) throws IOException {
+        in  = new File(input + fileName);
+        writer = new BufferedWriter(new FileWriter(input + fileName + "_humanreadable"));
+       // binaryToReadable();
     }
-    public void binaryToReadable(String in) {
+    public void binaryToReadable() {
         Tuple tp;
 
        // writer = new BufferedWriter(new FileWriter(in)))
         try {
-            File input = new File(in);
-            File file  = new File(in.substring(0,in.length() - 4) + "_test.txt");
-            reader = new TupleReader(input);
-
-            writer = new BufferedWriter(new FileWriter(file));
+            reader = new TupleReader(in);
+            writer = new BufferedWriter(writer);
             while((tp = reader.read()) != null) {
                 writer.write(tp.toString() + "\n");
             }
@@ -41,27 +38,22 @@ public class Converter {
             e.printStackTrace();
         }
     }
-    //@Test
-    public void exampleTest() throws IOException {
-        String expected = "/Users/yaoxiao/Documents/cs4321/cs4321_p2/samples/expected/";
-        for(int i = 1; i <= 16; i++) {
-            String target = input + "query" + i + ".txt";
-            String exp = expected + "query" + i;
-           // binaryToReadable(target);
+//    @Test
+//    public void exampleTest() throws IOException {
+//        String expected = "/Users/yaoxiao/Documents/cs4321/cs4321_p2/samples/expected/";
+//        for(int i = 1; i <= 15; i++) {
+//            String target = input + "query" + i;
+//            String exp = expected + "query" + i;
+//           // binaryToReadable(target);
+//            String readble = expected + "query" + i + "_humanreadable";
+//            String targetReadable = input + "query" + i + "_humanreadable";
+//            File tem1 = new File(target);
+//            File tem2 = new File(exp);
 
-         //   assertTrue(FileUtils.contentEquals(new File(target), new File(exp)));
-        }
-    }
-   // @Test
-    public void exampleTestRead() throws IOException {
-        String expected = "/Users/yaoxiao/Documents/cs4321/cs4321_p2/samples/expected/";
-        for(int i = 1; i <= 1; i++) {
-            String target = input + "query" + i + ".txt";
-            String exp = expected + "query" + i + "_humanreadable";
-            binaryToReadable(target);
-            String readable = input + "query" + i +"_test.txt";
+//            assertTrue(FileUtils.contentEquals(new File(target), new File(exp)));
 
-          //  assertTrue(FileUtils.contentEquals(new File(readable), new File(exp)));
-        }
-    }
+//           assertTrue(FileUtils.contentEquals(new File(readble), new File(targetReadable)));
+//        }
+//    }
+
 }
