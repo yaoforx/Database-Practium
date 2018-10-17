@@ -1,7 +1,9 @@
 package operators;
 
 import visitors.PhysicalPlanBuilder;
-
+/**
+ * Constructs Logical Elimination Operator
+ */
 public class LogicalEliminator extends LogicalOperator {
     public LogicalOperator child;
 

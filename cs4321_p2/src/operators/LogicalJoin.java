@@ -3,9 +3,10 @@ package operators;
 import net.sf.jsqlparser.expression.Expression;
 import visitors.PhysicalPlanBuilder;
 
-
-public class LogicalJoin
-        extends LogicalOperator
+/**
+ * Constructs Logical Join Operator
+ */
+public class LogicalJoin extends LogicalOperator
 {
     public LogicalOperator left;
     public LogicalOperator right;

@@ -5,7 +5,9 @@ import net.sf.jsqlparser.statement.select.OrderByElement;
 import visitors.PhysicalPlanBuilder;
 import visitors.*;
 
-
+/**
+ * Constructs Logical Sort Operator
+ */
 
 public class LogicalSort extends LogicalOperator
 {

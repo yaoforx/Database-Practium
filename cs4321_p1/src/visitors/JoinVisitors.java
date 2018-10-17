@@ -4,7 +4,6 @@ import java.util.List;
 import net.sf.jsqlparser.schema.Column;
 import util.*;
 
-//TODO: comments for JoinVisitors
 /**
  * Join visitors combine two tuples
  * and filter them based on condition

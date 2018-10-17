@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import util.Tuple;
 
+/**
+ * TupleWriter writes tuples page by page
+ */
 public class TupleWriter {
     private static int size = 4096;
     private java.nio.channels.FileChannel fc;
@@ -16,6 +19,11 @@ public class TupleWriter {
     private int fitInPage;
     private int curIndex;
 
+    /**
+     * Constructor TupleWriter
+     * @param outputPath Output path for written files
+     * @throws FileNotFoundException
+     */
     public TupleWriter(String outputPath) throws FileNotFoundException {
         java.io.File file = new java.io.File(outputPath);
         fo = new FileOutputStream(file, false);
@@ -26,6 +34,11 @@ public class TupleWriter {
         curIndex = 0;
     }
 
+    /**
+     * Function: Write
+     * @param tuple to be written in page
+     * @throws IOException
+     */
     public void write(Tuple tuple) throws IOException {
         colInTuple = tuple.getSize();
         if (!hasHeader) {
@@ -54,8 +67,10 @@ public class TupleWriter {
     }
 
 
-
-
+    /**
+     * Function setPage
+     * Set a new page whenever a page is full
+     */
     private void setPage() {
         curIndex = 0;
         hasHeader = false;
@@ -64,6 +79,11 @@ public class TupleWriter {
         page.clear();
     }
 
+    /**
+     * Function: close
+     * close written files and associated FileChannels
+     * @throws IOException
+     */
     public void close() throws IOException {
         while (page.hasRemaining()) page.putInt(0);
         if(fitInPage == 0) page.limit(0);

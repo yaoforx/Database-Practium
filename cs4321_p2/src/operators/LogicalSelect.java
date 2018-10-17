@@ -3,7 +3,9 @@ package operators;
 import java.io.IOException;
 import net.sf.jsqlparser.expression.Expression;
 import visitors.PhysicalPlanBuilder;
-
+/**
+ * Constructs Logical Select Operator
+ */
 public class LogicalSelect
         extends LogicalOperator
 {

@@ -139,10 +139,8 @@ public class Selector {
                 selectCondition.put(table, res2);
             }
 
-
-
-
         }
+        
         buildTree();
 
 

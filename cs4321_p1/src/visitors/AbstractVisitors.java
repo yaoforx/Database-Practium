@@ -10,7 +10,7 @@ import net.sf.jsqlparser.expression.operators.relational.*;
 import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.statement.select.SubSelect;
 
-//TODO: comments for AbstractVisitors
+
 /**
  * AbstractVisitors class implements ExpressionVisitor
  */

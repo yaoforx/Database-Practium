@@ -10,6 +10,10 @@ import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TupleReader reads tuple page by page
+ */
+
 public class TupleReader {
 
     ByteBuffer page;
@@ -22,6 +26,11 @@ public class TupleReader {
     private boolean newPage;
     private int currentSize;
 
+    /**
+     * Tuple Reader Constructor
+     * @param file to read from
+     * @throws IOException
+     */
     public TupleReader(File file) throws IOException {
         this.file = file;
         FileInputStream fin = new FileInputStream(file);
@@ -33,6 +42,11 @@ public class TupleReader {
         tupleInPgae = 0;
     }
 
+    /**
+     * Function: Read tuples from bufferpage with bounded state
+     * @return tuple
+     * @throws IOException
+     */
     public Tuple read() throws IOException {
         while (!eof) {
             if (newPage) {
@@ -55,7 +69,10 @@ public class TupleReader {
         return null;
     }
 
-
+    /**
+     * Function: setPage
+     * Set a new page whenever a previous page is exhausted
+     */
 
     private void setPage() {
         page.flip();
@@ -68,8 +85,10 @@ public class TupleReader {
     }
 
 
-
-
+    /**
+     * Function: serZeros
+     * Set remaining page to zeros
+     */
     private void setZeros()
     {
         page.clear();
@@ -83,8 +102,11 @@ public class TupleReader {
     public void reset() {}
 
 
-
-
+    /**
+     * Function: close
+     * close reader files and associated bufferchannels
+     * @throws IOException
+     */
     public void close() throws IOException
     {
         page.clear();

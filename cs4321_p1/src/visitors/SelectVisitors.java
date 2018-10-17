@@ -3,8 +3,6 @@ import net.sf.jsqlparser.expression.*;
 import net.sf.jsqlparser.schema.Column;
 import util.*;
 import java.util.*;
-
-//TODO: comments for SelectVisitors
 /**
  * The class will take as input a tuple
  * and recursively walk the expression to

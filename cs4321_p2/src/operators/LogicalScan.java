@@ -4,7 +4,9 @@ import util.Table;
 import visitors.*;
 
 import java.io.IOException;
-
+/**
+ * Constructs Logical Scan Operator
+ */
 public class LogicalScan extends LogicalOperator {
     public Table table;
 
