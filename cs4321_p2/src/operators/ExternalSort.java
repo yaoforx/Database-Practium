@@ -57,7 +57,7 @@ public class ExternalSort extends Operator{
     public ExternalSort(Operator child, List<OrderByElement> ties) {
         Random random = new Random();
         id = random.nextInt(10000000);
-        bufferPages = DBCatalog.config.sortPage;
+        bufferPages = DBCatalog.config.sortPage - 1;
         this.child = child;
         cmp = new externalCmp(ties);
         tempout = DBCatalog.tempdir;
@@ -186,7 +186,7 @@ public class ExternalSort extends Operator{
 
 
 
-                    for (int j = 0; j < num; j++) {
+                    for (int j = i; j < i + num; j++) {
                         File file = new File(setName(pass , j));
                         System.out.println("detleting " + setName(pass, j));
                         file.delete();
@@ -211,7 +211,10 @@ public class ExternalSort extends Operator{
         if(pass == 0) pass = 1;
 
         try {
-            reader = new TupleReader(new File(setName(pass, 0)));
+            File orig = new  File(setName(pass, 0));
+            File result = new File(tempout + id + "_result");
+            orig.renameTo(result);
+            reader = new TupleReader(result);
         } catch (IOException e) {
             e.printStackTrace();
         }

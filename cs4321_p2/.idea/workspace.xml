@@ -17,6 +17,7 @@
     <session id="222906544">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="1" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.opened" value="1" />
         </counts>
@@ -33,23 +34,23 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="612" />
+          <entry key="java" value="721" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="612" />
+          <entry key="JAVA" value="721" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/operators/ExternalSort.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="138" selection-start-line="138" selection-end-line="138" />
+            <state relative-caret-position="239">
+              <caret line="214" column="38" selection-start-line="214" selection-start-column="38" selection-end-line="214" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -78,11 +79,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Interpreter/Harness.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="410">
-              <caret line="77" selection-start-line="77" selection-end-line="77" />
+            <state relative-caret-position="804">
+              <caret line="81" lean-forward="true" selection-start-line="81" selection-end-line="81" />
             </state>
           </provider>
         </entry>
@@ -147,11 +148,11 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/util/Tuple.java" />
-        <option value="$PROJECT_DIR$/src/Interpreter/Harness.java" />
         <option value="$PROJECT_DIR$/src/jnio/Converter.java" />
         <option value="$PROJECT_DIR$/src/jnio/TupleWriter.java" />
         <option value="$PROJECT_DIR$/src/jnio/TupleReader.java" />
         <option value="$PROJECT_DIR$/src/operators/ExternalSort.java" />
+        <option value="$PROJECT_DIR$/src/Interpreter/Harness.java" />
       </list>
     </option>
   </component>
@@ -227,7 +228,7 @@
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540153285772" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540153905345" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -316,24 +317,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Harness - 2018.10.21 at 15h 50m 10s.xml">
-      <configuration name="Harness" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Harness - 2018.10.21 at 15h 50m 39s.xml">
-      <configuration name="Harness" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Harness - 2018.10.21 at 15h 53m 31s.xml">
-      <configuration name="Harness" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Harness - 2018.10.21 at 15h 55m 33s.xml">
-      <configuration name="Harness" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Harness - 2018.10.21 at 15h 57m 04s.xml">
-      <configuration name="Harness" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Harness - 2018.10.21 at 15h 57m 51s.xml">
-      <configuration name="Harness" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="Harness - 2018.10.21 at 15h 58m 21s.xml">
       <configuration name="Harness" configurationId="JUnit" />
     </history-entry>
@@ -346,6 +329,24 @@
     <history-entry file="Harness - 2018.10.21 at 16h 21m 32s.xml">
       <configuration name="Harness" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="Harness - 2018.10.21 at 16h 22m 52s.xml">
+      <configuration name="Harness" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Harness - 2018.10.21 at 16h 23m 12s.xml">
+      <configuration name="Harness" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Harness - 2018.10.21 at 16h 24m 33s.xml">
+      <configuration name="Harness" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Harness - 2018.10.21 at 16h 28m 12s.xml">
+      <configuration name="Harness" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Harness - 2018.10.21 at 16h 29m 40s.xml">
+      <configuration name="Harness" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Harness - 2018.10.21 at 16h 31m 15s.xml">
+      <configuration name="Harness" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="1440" y="-45" width="1920" height="1057" extended-state="6" />
@@ -356,7 +357,7 @@
       <window_info id="UI Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24973376" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24973376" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" />
@@ -364,7 +365,7 @@
       <window_info anchor="bottom" id="Messages" weight="0.32953367" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32953367" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32953367" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -430,13 +431,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Interpreter/Harness.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="410">
-          <caret line="77" selection-start-line="77" selection-end-line="77" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/operators/Operator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="394">
@@ -453,8 +447,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/operators/ExternalSort.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="138" selection-start-line="138" selection-end-line="138" />
+        <state relative-caret-position="239">
+          <caret line="214" column="38" selection-start-line="214" selection-start-column="38" selection-end-line="214" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Interpreter/Harness.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="804">
+          <caret line="81" lean-forward="true" selection-start-line="81" selection-end-line="81" />
         </state>
       </provider>
     </entry>
