@@ -57,7 +57,7 @@ public class ExternalSort extends Operator{
     public ExternalSort(Operator child, List<OrderByElement> ties) {
         Random random = new Random();
         id = random.nextInt(10000000);
-        bufferPages = DBCatalog.config.sortPage - 1;
+        bufferPages = DBCatalog.config.sortPage;
         this.child = child;
         cmp = new externalCmp(ties);
         tempout = DBCatalog.tempdir;
@@ -78,7 +78,7 @@ public class ExternalSort extends Operator{
 
        try {
            Tuple tp = reader.read();
-           System.out.println(tp.toString());
+
            return tp;
        } catch (IOException e) {
            e.printStackTrace();
@@ -94,7 +94,7 @@ public class ExternalSort extends Operator{
         Tuple tp;
         int run = 0;
         while((tp = child.getNextTuple()) != null) {
-            List<Tuple> listToSort = new ArrayList<>();
+            List<Tuple> listToSort = new ArrayList<>(tuplesInRun);
             int remain = tuplesInRun;
             while(remain > 0 && tp != null) {
                 listToSort.add(tp);
@@ -108,7 +108,11 @@ public class ExternalSort extends Operator{
                 System.out.println("Pass 0 file: " + setName(0, run));
 
                 TupleWriter tw = new TupleWriter(setName(0, run));
-                for(Tuple t : listToSort) tw.write(t);
+                for(Tuple t : listToSort) {
+                    tw.write(t);
+
+                }
+                tw.close();
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -116,7 +120,7 @@ public class ExternalSort extends Operator{
 
             run++;
         }
-        merge(run - 1);
+        merge(run);
 
 
     }
@@ -125,38 +129,38 @@ public class ExternalSort extends Operator{
 
         int totalPass = Pass;
         int pass = 0;
+        int outCount = Pass;
 
 
         while(totalPass > 1) {
-            System.out.println("Pass num ber " + totalPass);
-            int outCount = Pass;
+            System.out.println("Pass number " + totalPass);
+
+
+
 
             List<TupleReader> buffer = new ArrayList<>();
-
+            int num = Math.min(outCount, bufferPages);
 
             for(int i = 0; i < totalPass; i+= bufferPages) {
-
-                int num = Math.min(outCount, bufferPages);
-
                 try {
                     for (int j = 0; j < num; j++) {
 
-                        System.out.println("num is " + num + "Input file name is adding file: " + setName(pass, j));
 
                         buffer.add(new TupleReader(new File(setName(pass, j))));
+                        System.out.println("Pass is " + pass + ", num is " + num + "Input file name is adding file: " + setName(pass, j));
+
                     }
 
                     outCount = i/bufferPages;
                     System.out.println("output file name is adding file: " + setName(pass + 1, outCount));
                     TupleWriter outputPage = new TupleWriter(setName(pass + 1, outCount));
-                    outCount++;
+
                     PriorityQueue<Tuple> pq = new PriorityQueue<>(cmp);
                     Tuple tuple = null;
 
                     for (TupleReader tr : buffer) {
                         Tuple tp = tr.read();
                         if (tp != null) {
-
                             pq.add(tp);
                             tp.tupleReader = tr;
                         }
@@ -168,31 +172,35 @@ public class ExternalSort extends Operator{
                         TupleReader tr = tp.tupleReader;
                         tp = tr.read();
                         if (tp != null) {
-
                             pq.add(tp);
                             tp.tupleReader = tr;
                         }
                     }
 
-                    outputPage.close();
+
+
                     for (int j = 0; j < num; j++) {
-                        File file = new File(setName(pass - 1, j));
-                        System.out.println("detleting " + setName(pass - 1, j));
+                        File file = new File(setName(pass, j));
+                        System.out.println("detleting " + setName(pass, j));
                         file.delete();
                     }
+
                     buffer.clear();
                     outputPage.close();
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                pass++;
 
             }
-            pass++;
-            totalPass = totalPass/outCount;
+
+            totalPass = totalPass/bufferPages;
 
         }
+        if (pass == 0) totalPass = 0;
         try {
-            reader = new TupleReader(new File(setName(pass - 1, 0)));
+            reader = new TupleReader(new File(setName(totalPass, 0)));
         } catch (IOException e) {
             e.printStackTrace();
         }

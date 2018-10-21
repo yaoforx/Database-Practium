@@ -1,9 +1,12 @@
 package jnio;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+
 import util.Tuple;
 
 /**
@@ -11,13 +14,14 @@ import util.Tuple;
  */
 public class TupleWriter {
     private static int size = 4096;
-    private java.nio.channels.FileChannel fc;
+    private FileChannel fc;
     private ByteBuffer page;
     private int colInTuple;
     private FileOutputStream fo;
     boolean hasHeader = false;
     private int fitInPage;
     private int curIndex;
+    public File file;
 
     /**
      * Constructor TupleWriter
@@ -25,7 +29,7 @@ public class TupleWriter {
      * @throws FileNotFoundException
      */
     public TupleWriter(String outputPath) throws FileNotFoundException {
-        java.io.File file = new java.io.File(outputPath);
+        file = new File(outputPath);
         fo = new FileOutputStream(file, false);
         fc = fo.getChannel();
 
@@ -42,10 +46,10 @@ public class TupleWriter {
     public void write(Tuple tuple) throws IOException {
         colInTuple = tuple.getSize();
         if (!hasHeader) {
-            page.putInt(tuple.getSize());
+            page.putInt(colInTuple);
             page.putInt(0);
             hasHeader = true;
-            fitInPage = ((size - 8) / (4 * tuple.getSize()));
+            fitInPage = ((size - 8) / (4 * colInTuple));
         }
         if (curIndex < fitInPage) {
             for (int i = 0; i < tuple.getSize(); i++) {

@@ -33,7 +33,7 @@ public class TupleReader {
      */
     public TupleReader(File file) throws IOException {
         this.file = file;
-        FileInputStream fin = new FileInputStream(file);
+        FileInputStream fin = new FileInputStream(this.file);
         fc = fin.getChannel();
         page = ByteBuffer.allocate(4096);
         eof = false;
