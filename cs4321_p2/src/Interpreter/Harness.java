@@ -75,7 +75,7 @@ public class Harness {
     public void main() {
        Harness itpr = new Harness();
 
-        itpr.harness("/Users/yaoxiao/Documents/cs4321/cs4321_p2/samples/input","/Users/yaoxiao/Documents/cs4321/cs4321_p2", "/Users/yaoxiao/Documents/cs4321/cs4321_p2");
+        itpr.harness("/Users/yaoxiao/Database-Practium/cs4321_p2/samples/input","/Users/yaoxiao/Database-Practium/cs4321_p2", "/Users/yaoxiao/Database-Practium/cs4321_p2");
 
     }
 }

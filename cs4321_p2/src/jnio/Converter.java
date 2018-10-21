@@ -1,7 +1,6 @@
 package jnio;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.output.FileWriterWithEncoding;
+
 import org.junit.Test;
 import util.Tuple;
 import static org.junit.Assert.*;
