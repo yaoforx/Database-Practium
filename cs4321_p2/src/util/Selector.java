@@ -234,7 +234,7 @@ public class Selector {
 
 
 
-        PhysicalPlanBuilder planBuilder = new PhysicalPlanBuilder(DBCatalog.config);
+        PhysicalPlanBuilder planBuilder = new PhysicalPlanBuilder();
         curRoot.accept(planBuilder);
         root = planBuilder.getRoot();
     }

@@ -4,42 +4,20 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import operators.*;
+import util.Configure;
+import util.DBCatalog;
+
 import java.io.BufferedReader;
 public class PhysicalPlanBuilder {
     private Operator root = null;
-    private BufferedReader reader;
-    private int joinMethod = -1;
-    private int sortMethod = -1;
-    private int joinPage = -1;
-    private int sortPage = -1;
 
-    private void setUp() throws IOException {
-        int[][] info = new int[2][2];
-        for (int i = 0; i < 2; i++) {
-            String[] temp = reader.readLine().split(" ");
-            info[i][0] = Integer.parseInt(temp[0]);
-            if (temp.length == 2) {
-                info[i][1] = Integer.parseInt(temp[1]);
-            } else
-                info[i][1] = -1;
-        }
-        joinMethod = info[0][0];
-        sortMethod = info[1][0];
-        if (info[0][1] != -1) {
-            joinPage = info[0][1];
-        }
-        if (info[1][1] != -1)
-            sortPage = info[1][1];
+
+
+
+    public PhysicalPlanBuilder() {
+
     }
 
-    public PhysicalPlanBuilder(String input) throws IOException {
-        try {
-            reader = new BufferedReader(new FileReader(input));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        setUp();
-    }
 
     public operators.Operator getRoot() {
         return root;
@@ -66,8 +44,10 @@ public class PhysicalPlanBuilder {
 
     public void visit(LogicalSort logSort) {
         logSort.child.accept(this);
-        if (sortMethod == 0)
+        if (DBCatalog.config.externalSort == 0)
             root = new SortOperator(root, logSort.order);
+        else
+            root = new ExternalSort(root, logSort.order);
     }
 
     public void visit(LogicalJoin logJoin) {
@@ -76,8 +56,6 @@ public class PhysicalPlanBuilder {
         child[0] = root;
         logJoin.right.accept(this);
         child[1] = root;
-        if (joinMethod == 0) {
             root = new operators.JoinOperator(logJoin.expression, child[0], child[1]);
-        }
     }
 }

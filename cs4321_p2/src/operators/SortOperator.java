@@ -86,7 +86,7 @@ public class SortOperator extends Operator {
      * @param schema the schema this element is using
      * @return the column index
      */
-    private int getColIdx(OrderByElement element, List<String> schema) {
+    static public int getColIdx(OrderByElement element, List<String> schema) {
         int idx = schema.indexOf(element);
 
         if (idx != -1) {

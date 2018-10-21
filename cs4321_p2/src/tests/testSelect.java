@@ -30,7 +30,7 @@ public class testSelect {
 
        // AbstractVisitors visitor = new SelectVisitors(null);
         Tuple tp = new Tuple(cols);
-        DBCatalog.setDBCatalog("/Users/yaoxiao/Documents/cs4321/project1/samples/input","/Users/yaoxiao/Documents/cs4321/project1/samples/out/");
+        //DBCatalog.setDBCatalog("/Users/yaoxiao/Documents/cs4321/project1/samples/input","/Users/yaoxiao/Documents/cs4321/project1/samples/out/");
         SelectVisitors sl;
         try {
             CCJSqlParser parser = new CCJSqlParser(new StringReader(query));

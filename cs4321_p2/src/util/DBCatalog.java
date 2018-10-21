@@ -24,7 +24,8 @@ public class DBCatalog {
     public static String schemadir;
     public static String dbdir;
     public static String querydir;
-    public static String config;
+    public static Configure config;
+    public static String tempdir;
 
 
     /**
@@ -42,14 +43,15 @@ public class DBCatalog {
      * @param input  the input directory
      * @param output the output directory
      */
-    public static void setDBCatalog(String input, String output) {
+    public static void setDBCatalog(String input, String output, String temp) {
         inputdir = input + "/";
         outputdir = output + "/";
         dbdir = inputdir + "db/data/";
         schemadir = input + "/db/" + "schema.txt";
         querydir = inputdir + "/queries.sql";
-       config = inputdir + "plan_builder_config.txt";
+       tempdir = temp + "/";
         createSchema();
+        config = new Configure(inputdir + "plan_builder_config.txt");
 
     }
 

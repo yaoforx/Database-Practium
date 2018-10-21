@@ -21,7 +21,7 @@ public class testScan {
         ScanOperator sop = null;
         //Please change the following to your own absolute path
         //not sure why but relative path does not work
-        DBCatalog.setDBCatalog("/Users/yaoxiao/Documents/cs4321/project1/samples/input","/Users/yaoxiao/Documents/cs4321/project1/samples/out/");
+      //  DBCatalog.setDBCatalog("/Users/yaoxiao/Documents/cs4321/project1/samples/input","/Users/yaoxiao/Documents/cs4321/project1/samples/out/");
         try {
             CCJSqlParser parser = new CCJSqlParser(new FileReader(DBCatalog.querydir));
             Statement statement;

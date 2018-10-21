@@ -28,8 +28,8 @@ public class Harness {
      * @see              DBCatalog
      * @see              Selector
      */
-    public void harness(String inputPath, String outputPath) {
-        DBCatalog.setDBCatalog(inputPath,outputPath);
+    public void harness(String inputPath, String outputPath, String tempdir) {
+        DBCatalog.setDBCatalog(inputPath,outputPath, tempdir);
         DBCatalog.getDB();
         try{
             CCJSqlParser parser = new CCJSqlParser(new FileReader(DBCatalog.querydir));
@@ -63,19 +63,19 @@ public class Harness {
     }
 
 
-    public static void main(String args[]) {
-        if(args.length < 2) {
-            throw new IllegalArgumentException("Not enough argument!");
-        }
-        Harness interpreter = new Harness();
-        interpreter.harness(args[0],args[1]);
-
-    }
-//    @Test
-//    public void main() {
-//       Harness itpr = new Harness();
-//
-//        itpr.harness("/Users/yaoxiao/Documents/cs4321/cs4321_p2/samples/input","/Users/yaoxiao/Documents/cs4321/cs4321_p2");
+//    public static void main(String args[]) {
+//        if(args.length < 2) {
+//            throw new IllegalArgumentException("Not enough argument!");
+//        }
+//        Harness interpreter = new Harness();
+//        interpreter.harness(args[0],args[1], args[2]);
 //
 //    }
+    @Test
+    public void main() {
+       Harness itpr = new Harness();
+
+        itpr.harness("/Users/yaoxiao/Documents/cs4321/cs4321_p2/samples/input","/Users/yaoxiao/Documents/cs4321/cs4321_p2", "/Users/yaoxiao/Documents/cs4321/cs4321_p2");
+
+    }
 }
