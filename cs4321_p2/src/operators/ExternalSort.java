@@ -102,6 +102,7 @@ public class ExternalSort extends Operator{
                 tp = child.getNextTuple();
                 remain--;
             }
+            if(tp != null) listToSort.add(tp);
             Collections.sort(listToSort, cmp);
             try {
                 System.out.println("Pass 0 file: " + setName(0, run));
@@ -128,7 +129,7 @@ public class ExternalSort extends Operator{
 
         while(totalPass > 1) {
             System.out.println("Pass num ber " + totalPass);
-            int outCount = Integer.MAX_VALUE;
+            int outCount = Pass;
 
             List<TupleReader> buffer = new ArrayList<>();
 
@@ -144,34 +145,40 @@ public class ExternalSort extends Operator{
 
                         buffer.add(new TupleReader(new File(setName(pass, j))));
                     }
-                    pass++;
+
                     outCount = i/bufferPages;
-                    System.out.println("output file name is adding file: " + setName(pass, outCount));
-                    TupleWriter outputPage = new TupleWriter(setName(pass, outCount++));
+                    System.out.println("output file name is adding file: " + setName(pass + 1, outCount));
+                    TupleWriter outputPage = new TupleWriter(setName(pass + 1, outCount));
+                    outCount++;
                     PriorityQueue<Tuple> pq = new PriorityQueue<>(cmp);
                     Tuple tuple = null;
 
-                    while(true) {
-                        while(!pq.isEmpty()) {
-                            Tuple tp = pq.poll();
-                            if (tp != null) outputPage.write(tp);
-                        }
-                        for(int k = 0; k < buffer.size(); k++) {
-                            tuple = buffer.get(k).read();
-                            if(tuple == null) {
-                                buffer.get(k).close();
-                                buffer.remove(buffer.get(k));
+                    for (TupleReader tr : buffer) {
+                        Tuple tp = tr.read();
+                        if (tp != null) {
 
-                                continue;
-                            }
-                            pq.add(tuple);
+                            pq.add(tp);
+                            tp.tupleReader = tr;
                         }
-                        if(buffer.size() == 0) break;
                     }
+
+                    while (!pq.isEmpty()) {
+                        Tuple tp = pq.poll();
+                        outputPage.write(tp);
+                        TupleReader tr = tp.tupleReader;
+                        tp = tr.read();
+                        if (tp != null) {
+
+                            pq.add(tp);
+                            tp.tupleReader = tr;
+                        }
+                    }
+
+                    outputPage.close();
                     for (int j = 0; j < num; j++) {
-                       // File file = new File(setName(pass, j));
-                       // System.out.println("detleting " + setName(pass - 1, j));
-                       // file.delete();
+                        File file = new File(setName(pass - 1, j));
+                        System.out.println("detleting " + setName(pass - 1, j));
+                        file.delete();
                     }
                     buffer.clear();
                     outputPage.close();
@@ -179,9 +186,8 @@ public class ExternalSort extends Operator{
                     e.printStackTrace();
                 }
 
-
-
             }
+            pass++;
             totalPass = totalPass/outCount;
 
         }

@@ -1,4 +1,6 @@
 package util;
+import jnio.TupleReader;
+
 import java.io.IOException;
 import java.util.*;
 import java.io.PrintStream;
@@ -11,6 +13,7 @@ import java.io.PrintStream;
 public class Tuple{
     public List<Integer> tuple = new ArrayList<>();
     private int cols;
+    public TupleReader tupleReader = null;
 
     /**
      * constructs a Tuple. calculates the number of columns using the size() method of List
