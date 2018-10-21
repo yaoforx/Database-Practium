@@ -144,7 +144,7 @@ public class ExternalSort extends Operator{
 
             for(int i = 0; i < totalPass; i+= bufferPages) {
                 outCount = i/bufferPages;
-                num = Math.min(totalPass, bufferPages);
+                num = Math.min(totalPass - i, bufferPages);
 
 
                 try {

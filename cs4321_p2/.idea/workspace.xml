@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="24d8faf5-a6bc-4f5f-afbf-47a125de9253" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/samples/input/plan_builder_config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/samples/input/plan_builder_config.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/operators/ExternalSort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/ExternalSort.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -32,12 +33,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="601" />
+          <entry key="java" value="612" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="601" />
+          <entry key="JAVA" value="612" />
         </counts>
       </usages-collector>
     </session>
@@ -47,8 +48,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/operators/ExternalSort.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="146" column="40" selection-start-line="146" selection-start-column="40" selection-end-line="146" selection-end-column="40" />
+            <state relative-caret-position="177">
+              <caret line="138" selection-start-line="138" selection-end-line="138" />
             </state>
           </provider>
         </entry>
@@ -226,7 +227,7 @@
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540151930968" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540153285772" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -315,27 +316,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Harness - 2018.10.21 at 15h 43m 18s.xml">
-      <configuration name="Harness" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Harness - 2018.10.21 at 15h 44m 54s.xml">
-      <configuration name="Harness" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Harness - 2018.10.21 at 15h 45m 00s.xml">
-      <configuration name="Harness" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Harness - 2018.10.21 at 15h 45m 55s.xml">
-      <configuration name="Harness" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Harness - 2018.10.21 at 15h 48m 03s.xml">
-      <configuration name="Harness" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Harness - 2018.10.21 at 15h 48m 29s.xml">
-      <configuration name="Harness" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="Harness - 2018.10.21 at 15h 49m 44s.xml">
-      <configuration name="Harness" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="Harness - 2018.10.21 at 15h 50m 10s.xml">
       <configuration name="Harness" configurationId="JUnit" />
     </history-entry>
@@ -343,6 +323,27 @@
       <configuration name="Harness" configurationId="JUnit" />
     </history-entry>
     <history-entry file="Harness - 2018.10.21 at 15h 53m 31s.xml">
+      <configuration name="Harness" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Harness - 2018.10.21 at 15h 55m 33s.xml">
+      <configuration name="Harness" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Harness - 2018.10.21 at 15h 57m 04s.xml">
+      <configuration name="Harness" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Harness - 2018.10.21 at 15h 57m 51s.xml">
+      <configuration name="Harness" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Harness - 2018.10.21 at 15h 58m 21s.xml">
+      <configuration name="Harness" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Harness - 2018.10.21 at 15h 58m 56s.xml">
+      <configuration name="Harness" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Harness - 2018.10.21 at 16h 01m 04s.xml">
+      <configuration name="Harness" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="Harness - 2018.10.21 at 16h 21m 32s.xml">
       <configuration name="Harness" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -452,8 +453,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/operators/ExternalSort.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="146" column="40" selection-start-line="146" selection-start-column="40" selection-end-line="146" selection-end-column="40" />
+        <state relative-caret-position="177">
+          <caret line="138" selection-start-line="138" selection-end-line="138" />
         </state>
       </provider>
     </entry>
