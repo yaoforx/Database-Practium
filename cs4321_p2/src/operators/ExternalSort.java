@@ -134,6 +134,7 @@ public class ExternalSort extends Operator{
 
         while(totalPass > 1) {
             System.out.println("Pass number " + totalPass);
+            int nextRun = 0;
 
 
 
@@ -142,18 +143,23 @@ public class ExternalSort extends Operator{
             int num = Math.min(outCount, bufferPages);
 
             for(int i = 0; i < totalPass; i+= bufferPages) {
-                try {
-                    for (int j = 0; j < num; j++) {
+                outCount = i/bufferPages;
+                num = Math.min(totalPass, bufferPages);
 
+
+                try {
+                    for (int j = i; j < i + num; j++) {
+
+                        System.out.println("Pass is " + pass + ", num is " + num + " Input file name is adding file: " + setName(pass, j));
 
                         buffer.add(new TupleReader(new File(setName(pass, j))));
-                        System.out.println("Pass is " + pass + ", num is " + num + "Input file name is adding file: " + setName(pass, j));
 
                     }
 
-                    outCount = i/bufferPages;
+                    if(buffer.size() == 0) break;
                     System.out.println("output file name is adding file: " + setName(pass + 1, outCount));
                     TupleWriter outputPage = new TupleWriter(setName(pass + 1, outCount));
+
 
                     PriorityQueue<Tuple> pq = new PriorityQueue<>(cmp);
                     Tuple tuple = null;
@@ -179,28 +185,33 @@ public class ExternalSort extends Operator{
 
 
 
+
                     for (int j = 0; j < num; j++) {
-                        File file = new File(setName(pass, j));
+                        File file = new File(setName(pass , j));
                         System.out.println("detleting " + setName(pass, j));
                         file.delete();
                     }
 
                     buffer.clear();
                     outputPage.close();
+                    nextRun++;
+
+
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                pass++;
 
             }
+            pass++;
 
-            totalPass = totalPass/bufferPages;
 
+            totalPass = nextRun;
         }
-        if (pass == 0) totalPass = 0;
+        if(pass == 0) pass = 1;
+
         try {
-            reader = new TupleReader(new File(setName(totalPass, 0)));
+            reader = new TupleReader(new File(setName(pass, 0)));
         } catch (IOException e) {
             e.printStackTrace();
         }
