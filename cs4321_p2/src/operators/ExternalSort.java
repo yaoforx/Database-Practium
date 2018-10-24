@@ -156,7 +156,7 @@ public class ExternalSort extends Operator{
 
                     }
 
-                    if(buffer.size() == 0) break;
+                    
                     System.out.println("output file name is adding file: " + setName(pass + 1, outCount));
                     TupleWriter outputPage = new TupleWriter(setName(pass + 1, outCount));
 

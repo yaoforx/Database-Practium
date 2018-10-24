@@ -14,6 +14,8 @@ public class Tuple{
     public List<Integer> tuple = new ArrayList<>();
     private int cols;
     public TupleReader tupleReader = null;
+    private int pageNum;
+    private int idxInPage;
 
     /**
      * constructs a Tuple. calculates the number of columns using the size() method of List
@@ -23,6 +25,8 @@ public class Tuple{
     public Tuple(List<Integer> tuple) {
         this.tuple = tuple;
         this.cols = tuple.size();
+        pageNum = 0;
+        idxInPage = 0;
 
     }
 
@@ -100,6 +104,38 @@ public class Tuple{
 
         }
         return sb;
+    }
+
+    /**
+     * return the page that this tuple currently is at
+     * @return
+     */
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    /**
+     * set up the num as the page number the tuple is at
+     * @param num
+     */
+    public void setPageNum(int num) {
+        pageNum = num;
+    }
+
+    /**
+     * return the idx in the page that this tuple currently is at
+     * @return
+     */
+    public int getIdxInPage() {
+        return idxInPage;
+    }
+
+    /**
+     * set up the idx in the page that this tuple currently is at
+     * @param idx
+     */
+    public void setIdxInPage(int idx) {
+        idxInPage = idx;
     }
 }
 

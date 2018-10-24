@@ -17,7 +17,7 @@ import java.util.stream.Stream;
  *
  * @authors Yao Xiao, Kyle Johnson, Valerie Tan
  */
-public class JoinOperator extends Operator {
+public abstract class JoinOperator extends Operator {
     Expression exp;
     public Operator left;
     public Operator right;
