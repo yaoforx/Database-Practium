@@ -57,8 +57,10 @@ public class PhysicalPlanBuilder {
 
     public void visit(LogicalJoin logJoin) {
         Operator[] child = new operators.Operator[2];
+        root = null;
         logJoin.left.accept(this);
         child[0] = root;
+        root = null;
         logJoin.right.accept(this);
         child[1] = root;
         if(DBCatalog.config.SMJ == 1) {
@@ -80,6 +82,7 @@ public class PhysicalPlanBuilder {
                             child[1], inIdxs);
                 }
                 else {
+
                     child[0] = new ExternalSort(
                             child[0], outIdxs);
                     child[1] = new ExternalSort(
@@ -87,9 +90,10 @@ public class PhysicalPlanBuilder {
                 }
 
             }
-            child[0].getNextTuple();
             root = new SortMergeJoin(logJoin.expression, child[0], child[1], outIdxs, inIdxs);
+
         }
+
 
     }
 }

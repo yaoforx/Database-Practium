@@ -68,6 +68,7 @@ public abstract class SortOperator extends Operator {
         inputs = new ArrayList<>();
         sort = new ArrayList<>();
         this.schema = child.schema;
+        this.child = child;
 
         if (!orders.isEmpty()) {
             if (orders.get(0) instanceof OrderByElement) {
@@ -84,7 +85,7 @@ public abstract class SortOperator extends Operator {
                 throw new IllegalArgumentException();
         }
         compare = new externalCmp(sort);
-        while((tp = child.getNextTuple()) != null) {
+        while((tp = this.child.getNextTuple()) != null) {
         //    System.out.println(  tp.getPageNum() + " index " + tp.getIdxInPage());
             inputs.add(tp);
         }

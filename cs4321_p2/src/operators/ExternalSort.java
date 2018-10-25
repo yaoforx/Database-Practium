@@ -13,7 +13,7 @@ import java.util.Random.*;
 public class ExternalSort extends SortOperator{
     private String tempout;
     private int id;
-    private TupleReader tr=null;
+
     private int bufferPages = 0;
     private Operator child;
     List<Integer> sort = new ArrayList<>();
@@ -37,9 +37,9 @@ public class ExternalSort extends SortOperator{
     }
     @Override
     public void reset() {
-        if (tr == null) return;
+        if (reader == null) return;
         try {
-            tr.reset();
+            reader.reset();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -47,9 +47,9 @@ public class ExternalSort extends SortOperator{
 
     @Override
     public void reset(int pageNum, int index) {
-        if (tr == null) return;
+        if (reader == null) return;
         try {
-            tr.reset(pageNum,index);
+            reader.reset(pageNum,index);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -59,10 +59,9 @@ public class ExternalSort extends SortOperator{
     }
     @Override
     public Tuple getNextTuple() {
-
+        if (reader == null) return null;
        try {
            Tuple tp = reader.read();
-
            return tp;
        } catch (IOException e) {
            e.printStackTrace();
@@ -77,7 +76,7 @@ public class ExternalSort extends SortOperator{
         int tuplesInRun = tuplesInPage * bufferPages;
         Tuple tp;
         int run = 0;
-        child.reset();
+
         while((tp = child.getNextTuple()) != null) {
             List<Tuple> listToSort = new ArrayList<>(tuplesInRun);
             int remain = tuplesInRun;
@@ -105,6 +104,7 @@ public class ExternalSort extends SortOperator{
 
             run++;
         }
+        if(run == 0) return;
         merge(run);
 
 
@@ -193,7 +193,8 @@ public class ExternalSort extends SortOperator{
 
             totalPass = nextRun;
         }
-        if(Pass == 0) pass = 0;
+
+
 
         try {
             File orig = new  File(setName(pass, 0));

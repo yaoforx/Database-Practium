@@ -88,7 +88,8 @@ public class TupleReader {
      * Set a new page whenever a previous page is exhausted
      */
 
-    private void setPage() {
+    private void setPage() throws IOException{
+
         page.flip();
         colIntuple = page.getInt();
         tupleInPgae = page.getInt();
@@ -144,8 +145,16 @@ public class TupleReader {
         currentTuple = pos;
 
 
-        setPage();
-        page.position(pos);
+        eof = (fc.read(page) < 0);
+        if (eof) return;
+        page.flip();
+        colIntuple = page.getInt();
+        tupleInPgae = page.getInt();
+        currentSize = (colIntuple * tupleInPgae * 4 + 8);
+        page.limit(currentSize);
+
+        newPage = false;
+        page.position(pos * colIntuple * 4 + 8);
 
     }
 

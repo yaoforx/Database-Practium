@@ -26,11 +26,6 @@ public class SortMergeJoin extends JoinOperator {
 
 
 
-    @Override
-    public void reset() {
-        super.reset();
-    }
-
     public SortMergeJoin(Expression exp, Operator left, Operator right, List<Integer> leftorder, List<Integer> rightorder)
     {
 
@@ -68,15 +63,16 @@ public class SortMergeJoin extends JoinOperator {
     public Tuple getNextTuple() {
 
      while(leftTuple != null && rightTuple != null) {
-            while(compare(leftTuple, rightTuple, leftOrder, rightOrder) == -1) {
+            if(compare(leftTuple, rightTuple, leftOrder, rightOrder) == -1) {
                 leftTuple = left.getNextTuple();
-                if(leftTuple == null) return null;
+                continue;
 
             }
-            while(compare(leftTuple, rightTuple, leftOrder, rightOrder)== 1) {
+           if(compare(leftTuple, rightTuple, leftOrder, rightOrder)== 1) {
                 rightTuple = right.getNextTuple();
                 index = rightTuple.getIdxInPage();
                 pageNum = rightTuple.getPageNum();
+                continue;
             }
             Tuple res = null;
             if(expression == null || satisfy(leftTuple,rightTuple)) {
@@ -98,7 +94,7 @@ public class SortMergeJoin extends JoinOperator {
                 rightTuple = right.getNextTuple();
             }
             if(res != null) {
-                System.out.println(res.toString());
+              //  System.out.println(res.toString());
                 return res;
             }
      }
