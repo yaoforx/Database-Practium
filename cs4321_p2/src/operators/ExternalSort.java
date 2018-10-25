@@ -21,12 +21,12 @@ public class ExternalSort extends SortOperator{
     public TupleReader reader = null;
 
 
-    public ExternalSort(Operator child, List<?> ties) {
-        super(child, ties);
+    public ExternalSort(Operator c, List<?> ties) {
+        super(c, ties);
         Random random = new Random();
         id = random.nextInt(10000000);
         bufferPages = DBCatalog.config.sortPage - 1;
-        this.child = child;
+        this.child = c;
 
         tempout = DBCatalog.tempdir;
 
@@ -191,7 +191,7 @@ public class ExternalSort extends SortOperator{
 
             totalPass = nextRun;
         }
-        if(pass == 0) pass = 1;
+        if(Pass == 0) pass = 0;
 
         try {
             File orig = new  File(setName(pass, 0));

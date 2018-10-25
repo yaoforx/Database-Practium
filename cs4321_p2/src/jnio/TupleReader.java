@@ -19,7 +19,7 @@ public class TupleReader {
 
     private ByteBuffer page;
     private static final int size = 4096;
-    private boolean eof;
+    private boolean eof = false;
     private int colIntuple;
     private int tupleInPgae;
     private File file;
@@ -28,6 +28,7 @@ public class TupleReader {
     private int currentSize;
     private int currentPage;
     private int currentTuple;
+
 
 
     /**
@@ -74,7 +75,7 @@ public class TupleReader {
                 tp.setPageNum(currentPage);
                 tp.setIdxInPage(currentTuple);
                 currentTuple++;
-                return new Tuple(tuple);
+                return tp;
             }
             newPage = true;
             setZeros();

@@ -14,6 +14,8 @@ import java.util.*;
 public abstract class SortOperator extends Operator {
     List<Integer> sort;
     List<Tuple> inputs;
+    Tuple tp;
+    public Operator child;
 
     public externalCmp compare = null;
 
@@ -62,9 +64,10 @@ public abstract class SortOperator extends Operator {
      * @param orders
      */
     public SortOperator(Operator child, List<?> orders) {
-        Tuple tp;
+
         inputs = new ArrayList<>();
         sort = new ArrayList<>();
+        this.schema = child.schema;
 
         if (!orders.isEmpty()) {
             if (orders.get(0) instanceof OrderByElement) {
@@ -81,7 +84,11 @@ public abstract class SortOperator extends Operator {
                 throw new IllegalArgumentException();
         }
         compare = new externalCmp(this.sort);
-        while((tp = child.getNextTuple()) != null) inputs.add(tp);
+        while((tp = child.getNextTuple()) != null) {
+            System.out.println(  tp.getPageNum() + " index " + tp.getIdxInPage());
+            inputs.add(tp);
+        }
+        child.reset();
 
 
         Collections.sort(inputs,compare);

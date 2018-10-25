@@ -15,7 +15,7 @@ import java.io.PrintStream;
 public abstract class Operator {
     public List<String> schema = null;
     public abstract void reset();
-    public abstract Tuple getNextTuple();
+    public abstract Tuple  getNextTuple();
 
     /**
      * repeatedly calls getNextTuple() until the next tuple is null and writes each tuple to PrintStream ps

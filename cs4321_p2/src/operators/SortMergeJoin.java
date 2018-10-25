@@ -81,13 +81,17 @@ public class SortMergeJoin extends JoinOperator {
 
             }
             rightTuple = right.getNextTuple();
-            index = rightTuple.getIdxInPage();
-            pageNum = rightTuple.getPageNum();
+            if(rightTuple != null) {
+                index = rightTuple.getIdxInPage();
+                pageNum = rightTuple.getPageNum();
+            }
             if(rightTuple == null || compare(leftTuple,rightTuple,leftOrder, rightOrder) != 0) {
                 leftTuple = left.getNextTuple();
                 ((SortOperator) right).reset(pageNum,index);
-                index = rightTuple.getIdxInPage();
-                pageNum = rightTuple.getPageNum();
+                if(rightTuple != null) {
+                    index = rightTuple.getIdxInPage();
+                    pageNum = rightTuple.getPageNum();
+                }
                 rightTuple = right.getNextTuple();
             }
             if(res != null) return res;

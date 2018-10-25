@@ -18,6 +18,7 @@ public class Configure {
     private BufferedReader tr = null;
     public Configure(String path) {
         config = new File(path);
+
         setUp();
     }
     private void setUp() {
@@ -47,10 +48,8 @@ public class Configure {
 
                     }
                 }
-
-                tr.close();
-
             }
+            tr.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
