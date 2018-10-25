@@ -69,11 +69,11 @@ public class ScanOperator extends Operator {
      */
     public void reset() {
         try {
-            lines.close();
+            lines.reset();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        lines = DBCatalog.tableReader(tb.tableName);
+       // lines = DBCatalog.tableReader(tb.tableName);
     }
 
     /**

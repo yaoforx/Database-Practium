@@ -49,8 +49,9 @@ public abstract class JoinOperator extends Operator {
 
         r  = right.getNextTuple();
 
-        List<String> newList = Stream.concat(left.schema.stream(), right.schema.stream())
-                .collect(Collectors.toList());
+        List<String> newList = new ArrayList<>();
+        newList.addAll(left.schema);
+        newList.addAll(right.schema);
         this.schema = newList;
 
         jv = new JoinVisitors(left.schema,right.schema);

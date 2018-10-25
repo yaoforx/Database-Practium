@@ -85,7 +85,7 @@ public abstract class SortOperator extends Operator {
         }
         compare = new externalCmp(this.sort);
         while((tp = child.getNextTuple()) != null) {
-            System.out.println(  tp.getPageNum() + " index " + tp.getIdxInPage());
+        //    System.out.println(  tp.getPageNum() + " index " + tp.getIdxInPage());
             inputs.add(tp);
         }
         child.reset();

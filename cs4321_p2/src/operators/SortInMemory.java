@@ -6,8 +6,8 @@ import util.Tuple;
 import java.util.*;
 
 public class SortInMemory extends SortOperator {
-    List<Integer> sort;
-    List<Tuple> inputs;
+    List<Integer> sort = new ArrayList<>();
+    List<Tuple> inputs = new ArrayList<>();
     private int cur = 0;
 
 
@@ -31,6 +31,7 @@ public class SortInMemory extends SortOperator {
         Tuple tp = null;
         while ((tp = child.getNextTuple()) != null)
             inputs.add(tp);
+        child.reset();
         Collections.sort(inputs,new Comparator<Tuple>(){
 
             /**

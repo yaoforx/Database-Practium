@@ -28,8 +28,9 @@ public class ExternalSort extends SortOperator{
         bufferPages = DBCatalog.config.sortPage - 1;
         this.child = c;
 
-        tempout = DBCatalog.tempdir;
 
+        tempout = DBCatalog.tempdir;
+        this.child.reset();
         sort();
 
 
@@ -76,6 +77,7 @@ public class ExternalSort extends SortOperator{
         int tuplesInRun = tuplesInPage * bufferPages;
         Tuple tp;
         int run = 0;
+        child.reset();
         while((tp = child.getNextTuple()) != null) {
             List<Tuple> listToSort = new ArrayList<>(tuplesInRun);
             int remain = tuplesInRun;
