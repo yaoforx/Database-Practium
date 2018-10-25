@@ -16,7 +16,6 @@ public class ExternalSort extends SortOperator{
 
     private int bufferPages = 0;
     private Operator child;
-    List<Integer> sort = new ArrayList<>();
 
     public TupleReader reader = null;
 
@@ -24,7 +23,7 @@ public class ExternalSort extends SortOperator{
     public ExternalSort(Operator c, List<?> ties) {
         super(c, ties);
         Random random = new Random();
-        id = random.nextInt(10000000);
+        id = random.nextInt(1000);
         bufferPages = DBCatalog.config.sortPage - 1;
         this.child = c;
 
@@ -44,6 +43,9 @@ public class ExternalSort extends SortOperator{
             e.printStackTrace();
         }
     }
+
+
+
 
     @Override
     public void reset(int pageNum, int index) {
@@ -84,12 +86,13 @@ public class ExternalSort extends SortOperator{
                 listToSort.add(tp);
 
                 tp = child.getNextTuple();
+
                 remain--;
             }
             if(tp != null) listToSort.add(tp);
             Collections.sort(listToSort, compare);
             try {
-                System.out.println("Pass 0 file: " + setName(0, run));
+               // System.out.println("Pass 0 file: " + setName(0, run));
 
                 TupleWriter tw = new TupleWriter(setName(0, run));
                 for(Tuple t : listToSort) {
@@ -118,7 +121,7 @@ public class ExternalSort extends SortOperator{
 
 
         while(totalPass > 1) {
-            System.out.println("Pass number " + totalPass);
+           // System.out.println("Pass number " + totalPass);
             int nextRun = 0;
 
 
@@ -135,14 +138,14 @@ public class ExternalSort extends SortOperator{
                 try {
                     for (int j = i; j < i + num; j++) {
 
-                        System.out.println("Pass is " + pass + ", num is " + num + " Input file name is adding file: " + setName(pass, j));
+                      //  System.out.println("Pass is " + pass + ", num is " + num + " Input file name is adding file: " + setName(pass, j));
 
                         buffer.add(new TupleReader(new File(setName(pass, j))));
 
                     }
 
-                    
-                    System.out.println("output file name is adding file: " + setName(pass + 1, outCount));
+
+                   // System.out.println("output file name is adding file: " + setName(pass + 1, outCount));
                     TupleWriter outputPage = new TupleWriter(setName(pass + 1, outCount));
 
 
@@ -152,19 +155,21 @@ public class ExternalSort extends SortOperator{
                     for (TupleReader tr : buffer) {
                         Tuple tp = tr.read();
                         if (tp != null) {
-                            pq.add(tp);
                             tp.tupleReader = tr;
+                            pq.add(tp);
+
                         }
                     }
 
                     while (!pq.isEmpty()) {
                         Tuple tp = pq.poll();
                         outputPage.write(tp);
+                        System.out.println(tp.toString());
                         TupleReader tr = tp.tupleReader;
                         tp = tr.read();
                         if (tp != null) {
-                            pq.add(tp);
                             tp.tupleReader = tr;
+                            pq.add(tp);
                         }
                     }
 
@@ -173,7 +178,7 @@ public class ExternalSort extends SortOperator{
 
                     for (int j = i; j < i + num; j++) {
                         File file = new File(setName(pass , j));
-                        System.out.println("detleting " + setName(pass, j));
+                    //    System.out.println("detleting " + setName(pass, j));
                         file.delete();
                     }
 
@@ -194,7 +199,7 @@ public class ExternalSort extends SortOperator{
             totalPass = nextRun;
         }
 
-
+        //if(pass == 0) pass++;
 
         try {
             File orig = new  File(setName(pass, 0));

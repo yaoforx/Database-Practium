@@ -73,19 +73,7 @@ public abstract class JoinOperator extends Operator {
      * @param r the right tuple
      * @return  the new tuple formed by concatenating the left and right tuples
      */
-    private Tuple joinTuple(Tuple l, Tuple r) {
 
-        List<Integer> newschema= new ArrayList<>();
-        for(int i = 0; i < l.getSize(); i++) {
-            newschema.add(l.getValue(i));
-        }
-        for(int i = 0; i < r.getSize(); i++) {
-            newschema.add(r.getValue(i));
-        }
-        return new Tuple(newschema);
-
-
-    }
 
     /**
      * checks whether two tuples satisfy the join condition
@@ -108,32 +96,6 @@ public abstract class JoinOperator extends Operator {
      *
      * @return qualified tuple
      */
-    public Tuple getNextTuple(){
-        Tuple res = null;
-
-
-        while(l != null) {
-
-            while(r != null) {
-                if(exp == null) {
-                    res = joinTuple(l,r);
-                } else if(satisfy(l,r)) {
-                    res = joinTuple(l,r);
-                }
-                if(r != null)
-                    r = right.getNextTuple();
-                if(res != null)  {
-
-                    return res;
-                }
-            }
-            l = left.getNextTuple();
-            right.reset();
-
-            r = right.getNextTuple();
-        }
-
-        return null;
-    }
+    public abstract Tuple getNextTuple();
 
 }

@@ -13,7 +13,7 @@ import java.util.*;
  */
 public abstract class SortOperator extends Operator {
     List<Integer> sort;
-    List<Tuple> inputs;
+
     Tuple tp;
     public Operator child;
 
@@ -65,7 +65,7 @@ public abstract class SortOperator extends Operator {
      */
     public SortOperator(Operator child, List<?> orders) {
 
-        inputs = new ArrayList<>();
+
         sort = new ArrayList<>();
         this.schema = child.schema;
         this.child = child;
@@ -85,14 +85,7 @@ public abstract class SortOperator extends Operator {
                 throw new IllegalArgumentException();
         }
         compare = new externalCmp(sort);
-        while((tp = this.child.getNextTuple()) != null) {
-        //    System.out.println(  tp.getPageNum() + " index " + tp.getIdxInPage());
-            inputs.add(tp);
-        }
-        child.reset();
 
-
-        Collections.sort(inputs,compare);
     }
 
     /**

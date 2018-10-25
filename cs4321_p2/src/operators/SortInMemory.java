@@ -6,7 +6,7 @@ import util.Tuple;
 import java.util.*;
 
 public class SortInMemory extends SortOperator {
-    List<Integer> sort = new ArrayList<>();
+
     List<Tuple> inputs = new ArrayList<>();
     private int cur = 0;
 
