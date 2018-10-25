@@ -87,6 +87,7 @@ public class PhysicalPlanBuilder {
                 }
 
             }
+            child[0].getNextTuple();
             root = new SortMergeJoin(logJoin.expression, child[0], child[1], outIdxs, inIdxs);
         }
 

@@ -24,6 +24,8 @@ public class SortMergeJoin extends JoinOperator {
     private int index;
     private int pageNum;
 
+
+
     @Override
     public void reset() {
         super.reset();
@@ -38,6 +40,7 @@ public class SortMergeJoin extends JoinOperator {
         this.rightOrder = rightorder;
         this.jv = new JoinVisitors(left.schema, right.schema);
 
+
         leftTuple = left.getNextTuple();
         rightTuple = right.getNextTuple();
         index = 0;
@@ -50,8 +53,8 @@ public class SortMergeJoin extends JoinOperator {
     public int compare(Tuple tpLeft, Tuple tpRight, List<Integer> leftOrder, List<Integer>rightOrder){
 
         for (int i = 0; i < leftOrder.size(); i++){
-            int vLeft = tpLeft.getValue(i);
-            int vRight = tpRight.getValue(i);
+            int vLeft = tpLeft.getValue(leftOrder.get(i));
+            int vRight = tpRight.getValue(rightOrder.get(i));
             if (vLeft < vRight){
                 return -1;
             }else if (vLeft > vRight){
@@ -87,14 +90,17 @@ public class SortMergeJoin extends JoinOperator {
             }
             if(rightTuple == null || compare(leftTuple,rightTuple,leftOrder, rightOrder) != 0) {
                 leftTuple = left.getNextTuple();
-                ((SortOperator) right).reset(pageNum,index);
+                ((SortOperator)right).reset(pageNum,index);
                 if(rightTuple != null) {
                     index = rightTuple.getIdxInPage();
                     pageNum = rightTuple.getPageNum();
                 }
                 rightTuple = right.getNextTuple();
             }
-            if(res != null) return res;
+            if(res != null) {
+                System.out.println(res.toString());
+                return res;
+            }
      }
      return null;
     }

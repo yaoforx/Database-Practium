@@ -15,7 +15,7 @@ import java.io.PrintStream;
 public abstract class Operator {
     public List<String> schema = null;
     public abstract void reset();
-    public abstract Tuple  getNextTuple();
+    public abstract Tuple getNextTuple();
 
     /**
      * repeatedly calls getNextTuple() until the next tuple is null and writes each tuple to PrintStream ps
@@ -24,13 +24,14 @@ public abstract class Operator {
      */
     public void dump(PrintStream ps) {
         Tuple t;
-        while((t = this.getNextTuple()) != null) {
+        while((t = getNextTuple()) != null) {
             t.dump(ps);
         }
 
     }
     public void dump(TupleWriter writer) throws IOException {
         Tuple t;
+        this.reset();
         while((t = this.getNextTuple()) != null) {
             writer.write(t);
         }
