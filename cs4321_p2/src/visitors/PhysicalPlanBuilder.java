@@ -3,11 +3,16 @@ package visitors;
 import java.io.FileReader;
 import java.io.IOException;
 
+import net.sf.jsqlparser.expression.Expression;
 import operators.*;
 import util.Configure;
 import util.DBCatalog;
+import util.Util;
 
 import java.io.BufferedReader;
+import java.util.ArrayList;
+import java.util.List;
+
 public class PhysicalPlanBuilder {
     private Operator root = null;
 
@@ -45,7 +50,7 @@ public class PhysicalPlanBuilder {
     public void visit(LogicalSort logSort) {
         logSort.child.accept(this);
         if (DBCatalog.config.externalSort == 0)
-            root = new SortOperator(root, logSort.order);
+            root = new SortInMemory(root, logSort.order);
         else
             root = new ExternalSort(root, logSort.order);
     }
@@ -56,6 +61,37 @@ public class PhysicalPlanBuilder {
         child[0] = root;
         logJoin.right.accept(this);
         child[1] = root;
-            root = new operators.JoinOperator(logJoin.expression, child[0], child[1]);
+        if(DBCatalog.config.SMJ == 1) {
+            List<Integer> outIdxs = new ArrayList<Integer>();
+            List<Integer> inIdxs = new ArrayList<Integer>();
+            Expression newExp = Util.procJoinConds(
+                    logJoin.expression, child[0].schema,
+                    child[1].schema, outIdxs, inIdxs);
+
+            if (outIdxs.size() != inIdxs.size())
+                throw new IllegalArgumentException();
+
+            if (!outIdxs.isEmpty()) {
+                logJoin.expression = newExp;
+                if (DBCatalog.config.externalSort == 0) {
+                    child[0] = new SortInMemory(
+                            child[0], outIdxs);
+                    child[1] = new SortInMemory(
+                            child[1], inIdxs);
+                }
+                else {
+                    child[0] = new ExternalSort(
+                            child[0], outIdxs);
+                    child[1] = new ExternalSort(
+                            child[1], inIdxs);
+                }
+                root = new SortMergeJoin(logJoin.expression, child[0], child[1]
+                        , outIdxs, inIdxs);
+            }
+
+
+
+        }
+
     }
 }

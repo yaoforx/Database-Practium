@@ -10,56 +10,24 @@ import util.Tuple;
 import java.io.*;
 import java.util.*;
 import java.util.Random.*;
-public class ExternalSort extends Operator{
+public class ExternalSort extends SortOperator{
     private String tempout;
     private int id;
     private TupleReader tr=null;
     private int bufferPages = 0;
     private Operator child;
     List<Integer> sort = new ArrayList<>();
-    externalCmp cmp;
+
     public TupleReader reader = null;
 
-    public class externalCmp implements Comparator<Tuple> {
 
-        @Override
-        public int compare(Tuple t1, Tuple t2) {
-            HashSet<Integer> orderby = new HashSet<>(sort);
-            //  System.out.println(sort.toString());
-
-            for(int i = 0; i < sort.size(); i++) {
-                int v1 = t1.getValue(sort.get(i));
-                int v2 = t2.getValue(sort.get(i));
-                int comp = Integer.compare(v1,v2);
-                if(comp !=0) return comp;
-            }
-            //If you are here means ORDER BY has not broken ties
-            //then sort based on original remaining schemas
-            for(int i = 0; i < t1.getSize(); i++) {
-                if(orderby.contains(i)) continue;
-                int v1 = t1.getValue(i);
-                int v2 = t2.getValue(i);
-                int comp = Integer.compare(v1,v2);
-                if(comp !=0) return comp;
-            }
-            return 0;
-        }
-        public externalCmp(List<OrderByElement> ties) {
-            if(!ties.isEmpty()) {
-                for (OrderByElement element : ties) {
-
-                    sort.add(SortOperator.getColIdx(element, child.schema));
-
-                }
-            }
-        }
-    }
-    public ExternalSort(Operator child, List<OrderByElement> ties) {
+    public ExternalSort(Operator child, List<?> ties) {
+        super(child, ties);
         Random random = new Random();
         id = random.nextInt(10000000);
         bufferPages = DBCatalog.config.sortPage - 1;
         this.child = child;
-        cmp = new externalCmp(ties);
+
         tempout = DBCatalog.tempdir;
 
         sort();
@@ -68,7 +36,22 @@ public class ExternalSort extends Operator{
     }
     @Override
     public void reset() {
+        if (tr == null) return;
+        try {
+            tr.reset();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    @Override
+    public void reset(int pageNum, int index) {
+        if (tr == null) return;
+        try {
+            tr.reset(pageNum,index);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     private String setName(int pass, int run) {
         return tempout + Integer.toString(pass) + "#" + Integer.toString(run) + "_" + Integer.toString(id);
@@ -103,7 +86,7 @@ public class ExternalSort extends Operator{
                 remain--;
             }
             if(tp != null) listToSort.add(tp);
-            Collections.sort(listToSort, cmp);
+            Collections.sort(listToSort, compare);
             try {
                 System.out.println("Pass 0 file: " + setName(0, run));
 
@@ -161,7 +144,7 @@ public class ExternalSort extends Operator{
                     TupleWriter outputPage = new TupleWriter(setName(pass + 1, outCount));
 
 
-                    PriorityQueue<Tuple> pq = new PriorityQueue<>(cmp);
+                    PriorityQueue<Tuple> pq = new PriorityQueue<>(compare);
                     Tuple tuple = null;
 
                     for (TupleReader tr : buffer) {
@@ -220,6 +203,8 @@ public class ExternalSort extends Operator{
         }
 
     }
+
+
 
 
 

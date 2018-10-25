@@ -63,11 +63,6 @@ public class SortMergeJoin extends JoinOperator {
 
     @Override
     public Tuple getNextTuple() {
-        boolean found = false;
-        if(rightTuple == null) {
-
-        }
-
 
      while(leftTuple != null && rightTuple != null) {
             while(compare(leftTuple, rightTuple, leftOrder, rightOrder) == -1) {
@@ -91,8 +86,13 @@ public class SortMergeJoin extends JoinOperator {
             if(rightTuple == null || compare(leftTuple,rightTuple,leftOrder, rightOrder) != 0) {
                 leftTuple = left.getNextTuple();
                 ((SortOperator) right).reset(pageNum,index);
+                index = rightTuple.getIdxInPage();
+                pageNum = rightTuple.getPageNum();
+                rightTuple = right.getNextTuple();
             }
+            if(res != null) return res;
      }
+     return null;
     }
 
     private Tuple joinTuple(Tuple l, Tuple r) {

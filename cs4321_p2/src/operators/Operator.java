@@ -13,7 +13,7 @@ import java.io.PrintStream;
  * @authors Yao Xiao, Kyle Johnson, Valerie Tan
  */
 public abstract class Operator {
-    protected List<String> schema = null;
+    public List<String> schema = null;
     public abstract void reset();
     public abstract Tuple getNextTuple();
 
