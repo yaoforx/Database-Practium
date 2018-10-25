@@ -43,6 +43,12 @@ public class ExternalSort extends SortOperator{
             e.printStackTrace();
         }
     }
+    public void reset(int index) {
+       if(reader == null) return;
+            reader.reset(index);
+
+    }
+
 
 
 

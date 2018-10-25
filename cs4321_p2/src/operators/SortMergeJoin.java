@@ -129,3 +129,108 @@ import java.util.List;
 //
 //
 //}
+public class SortMergeJoin extends JoinOperator {
+
+
+    private List<Integer> leftOrder;
+    private List<Integer> rightOrder;
+    private int innerPosition;
+    private  Tuple curOuter;
+
+
+
+    public SortMergeJoin(Expression exp, Operator left, Operator right, List<Integer> leftorder, List<Integer> rightorder)
+    {
+
+        super(exp,left,right);
+
+        this.leftOrder = leftorder;
+        this.rightOrder = rightorder;
+
+        curOuter = left.getNextTuple();
+        innerPosition = 0;
+
+
+
+
+    }
+
+
+    public int compare(Tuple tuLeft, Tuple tuRight, List<Integer> leftOrder, List<Integer> rightOrder){
+
+        for (int i = 0; i < leftOrder.size(); i++){
+            int vLeft = tuLeft.getValue(leftOrder.get(i));
+            int vRight = tuRight.getValue(rightOrder.get(i));
+            if (vLeft < vRight){
+                return -1;
+            }else if (vLeft > vRight){
+                return 1;
+            }
+        }
+        return 0;
+    }
+
+
+    @Override
+    public Tuple getNextTuple() {
+
+        Tuple combined = null;
+        boolean found = false;
+        Tuple r = right.getNextTuple();
+        if(r == null) {
+            curOuter = left.getNextTuple();
+            if(curOuter == null) {return null; }
+            right.reset(innerPosition);
+            r = right.getNextTuple();
+        }
+        if (curOuter == null){return null;}
+        while (!found){
+            int comp = compare(curOuter,r,leftOrder,rightOrder);
+            while (comp == -1){
+                curOuter = left.getNextTuple();
+                if (curOuter == null){return null;}
+                //reset the inner child whenever we read a new tuple from the outer child
+                right.reset(innerPosition);
+                r = right.getNextTuple();
+                comp = compare(curOuter,r,leftOrder,rightOrder);
+            }
+            while (comp == 1){
+                r = right.getNextTuple();
+                if (right == null){return null;}
+                comp = compare(curOuter,r,leftOrder,rightOrder);
+                innerPosition++;
+            }
+
+            found = satisfy(curOuter, r);
+            if (found == false){
+
+                r = right.getNextTuple();
+            } else {
+                combined = joinTuple(curOuter,r);
+            }
+        }
+        return combined;
+    }
+
+    @Override
+    public void reset(int index) {
+
+    }
+
+    private Tuple joinTuple(Tuple l, Tuple r) {
+
+        List<Integer> newschema= new ArrayList<>();
+        for(int i = 0; i < l.getSize(); i++) {
+            newschema.add(l.getValue(i));
+        }
+        for(int i = 0; i < r.getSize(); i++) {
+            newschema.add(r.getValue(i));
+        }
+        return new Tuple(newschema);
+
+
+    }
+
+
+
+}

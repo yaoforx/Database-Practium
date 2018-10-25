@@ -135,6 +135,11 @@ public class ProjectOperator extends Operator{
         return new Tuple(columns);
     }
 
+    @Override
+    public void reset(int index) {
+
+    }
+
     /**
      *
      * @param tp Tuple to find desired value

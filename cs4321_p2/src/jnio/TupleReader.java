@@ -28,6 +28,8 @@ public class TupleReader {
     private int currentSize;
     private int currentPage;
     private int currentTuple;
+    private int position;
+
 
 
 
@@ -167,5 +169,32 @@ public class TupleReader {
     {
         page.clear();
         fc.close();
+    }
+
+    public void reset(int index){
+        try{
+            fc = fc.position(0);
+            page.clear();
+            if (fc.read(page) != -1){
+                tupleInPgae = page.getInt(4);
+                page.clear();
+                int fcPosition = index/tupleInPgae *size ;
+                fc = fc.position(fcPosition);
+                if (fc.read(page) != -1){
+                    currentPage = index/tupleInPgae;
+                    currentTuple = index%tupleInPgae;
+                    colIntuple = page.getInt(0);
+                    position = (index%tupleInPgae) * colIntuple * 4 + 8;
+                    tupleInPgae = page.getInt(4) - index%(tupleInPgae);
+                }else{
+                    throw new IndexOutOfBoundsException();
+                }
+            }else{
+                throw new FileNotFoundException();
+            }
+        } catch (IOException e) {
+            System.err.println("Error occured while reading buffer");
+            e.printStackTrace();
+        }
     }
 }

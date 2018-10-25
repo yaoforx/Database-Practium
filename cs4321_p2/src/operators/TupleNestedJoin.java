@@ -61,4 +61,10 @@ public class TupleNestedJoin extends JoinOperator{
 
         return null;
     }
+
+    @Override
+    public void reset(int index) {
+        left.reset(index);
+        right.reset(index);
+    }
 }

@@ -34,6 +34,7 @@ public abstract class JoinOperator extends Operator {
         right.reset();
     }
 
+
     /**
      * constructs a JoinOperator
      *

@@ -64,6 +64,11 @@ public class ScanOperator extends Operator {
         return null;
     }
 
+    @Override
+    public void reset(int index) {
+
+    }
+
     /**
      * resets the BufferReader to a new one at the beginning of the table
      */
@@ -75,6 +80,8 @@ public class ScanOperator extends Operator {
         }
        // lines = DBCatalog.tableReader(tb.tableName);
     }
+
+
 
     /**
      * repeatedly calls getNextTuple() until the next tuple is null and writes each tuple to PrintStream ps

@@ -69,4 +69,9 @@ public class SortInMemory extends SortOperator {
         if(cur >= this.inputs.size()) return null;
         return inputs.get(cur++);
     }
+
+    @Override
+    public void reset(int index) {
+        cur = index;
+    }
 }
