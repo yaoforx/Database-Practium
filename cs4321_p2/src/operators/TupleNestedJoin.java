@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TupleNestedJoin extends JoinOperator{
-
+    Tuple l = null;
+    Tuple r = null;
     @Override
     public void reset() {
         super.reset();
@@ -15,6 +16,9 @@ public class TupleNestedJoin extends JoinOperator{
 
     public TupleNestedJoin(Expression exp, Operator left, Operator right) {
         super(exp, left, right);
+        l = left.getNextTuple();
+        r = right.getNextTuple();
+
     }
     private Tuple joinTuple(Tuple l, Tuple r) {
 

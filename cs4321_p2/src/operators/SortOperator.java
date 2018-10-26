@@ -26,12 +26,12 @@ public abstract class SortOperator extends Operator {
 
         @Override
         public int compare(Tuple t1, Tuple t2) {
-            HashSet<Integer> orderby = new HashSet<>(sort);
+           // HashSet<Integer> orderby = new HashSet<>(sort);
             //  System.out.println(sort.toString());
 
-            for(int i = 0; i < sort.size(); i++) {
-                int v1 = t1.getValue(sort.get(i));
-                int v2 = t2.getValue(sort.get(i));
+            for(int i = 0; i < orderby.size(); i++) {
+                int v1 = t1.getValue(ties.get(i));
+                int v2 = t2.getValue(ties.get(i));
                 int comp = Integer.compare(v1,v2);
                 if(comp !=0) return comp;
             }
@@ -54,7 +54,7 @@ public abstract class SortOperator extends Operator {
 
 
 
-    public abstract void reset(int pageNum, int index);
+    public abstract void reset(int index);
 
 
     /**

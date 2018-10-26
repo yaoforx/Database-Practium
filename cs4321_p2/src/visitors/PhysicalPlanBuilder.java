@@ -92,6 +92,8 @@ public class PhysicalPlanBuilder {
             }
             root = new SortMergeJoin(logJoin.expression, child[0], child[1], outIdxs, inIdxs);
            //     root =  new TupleNestedJoin(logJoin.expression, child[0], child[1]);
+        } else if(DBCatalog.config.TNLJ == 1) {
+            root = new TupleNestedJoin(logJoin.expression, child[0], child[1]);
         }
 
 

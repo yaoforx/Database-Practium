@@ -8,6 +8,7 @@ import net.sf.jsqlparser.statement.select.OrderByElement;
 import util.DBCatalog;
 import util.Tuple;
 import visitors.JoinVisitors;
+import visitors.PhysicalPlanBuilder;
 import visitors.SelectVisitors;
 
 import java.util.ArrayList;
@@ -134,8 +135,15 @@ public class SortMergeJoin extends JoinOperator {
 
     private List<Integer> leftOrder;
     private List<Integer> rightOrder;
-    private int innerPosition;
-    private  Tuple curOuter;
+
+    int partitionIndex = 0;  // the index of the first tuple in the current partition
+    int curRightIndex = 0;  // the index of the current tuple of left table
+
+    private JoinVisitors jv;
+    Tuple leftTp;
+    Tuple rightTp;
+    externalCmp cp = null;
+
 
 
 
@@ -143,79 +151,106 @@ public class SortMergeJoin extends JoinOperator {
     {
 
         super(exp,left,right);
+        // System.out.println("left order" + leftorder.toString() + " right order" + rightorder);
 
         this.leftOrder = leftorder;
         this.rightOrder = rightorder;
 
-        curOuter = left.getNextTuple();
-        innerPosition = 0;
+        this.jv = new JoinVisitors(left.schema,right.schema);
+        leftTp = left.getNextTuple();
+        rightTp = right.getNextTuple();
+        cp = new externalCmp(leftOrder,rightOrder);
+        partitionIndex = 0;
+        curRightIndex = 0;
+
+
 
 
 
 
     }
 
-
-    public int compare(Tuple tuLeft, Tuple tuRight, List<Integer> leftOrder, List<Integer> rightOrder){
-
-        for (int i = 0; i < leftOrder.size(); i++){
-            int vLeft = tuLeft.getValue(leftOrder.get(i));
-            int vRight = tuRight.getValue(rightOrder.get(i));
-            if (vLeft < vRight){
-                return -1;
-            }else if (vLeft > vRight){
-                return 1;
+    public class externalCmp implements Comparator<Tuple>{
+        List<Integer> leftOrders = null; // the order of attributes in left table
+        List<Integer> rightOrders = null;// the order of attributes in right table
+        @Override
+        public int compare(Tuple left, Tuple right) {
+            for( int i = 0; i< leftOrders.size();i++){
+                int leftVal = left.getValue(leftOrder.get(i));
+                int rightVal = right.getValue(rightOrder.get(i));
+                int cmp = Integer.compare(leftVal, rightVal);
+                if(cmp != 0) return cmp;
             }
+
+            return 0;
         }
-        return 0;
+
+        public externalCmp(List<Integer> leftOrders, List<Integer> rightOrders){
+            this.leftOrders = leftOrders;
+            this.rightOrders = rightOrders;
+        }
     }
+
+
 
 
     @Override
     public Tuple getNextTuple() {
+        Tuple rst = null;
 
-        Tuple combined = null;
-        boolean found = false;
-        Tuple r = right.getNextTuple();
-        if(r == null) {
-            curOuter = left.getNextTuple();
-            if(curOuter == null) {return null; }
-            right.reset(innerPosition);
-            r = right.getNextTuple();
+        while(leftTp !=null && rightTp !=null){
+            if (cp.compare(leftTp, rightTp) < 0) {
+                leftTp = left.getNextTuple();
+                if(leftTp != null)
+                    //    System.out.println(leftTp.toString());
+                    continue;
+            }
+
+            if (cp.compare(leftTp, rightTp) > 0) {
+                rightTp = right.getNextTuple();
+                curRightIndex++;
+                partitionIndex = curRightIndex;
+                continue;
+            }
+
+            if(exp == null || satisfy(leftTp, rightTp)){
+                //  System.out.println(leftTp.toString() + "," + rightTp.toString());
+                rst = joinTuple(leftTp,rightTp);
+
+            }
+            rightTp = right.getNextTuple();
+            curRightIndex++;
+            if (rightTp == null ||
+                    cp.compare(leftTp, rightTp) != 0) {
+
+                leftTp = left.getNextTuple();
+                if(leftTp != null)
+                    //  System.out.println(leftTp.toString());
+                    // System.out.println(leftTp);
+                    ((SortOperator) right).reset(partitionIndex);
+                curRightIndex = partitionIndex;
+                rightTp = right.getNextTuple();
+            }
+
+            if (rst != null) return rst;
         }
-        if (curOuter == null){return null;}
-        while (!found){
-            int comp = compare(curOuter,r,leftOrder,rightOrder);
-            while (comp == -1){
-                curOuter = left.getNextTuple();
-                if (curOuter == null){return null;}
-                //reset the inner child whenever we read a new tuple from the outer child
-                right.reset(innerPosition);
-                r = right.getNextTuple();
-                comp = compare(curOuter,r,leftOrder,rightOrder);
-            }
-            while (comp == 1){
-                r = right.getNextTuple();
-                if (right == null){return null;}
-                comp = compare(curOuter,r,leftOrder,rightOrder);
-                innerPosition++;
-            }
 
-            found = satisfy(curOuter, r);
-            if (found == false){
-
-                r = right.getNextTuple();
-            } else {
-                combined = joinTuple(curOuter,r);
-            }
-        }
-        return combined;
+        return null;
     }
 
     @Override
     public void reset(int index) {
 
     }
+
+    @Override
+    public boolean satisfy(Tuple l, Tuple r) {
+
+        jv.setTuple(l,r);
+        exp.accept(jv);
+        return jv.getCondition();
+    }
+
 
     private Tuple joinTuple(Tuple l, Tuple r) {
 

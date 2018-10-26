@@ -46,10 +46,10 @@ public abstract class JoinOperator extends Operator {
         this.exp = exp;
         this.left = left;
         this.right = right;
-
-        l  = left.getNextTuple();
-
-        r  = right.getNextTuple();
+//
+//        l  = left.getNextTuple();
+//
+//        r  = right.getNextTuple();
 
         List<String> newList = new ArrayList<>();
         newList.addAll(left.schema);

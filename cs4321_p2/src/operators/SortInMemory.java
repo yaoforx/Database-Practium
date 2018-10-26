@@ -11,10 +11,7 @@ public class SortInMemory extends SortOperator {
     private int cur = 0;
 
 
-    @Override
-    public void reset(int pageNum, int index) {
-        cur = index;
-    }
+
     @Override
     public void reset() {
         cur = 0;
@@ -29,11 +26,12 @@ public class SortInMemory extends SortOperator {
     public SortInMemory(Operator child, List<?> ties) {
         super(child, ties);
         Tuple tp = null;
-        child.reset();
+
         while ((tp = child.getNextTuple()) != null)
             inputs.add(tp);
 
         Collections.sort(inputs,compare);
+
     }
 
     /**

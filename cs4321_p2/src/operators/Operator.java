@@ -33,8 +33,8 @@ public abstract class Operator {
     }
     public void dump(TupleWriter writer) throws IOException {
         Tuple t;
-        this.reset();
-        while((t = this.getNextTuple()) != null) {
+
+        while((t = getNextTuple()) != null) {
             writer.write(t);
         }
     }

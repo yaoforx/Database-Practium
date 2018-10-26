@@ -4,10 +4,8 @@ package jnio;
 import org.junit.Test;
 import util.Tuple;
 import static org.junit.Assert.*;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+
+import java.io.*;
 
 /**
  * Utils Class for converting binary to humanreadable
@@ -15,8 +13,10 @@ import java.io.IOException;
 public class Converter {
     private TupleReader reader;
     private BufferedWriter writer;
-   // String input = "/Users/yaoxiao/Documents/cs4321/cs4321_p2/";
-    //String output = "";
+    private TupleWriter bwriter;
+    private NormalTupleReader breader;
+    String input = "/Users/yaoxiao/Database-Practium/cs4321_p2/samples/input/db/data/temp/";
+    String output = "/Users/yaoxiao/Database-Practium/cs4321_p2/samples/input/db/data/temp/";
     File in;
     public Converter (String path) throws IOException {
         in  = new File(path + "/");
@@ -38,6 +38,17 @@ public class Converter {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+   // @Test
+    public void ReadableToBinary() throws IOException {
+        NormalTupleReader reader = new NormalTupleReader(input + "Sailors");
+        TupleWriter writer = new TupleWriter(output + "Sailors2");
+        Tuple t;
+        while ((t = reader.read()) != null) {
+            writer.write(t);
+        }
+        reader.close();
+        writer.close();
     }
 //    @Test
 //    public void exampleTest() throws IOException {
