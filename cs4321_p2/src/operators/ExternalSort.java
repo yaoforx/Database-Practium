@@ -273,12 +273,13 @@ public class ExternalSort extends SortOperator{
     @Override
     public void reset(int index) {
        if(reader == null) return;
-       try {
 
-           reader.reset(index);
-       }catch (IOException e) {
-           e.printStackTrace();
-       }
+        try {
+            reader.reset(index);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -367,8 +368,6 @@ public class ExternalSort extends SortOperator{
 
                 try {
                     for (int j = i; j < i + num; j++) {
-
-                      //  System.out.println("Pass is " + pass + ", num is " + num + " Input file name is adding file: " + setName(pass, j));
 
                         buffer.add(new TupleReader(new File(setName(pass, j))));
 

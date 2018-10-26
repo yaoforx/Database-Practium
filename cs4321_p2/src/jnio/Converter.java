@@ -39,17 +39,18 @@ public class Converter {
             e.printStackTrace();
         }
     }
-   // @Test
-    public void ReadableToBinary() throws IOException {
-        NormalTupleReader reader = new NormalTupleReader(input + "Sailors");
-        TupleWriter writer = new TupleWriter(output + "Sailors2");
-        Tuple t;
-        while ((t = reader.read()) != null) {
-            writer.write(t);
-        }
-        reader.close();
-        writer.close();
-    }
+  //  @Test
+//    public void ReadableToBinary() throws IOException {
+//        NormalTupleReader reader = new NormalTupleReader(input + "Sailors");
+//        TupleWriter writer = new TupleWriter(output + "Sailors2");
+//        Tuple t;
+//        while ((t = reader.read()) != null) {
+//            System.out.println(t.toString());
+//            writer.write(t);
+//        }
+//        reader.close();
+//        writer.close();
+//    }
 //    @Test
 //    public void exampleTest() throws IOException {
 //        String expected = "/Users/yaoxiao/Documents/cs4321/cs4321_p2/samples/expected/";

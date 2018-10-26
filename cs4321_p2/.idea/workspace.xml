@@ -3,20 +3,18 @@
   <component name="ChangeListManager">
     <list default="true" id="4299f681-c623-4bc8-ac52-b14a90f9725d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/samples/input/plan_builder_config.txt" beforeDir="false" afterPath="$PROJECT_DIR$/samples/input/plan_builder_config.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/samples/input/queries.sql" beforeDir="false" afterPath="$PROJECT_DIR$/samples/input/queries.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/query1" beforeDir="false" afterPath="$PROJECT_DIR$/query1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/samples/input/db/data/temp/Boats1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/samples/input/db/data/temp/Boats2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/samples/input/db/data/temp/Reserves1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/samples/input/db/data/temp/Reserves2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/samples/input/db/data/temp/Sailors1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/samples/input/db/data/temp/Sailors2" beforeDir="false" afterPath="$PROJECT_DIR$/samples/input/db/data/temp/Sailors2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/jnio/Converter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jnio/Converter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jnio/TupleReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/jnio/TupleReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/operators/DuplicateEliminationOperator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/DuplicateEliminationOperator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/operators/ExternalSort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/ExternalSort.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/operators/JoinOperator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/JoinOperator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/operators/Operator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/Operator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/operators/ProjectOperator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/ProjectOperator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/operators/ScanOperator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/ScanOperator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/operators/SelectOperator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/SelectOperator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/operators/SortMergeJoin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/SortMergeJoin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/operators/SortOperator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/SortOperator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/operators/TupleNestedJoin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/operators/TupleNestedJoin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/visitors/PhysicalPlanBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/visitors/PhysicalPlanBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/util/Tuple.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/Tuple.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,37 +33,28 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="49" />
+          <entry key="java" value="55" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="49" />
+          <entry key="JAVA" value="55" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="585" />
+          <entry key="java" value="2347" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="585" />
+          <entry key="JAVA" value="2347" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/operators/SortOperator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-202">
-              <caret line="28" column="19" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/operators/TupleNestedJoin.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -78,31 +67,9 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/operators/SortMergeJoin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="258">
-              <caret line="160" selection-start-line="160" selection-end-line="160" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/operators/ExternalSort.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2248">
-              <caret line="229" column="24" lean-forward="true" selection-start-line="229" selection-start-column="24" selection-end-line="229" selection-end-column="24" />
+            <state relative-caret-position="235">
+              <caret line="87" column="16" selection-start-line="87" selection-start-column="16" selection-end-line="87" selection-end-column="16" />
               <folding>
-                <element signature="e#0#17152#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/jnio/TupleReader.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="622">
-              <caret line="451" selection-start-line="451" selection-end-line="451" />
-              <folding>
-                <element signature="e#0#13909#0" expanded="true" />
                 <element signature="imports" expanded="true" />
               </folding>
             </state>
@@ -110,46 +77,87 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/util/Tuple.java">
+        <entry file="file://$PROJECT_DIR$/src/Interpreter/Harness.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="494">
+            <state relative-caret-position="253">
+              <caret line="52" column="15" selection-start-line="52" selection-start-column="15" selection-end-line="52" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/operators/ExternalSort.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="229">
+              <caret line="279" column="7" selection-start-line="279" selection-start-column="7" selection-end-line="279" selection-end-column="7" />
+              <folding>
+                <element signature="e#0#17152#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/jnio/TupleReader.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="251">
               <caret line="30" selection-start-line="30" selection-end-line="30" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/visitors/PhysicalPlanBuilder.java">
+        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-9.0.1.jdk/Contents/Home/lib/src.zip!/java.base/java/nio/ByteBuffer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="386">
-              <caret line="84" selection-start-line="84" selection-end-line="84" />
+            <state relative-caret-position="252">
+              <caret line="1116" column="15" selection-start-line="1116" selection-start-column="15" selection-end-line="1116" selection-end-column="15" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/operators/JoinOperator.java">
+        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-9.0.1.jdk/Contents/Home/lib/src.zip!/java.base/java/nio/Buffer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="56" selection-start-line="56" selection-end-line="56" />
+            <state relative-caret-position="208">
+              <caret line="633" selection-start-line="633" selection-end-line="633" />
+              <folding>
+                <element signature="e#15714#15715#0" expanded="true" />
+                <element signature="e#15753#15754#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/operators/DuplicateEliminationOperator.java">
+        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-9.0.1.jdk/Contents/Home/lib/src.zip!/java.base/java/nio/HeapByteBuffer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="41" selection-start-line="41" selection-end-line="41" />
+            <state relative-caret-position="216">
+              <caret line="400" selection-start-line="400" selection-end-line="400" />
+              <folding>
+                <element signature="e#8945#8946#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/operators/ProjectOperator.java">
+        <entry file="file://$PROJECT_DIR$/src/jnio/Converter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="136" selection-start-line="136" selection-end-line="136" />
+            <state relative-caret-position="495">
+              <caret line="38" column="28" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/operators/ScanOperator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="245">
+              <caret line="59" selection-start-line="59" selection-end-line="59" />
             </state>
           </provider>
         </entry>
@@ -159,6 +167,12 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>system</find>
+      <find>312</find>
+      <find>currentTuple: 323 position : 2592</find>
+      <find>764</find>
+      <find>1064</find>
+      <find>3920</find>
+      <find>po</find>
       <find>sys</find>
     </findStrings>
   </component>
@@ -170,28 +184,28 @@
       <list>
         <option value="$PROJECT_DIR$/src/jnio/NormalTupleReader.java" />
         <option value="$PROJECT_DIR$/src/operators/SortInMemory.java" />
-        <option value="$PROJECT_DIR$/src/Interpreter/Harness.java" />
-        <option value="$PROJECT_DIR$/src/jnio/Converter.java" />
         <option value="$PROJECT_DIR$/src/operators/SortOperator.java" />
         <option value="$PROJECT_DIR$/src/visitors/PhysicalPlanBuilder.java" />
         <option value="$PROJECT_DIR$/src/operators/Operator.java" />
-        <option value="$PROJECT_DIR$/src/operators/SortMergeJoin.java" />
         <option value="$PROJECT_DIR$/src/operators/SelectOperator.java" />
         <option value="$PROJECT_DIR$/src/operators/ScanOperator.java" />
         <option value="$PROJECT_DIR$/src/operators/ProjectOperator.java" />
         <option value="$PROJECT_DIR$/src/operators/JoinOperator.java" />
         <option value="$PROJECT_DIR$/src/operators/DuplicateEliminationOperator.java" />
         <option value="$PROJECT_DIR$/src/operators/TupleNestedJoin.java" />
-        <option value="$PROJECT_DIR$/src/jnio/TupleReader.java" />
+        <option value="$PROJECT_DIR$/src/util/Tuple.java" />
+        <option value="$PROJECT_DIR$/src/Interpreter/Harness.java" />
+        <option value="$PROJECT_DIR$/src/jnio/Converter.java" />
         <option value="$PROJECT_DIR$/src/operators/ExternalSort.java" />
+        <option value="$PROJECT_DIR$/src/operators/SortMergeJoin.java" />
+        <option value="$PROJECT_DIR$/src/jnio/TupleReader.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="1522" />
-    <option name="y" value="-45" />
-    <option name="width" value="1920" />
-    <option name="height" value="1057" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="y" value="23" />
+    <option name="width" value="1440" />
+    <option name="height" value="786" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -263,7 +277,7 @@
     <property name="Downloaded.Files.Path.Enabled" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540576810514" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540587797592" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -372,39 +386,39 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Harness - 2018.10.26 at 13h 37m 06s.xml">
+    <history-entry file="Harness - 2018.10.26 at 16h 19m 38s.xml">
       <configuration name="Harness" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Harness - 2018.10.26 at 13h 38m 26s.xml">
+    <history-entry file="Harness - 2018.10.26 at 16h 22m 51s.xml">
       <configuration name="Harness" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Harness - 2018.10.26 at 13h 39m 05s.xml">
+    <history-entry file="Harness - 2018.10.26 at 16h 27m 08s.xml">
       <configuration name="Harness" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Harness - 2018.10.26 at 13h 43m 25s.xml">
+    <history-entry file="Harness - 2018.10.26 at 16h 28m 03s.xml">
       <configuration name="Harness" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Harness - 2018.10.26 at 13h 46m 08s.xml">
+    <history-entry file="Harness - 2018.10.26 at 16h 30m 18s.xml">
       <configuration name="Harness" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Harness - 2018.10.26 at 13h 46m 29s.xml">
+    <history-entry file="Harness - 2018.10.26 at 16h 30m 40s.xml">
       <configuration name="Harness" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Harness - 2018.10.26 at 13h 50m 36s.xml">
+    <history-entry file="Harness - 2018.10.26 at 16h 35m 25s.xml">
       <configuration name="Harness" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Harness - 2018.10.26 at 13h 52m 01s.xml">
+    <history-entry file="Harness - 2018.10.26 at 16h 43m 40s.xml">
       <configuration name="Harness" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Harness - 2018.10.26 at 13h 53m 09s.xml">
+    <history-entry file="Harness - 2018.10.26 at 16h 45m 08s.xml">
       <configuration name="Harness" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="Harness - 2018.10.26 at 13h 53m 45s.xml">
+    <history-entry file="Harness - 2018.10.26 at 16h 45m 37s.xml">
       <configuration name="Harness" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1522" y="-45" width="1920" height="1057" extended-state="0" />
+    <frame x="0" y="23" width="1440" height="786" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Image Layers" />
@@ -412,7 +426,7 @@
       <window_info id="UI Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.185836" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24964234" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" />
@@ -420,7 +434,7 @@
       <window_info anchor="bottom" id="Messages" weight="0.3284974" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.18860103" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.42074928" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39896372" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -434,6 +448,34 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Image Layers" order="0" />
+      <window_info id="Designer" order="1" />
+      <window_info id="UI Designer" order="2" />
+      <window_info id="Capture Tool" order="3" />
+      <window_info id="Favorites" order="4" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.185836" />
+      <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" order="0" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="1" />
+      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="3" weight="0.3284974" />
+      <window_info anchor="bottom" id="Message" order="4" />
+      <window_info anchor="bottom" id="Find" order="5" />
+      <window_info anchor="bottom" id="Run" order="6" visible="true" weight="0.18860103" />
+      <window_info anchor="bottom" id="Debug" order="7" weight="0.39896372" />
+      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="10" />
+      <window_info anchor="right" id="Palette" order="0" />
+      <window_info anchor="right" id="Capture Analysis" order="1" />
+      <window_info anchor="right" id="Theme Preview" order="2" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info anchor="right" id="Maven Projects" order="4" />
+      <window_info anchor="right" id="Commander" order="5" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="7" weight="0.25" />
+    </layout-to-restore>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -452,18 +494,6 @@
           <line>80</line>
           <properties />
           <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/visitors/PhysicalPlanBuilder.java</url>
-          <line>81</line>
-          <properties />
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/visitors/PhysicalPlanBuilder.java</url>
-          <line>82</line>
-          <properties />
-          <option name="timeStamp" value="22" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -508,27 +538,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Interpreter/Harness.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="53" column="13" selection-start-line="53" selection-start-column="13" selection-end-line="53" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/jnio/Converter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="22" column="10" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-9.0.1.jdk/Contents/Home/lib/src.zip!/java.base/java/nio/Buffer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="366" selection-start-line="366" selection-end-line="366" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/operators/LogicalJoin.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="247">
@@ -557,13 +566,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/operators/ScanOperator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
-          <caret line="65" selection-start-line="65" selection-end-line="65" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/operators/ProjectOperator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
@@ -585,20 +587,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/operators/TupleNestedJoin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/visitors/PhysicalPlanBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
-          <caret line="84" selection-start-line="84" selection-end-line="84" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/operators/JoinOperator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="177">
@@ -606,37 +594,103 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/operators/SortMergeJoin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="160" selection-start-line="160" selection-end-line="160" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/util/Tuple.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="30" selection-start-line="30" selection-end-line="30" />
+        <state relative-caret-position="565">
+          <caret line="106" selection-start-line="106" selection-end-line="106" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/jnio/TupleReader.java">
+    <entry file="file://$PROJECT_DIR$/src/visitors/PhysicalPlanBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="622">
-          <caret line="451" selection-start-line="451" selection-end-line="451" />
+        <state relative-caret-position="329">
+          <caret line="81" selection-start-line="81" selection-end-line="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/operators/TupleNestedJoin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Interpreter/Harness.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="52" column="15" selection-start-line="52" selection-start-column="15" selection-end-line="52" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jnio/Converter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="38" column="28" selection-start-line="38" selection-start-column="28" selection-end-line="38" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/operators/ScanOperator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="245">
+          <caret line="59" selection-start-line="59" selection-end-line="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-9.0.1.jdk/Contents/Home/lib/src.zip!/java.base/java/nio/ByteBuffer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="1116" column="15" selection-start-line="1116" selection-start-column="15" selection-end-line="1116" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-9.0.1.jdk/Contents/Home/lib/src.zip!/java.base/java/nio/Buffer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="633" selection-start-line="633" selection-end-line="633" />
           <folding>
-            <element signature="e#0#13909#0" expanded="true" />
-            <element signature="imports" expanded="true" />
+            <element signature="e#15714#15715#0" expanded="true" />
+            <element signature="e#15753#15754#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk-9.0.1.jdk/Contents/Home/lib/src.zip!/java.base/java/nio/HeapByteBuffer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="400" selection-start-line="400" selection-end-line="400" />
+          <folding>
+            <element signature="e#8945#8946#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/operators/ExternalSort.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2248">
-          <caret line="229" column="24" lean-forward="true" selection-start-line="229" selection-start-column="24" selection-end-line="229" selection-end-column="24" />
+        <state relative-caret-position="229">
+          <caret line="279" column="7" selection-start-line="279" selection-start-column="7" selection-end-line="279" selection-end-column="7" />
           <folding>
             <element signature="e#0#17152#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/operators/SortMergeJoin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="87" column="16" selection-start-line="87" selection-start-column="16" selection-end-line="87" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/jnio/TupleReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
