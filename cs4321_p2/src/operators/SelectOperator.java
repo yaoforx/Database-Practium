@@ -68,10 +68,7 @@ public class SelectOperator extends Operator {
         return null;
     }
 
-    @Override
-    public void reset(int index) {
 
-    }
 
     /**
      * evaluates whether a tuple satisfies a where condition

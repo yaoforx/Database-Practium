@@ -17,7 +17,7 @@ public abstract class Operator {
     public abstract void reset();
 
     public abstract Tuple getNextTuple();
-    public abstract void reset(int index);
+   // public abstract void reset(int index);
 
     /**
      * repeatedly calls getNextTuple() until the next tuple is null and writes each tuple to PrintStream ps

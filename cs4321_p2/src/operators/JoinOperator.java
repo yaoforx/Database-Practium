@@ -22,8 +22,8 @@ public abstract class JoinOperator extends Operator {
     public Operator left;
     public Operator right;
     JoinVisitors jv;
-    Tuple l;
-    Tuple r;
+    abstract void reset(int idx);
+
 
     /**
      * calls reset() on both the left and right child Operators
@@ -46,10 +46,6 @@ public abstract class JoinOperator extends Operator {
         this.exp = exp;
         this.left = left;
         this.right = right;
-//
-//        l  = left.getNextTuple();
-//
-//        r  = right.getNextTuple();
 
         List<String> newList = new ArrayList<>();
         newList.addAll(left.schema);

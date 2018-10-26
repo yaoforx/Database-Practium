@@ -14,7 +14,6 @@ import java.util.*;
 public abstract class SortOperator extends Operator {
     List<Integer> sort;
 
-    Tuple tp;
     public Operator child;
 
     public externalCmp compare = null;
@@ -75,7 +74,7 @@ public abstract class SortOperator extends Operator {
                 for (Object obj : orders) {
                     OrderByElement obe = (OrderByElement) obj;
                     this.sort.add(getColIdx(
-                            obe, child.schema));
+                            obe, this.child.schema));
                 }
             }
             else if (orders.get(0) instanceof Integer) {

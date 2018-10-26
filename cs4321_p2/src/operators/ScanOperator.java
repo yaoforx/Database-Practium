@@ -64,10 +64,6 @@ public class ScanOperator extends Operator {
         return null;
     }
 
-    @Override
-    public void reset(int index) {
-
-    }
 
     /**
      * resets the BufferReader to a new one at the beginning of the table

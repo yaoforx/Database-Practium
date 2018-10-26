@@ -9,6 +9,12 @@ import java.util.List;
 public class TupleNestedJoin extends JoinOperator{
     Tuple l = null;
     Tuple r = null;
+
+    @Override
+    void reset(int idx) {
+
+    }
+
     @Override
     public void reset() {
         super.reset();
@@ -66,9 +72,5 @@ public class TupleNestedJoin extends JoinOperator{
         return null;
     }
 
-    @Override
-    public void reset(int index) {
-        left.reset(index);
-        right.reset(index);
-    }
+
 }

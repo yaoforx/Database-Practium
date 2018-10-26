@@ -54,7 +54,6 @@ public class PhysicalPlanBuilder {
         else
             root = new ExternalSort(root, logSort.order);
     }
-
     public void visit(LogicalJoin logJoin) {
         Operator[] child = new operators.Operator[2];
         root = null;
@@ -76,22 +75,18 @@ public class PhysicalPlanBuilder {
             if (!outIdxs.isEmpty()) {
                 logJoin.expression = newExp;
                 if (DBCatalog.config.externalSort == 0) {
-                    child[0] = new SortInMemory(
-                            child[0], outIdxs);
-                    child[1] = new SortInMemory(
-                            child[1], inIdxs);
+                    child[0] = new SortInMemory(child[0], outIdxs);
+                    child[1] = new SortInMemory(child[1], inIdxs);
                 }
                 else {
-
-                    child[0] = new ExternalSort(
-                            child[0], outIdxs);
-                    child[1] = new ExternalSort(
-                            child[1], inIdxs);
+                    child[0] = new ExternalSort(child[0], outIdxs);
+                    child[1] = new ExternalSort(child[1], inIdxs);
                 }
+                root = new SortMergeJoin(logJoin.expression, child[0], child[1], outIdxs, inIdxs);
 
             }
-            root = new SortMergeJoin(logJoin.expression, child[0], child[1], outIdxs, inIdxs);
-           //     root =  new TupleNestedJoin(logJoin.expression, child[0], child[1]);
+
+
         } else if(DBCatalog.config.TNLJ == 1) {
             root = new TupleNestedJoin(logJoin.expression, child[0], child[1]);
         }

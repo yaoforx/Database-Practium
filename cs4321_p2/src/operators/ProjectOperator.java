@@ -135,10 +135,6 @@ public class ProjectOperator extends Operator{
         return new Tuple(columns);
     }
 
-    @Override
-    public void reset(int index) {
-
-    }
 
     /**
      *

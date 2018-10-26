@@ -39,10 +39,6 @@ public class DuplicateEliminationOperator extends Operator {
         return null;
     }
 
-    @Override
-    public void reset(int index) {
-
-    }
 
     /**
      * constructs a DuplicateEliminationOperator

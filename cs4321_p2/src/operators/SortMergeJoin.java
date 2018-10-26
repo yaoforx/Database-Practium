@@ -136,13 +136,13 @@ public class SortMergeJoin extends JoinOperator {
     private List<Integer> leftOrder;
     private List<Integer> rightOrder;
 
-    int partitionIndex = 0;  // the index of the first tuple in the current partition
-    int curRightIndex = 0;  // the index of the current tuple of left table
+    int partitionIndex ;  // the index of the first tuple in the current partition
+    int curRightIndex ;  // the index of the current tuple of left table
 
-    private JoinVisitors jv;
+
     Tuple leftTp;
     Tuple rightTp;
-    externalCmp cp = null;
+    private joinCmp cp = null;
 
 
 
@@ -155,11 +155,12 @@ public class SortMergeJoin extends JoinOperator {
 
         this.leftOrder = leftorder;
         this.rightOrder = rightorder;
+       // left.reset();
+       // right.reset();
 
-        this.jv = new JoinVisitors(left.schema,right.schema);
         leftTp = left.getNextTuple();
         rightTp = right.getNextTuple();
-        cp = new externalCmp(leftOrder,rightOrder);
+        cp = new joinCmp(leftOrder,rightOrder);
         partitionIndex = 0;
         curRightIndex = 0;
 
@@ -170,7 +171,7 @@ public class SortMergeJoin extends JoinOperator {
 
     }
 
-    public class externalCmp implements Comparator<Tuple>{
+    public class joinCmp implements Comparator<Tuple>{
         List<Integer> leftOrders = null; // the order of attributes in left table
         List<Integer> rightOrders = null;// the order of attributes in right table
         @Override
@@ -185,7 +186,7 @@ public class SortMergeJoin extends JoinOperator {
             return 0;
         }
 
-        public externalCmp(List<Integer> leftOrders, List<Integer> rightOrders){
+        public joinCmp(List<Integer> leftOrders, List<Integer> rightOrders){
             this.leftOrders = leftOrders;
             this.rightOrders = rightOrders;
         }
@@ -201,7 +202,7 @@ public class SortMergeJoin extends JoinOperator {
         while(leftTp !=null && rightTp !=null){
             if (cp.compare(leftTp, rightTp) < 0) {
                 leftTp = left.getNextTuple();
-                if(leftTp != null)
+
                     //    System.out.println(leftTp.toString());
                     continue;
             }
@@ -214,7 +215,6 @@ public class SortMergeJoin extends JoinOperator {
             }
 
             if(exp == null || satisfy(leftTp, rightTp)){
-                //  System.out.println(leftTp.toString() + "," + rightTp.toString());
                 rst = joinTuple(leftTp,rightTp);
 
             }
@@ -224,10 +224,9 @@ public class SortMergeJoin extends JoinOperator {
                     cp.compare(leftTp, rightTp) != 0) {
 
                 leftTp = left.getNextTuple();
-                if(leftTp != null)
-                    //  System.out.println(leftTp.toString());
-                    // System.out.println(leftTp);
-                    ((SortOperator) right).reset(partitionIndex);
+
+
+                ((SortOperator)right).reset(partitionIndex);
                 curRightIndex = partitionIndex;
                 rightTp = right.getNextTuple();
             }
@@ -246,9 +245,7 @@ public class SortMergeJoin extends JoinOperator {
     @Override
     public boolean satisfy(Tuple l, Tuple r) {
 
-        jv.setTuple(l,r);
-        exp.accept(jv);
-        return jv.getCondition();
+        return super.satisfy(l,r);
     }
 
 
