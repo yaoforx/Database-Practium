@@ -39,8 +39,6 @@ public class Util {
                 continue;
             }
 
-            System.out.println("Equals: " + left + ' ' + right);
-
             if (or) {
                 et = new EqualsTo(et.getRightExpression(),
                         et.getLeftExpression());

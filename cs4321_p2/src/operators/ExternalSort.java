@@ -237,11 +237,25 @@ import util.Tuple;
 import java.io.*;
 import java.util.*;
 import java.util.Random.*;
-public class ExternalSort extends SortOperator{
-    private String tempout;
-    private int id;
 
-    private int bufferPages = 0;
+/**
+ * External Merge Sort Algoritms sorts file in multi passes
+ * and combine final result in "id_result" file
+ */
+public class ExternalSort extends SortOperator{
+    /**
+     * tempout: temporary output path
+     */
+    private String tempout;
+    /**
+     * uniq id for different externalsort operator
+     */
+    private int id;
+    /**
+     * Number of bufferpage in Main memory
+     */
+    private int bufferPages;
+
     private Operator child;
 
     public TupleReader reader = null;
@@ -250,7 +264,7 @@ public class ExternalSort extends SortOperator{
     public ExternalSort(Operator child, List<?> ties) {
         super(child, ties);
         Random random = new Random();
-        id = random.nextInt(1000);
+        id = random.nextInt(1000000);
         bufferPages = DBCatalog.config.sortPage - 1;
         this.child = child;
 
@@ -289,6 +303,7 @@ public class ExternalSort extends SortOperator{
     private String setName(int pass, int run) {
         return tempout + Integer.toString(pass) + "#" + Integer.toString(run) + "_" + Integer.toString(id);
     }
+
     @Override
     public Tuple getNextTuple() {
         if (reader == null) return null;
@@ -301,6 +316,10 @@ public class ExternalSort extends SortOperator{
        }
        return null;
     }
+
+    /**
+     * sort sep in External Sort Algoritms
+     */
     private void sort() {
 
 
@@ -343,6 +362,10 @@ public class ExternalSort extends SortOperator{
 
 
     }
+
+    /**
+     * Merge sep in External Sort Algoritms
+     */
     private void merge(int Pass) {
 
 

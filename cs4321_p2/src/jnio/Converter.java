@@ -39,10 +39,10 @@ public class Converter {
             e.printStackTrace();
         }
     }
-  //  @Test
+//    @Test
 //    public void ReadableToBinary() throws IOException {
-//        NormalTupleReader reader = new NormalTupleReader(input + "Sailors");
-//        TupleWriter writer = new TupleWriter(output + "Sailors2");
+//        NormalTupleReader reader = new NormalTupleReader(input + "Boats");
+//        TupleWriter writer = new TupleWriter(output + "Boats1");
 //        Tuple t;
 //        while ((t = reader.read()) != null) {
 //            System.out.println(t.toString());

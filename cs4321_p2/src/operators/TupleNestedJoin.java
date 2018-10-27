@@ -6,6 +6,9 @@ import util.Tuple;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Tuple Nested Loop Join
+ */
 public class TupleNestedJoin extends JoinOperator{
     Tuple l = null;
     Tuple r = null;
@@ -39,11 +42,22 @@ public class TupleNestedJoin extends JoinOperator{
 
 
     }
+
+    /**
+     * Satisfy function return true if this tuple can be selected
+     * @param l the left tuple
+     * @param r the right tuple
+     * @return
+     */
     @Override
     public boolean satisfy(Tuple l, Tuple r) {
         return super.satisfy(l, r);
     }
 
+    /**
+     * Tuple Nested Loop Join
+     * @return new tuple
+     */
     public Tuple getNextTuple(){
         Tuple res = null;
 

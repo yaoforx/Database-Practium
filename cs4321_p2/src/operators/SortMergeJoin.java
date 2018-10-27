@@ -9,11 +9,17 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Sort Merge Join Operator implements Sort Merge Join algorhims
+ * to combine two qualified tuples
+ * @author Yao Xiao
+ */
+
 public class SortMergeJoin extends JoinOperator {
 
 
-    private List<Integer> leftOrder;
-    private List<Integer> rightOrder;
+    private List<Integer> leftOrder; // OrderBy in left tuple
+    private List<Integer> rightOrder;// OrderBy in right tuple
 
     int position ;  // the index of the first tuple in the current partition
     int curIndex ;  // the index of the current tuple of outer
@@ -22,17 +28,21 @@ public class SortMergeJoin extends JoinOperator {
 
     Tuple leftTuple;
     Tuple rightTuple;
-    private joinCmp cp = null;
+    private joinCmp cp = null; // comparator for comparing two tuples in specific order
 
 
-
-
+    /**
+     * Constructor for SMJ
+     * @param exp expression to evaluate
+     * @param left left operator
+     * @param right right operator
+     * @param leftorder left operator's order
+     * @param rightorder right operator's order
+     */
     public SortMergeJoin(Expression exp, Operator left, Operator right, List<Integer> leftorder, List<Integer> rightorder)
     {
 
         super(exp,left,right);
-        // System.out.println("left order" + leftorder.toString() + " right order" + rightorder);
-
         this.leftOrder = leftorder;
         this.rightOrder = rightorder;
         leftTuple= left.getNextTuple();
@@ -41,12 +51,11 @@ public class SortMergeJoin extends JoinOperator {
         position = 0;
         curIndex= 0;
 
-
-
-
-
-
     }
+
+    /**
+     * Override method for comparing two tuples
+     */
 
     public class joinCmp implements Comparator<Tuple>{
         List<Integer> leftOrders = null; // the order of attributes in left table
@@ -70,8 +79,10 @@ public class SortMergeJoin extends JoinOperator {
     }
 
 
-
-
+    /**
+     * getNextTuple method evaluates inner and outer tuple
+     * @return a qualified joined tuple
+     */
     @Override
     public Tuple getNextTuple() {
         Tuple res = null;
@@ -88,7 +99,6 @@ public class SortMergeJoin extends JoinOperator {
                 position = curIndex;
 
             }
-
             if(exp == null || satisfy(leftTuple, rightTuple)){
                 res = joinTuple(leftTuple,rightTuple);
 
@@ -112,7 +122,6 @@ public class SortMergeJoin extends JoinOperator {
     public void reset(int index) {
 
     }
-
     @Override
     public boolean satisfy(Tuple l, Tuple r) {
 

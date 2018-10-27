@@ -13,6 +13,11 @@ import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * PhysicalPlanBuilder is to construct Physical Operator tree
+ * based on Configuration file and SQL query
+ * @author Yao Xiao
+ */
 public class PhysicalPlanBuilder {
     private Operator root = null;
 
@@ -89,6 +94,8 @@ public class PhysicalPlanBuilder {
 
         } else if(DBCatalog.config.TNLJ == 1) {
             root = new TupleNestedJoin(logJoin.expression, child[0], child[1]);
+        } else if(DBCatalog.config.BNLJ == 1) {
+            root = new BlockNestedJoin(logJoin.expression, child[0], child[1]);
         }
 
 

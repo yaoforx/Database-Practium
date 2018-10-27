@@ -6,8 +6,7 @@ import visitors.PhysicalPlanBuilder;
 /**
  * Constructs Logical Select Operator
  */
-public class LogicalSelect
-        extends LogicalOperator
+public class LogicalSelect extends LogicalOperator
 {
     public Expression exp;
     public LogicalScan scan;
