@@ -22,18 +22,18 @@ public class PhysicalPlanBuilder {
     private Operator root = null;
 
 
-
-
     public PhysicalPlanBuilder() {
 
     }
 
 
     public operators.Operator getRoot() {
+
         return root;
     }
 
     public void visit(LogicalScan logScan) {
+
         root = new ScanOperator(logScan.table);
     }
 
