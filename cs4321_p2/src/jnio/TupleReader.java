@@ -164,21 +164,19 @@ public class TupleReader {
 
     public void reset(int index) throws Exception{
         int pageNum = Collections.binarySearch(tupleList, index + 1);
+        //System.out.println("the pageIdx is: " + pageNum);
         pageNum = pageNum >= 0 ? pageNum : -(pageNum + 1);
-        //System.out.println("the pageIdx is: " + pageIdx);
+
         fc.position((pageNum - 1) * size);
         setZeros();
         newPage = true;
         eof = false;
         tupleList = tupleList.subList(0, pageNum);
         int tupleInList= tupleList.get(tupleList.size() - 1);
-
         int pos = (index - tupleInList) * colIntuple * 4 + 8;
         page.clear();
         if(fc.read(page) < 0) return;
         setPage();
         page.position(pos);
-
-
     }
 }

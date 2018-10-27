@@ -88,15 +88,17 @@ public class SortMergeJoin extends JoinOperator {
         Tuple res = null;
         while(leftTuple !=null && rightTuple !=null){
 
-            while (cp.compare(leftTuple, rightTuple) < 0) {
+            if (cp.compare(leftTuple, rightTuple) < 0) {
                 leftTuple = left.getNextTuple();
+                continue;
 
             }
 
-            while (cp.compare(leftTuple, rightTuple) > 0) {
+            if(cp.compare(leftTuple, rightTuple) > 0) {
                 rightTuple = right.getNextTuple();
                 curIndex++;
                 position = curIndex;
+                continue;
 
             }
             if(exp == null || satisfy(leftTuple, rightTuple)){

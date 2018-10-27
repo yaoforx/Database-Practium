@@ -8,7 +8,12 @@ import net.sf.jsqlparser.parser.CCJSqlParser;
 import net.sf.jsqlparser.statement.Statement;
 
 import org.junit.Test;
+import java.io.FilenameFilter;
+
 import util.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 /**
@@ -31,6 +36,7 @@ public class Harness {
     public void harness(String inputPath, String outputPath, String tempdir) {
         DBCatalog.setDBCatalog(inputPath,outputPath, tempdir);
         DBCatalog.getDB();
+        String deleteExtension = "_result";
         try{
             CCJSqlParser parser = new CCJSqlParser(new FileReader(DBCatalog.querydir));
             Statement statement;
@@ -40,20 +46,25 @@ public class Harness {
                 TupleWriter writer = new TupleWriter(out);
                 System.out.println("Parsing: " + statement);
                 Selector select = new Selector(statement);
-                counter++;
+
+                long beginTime = System.currentTimeMillis();
 
                 select.root.dump(writer);
-
+                long endTime = System.currentTimeMillis();
+                System.out.println("query "
+                        + counter + " took " + (endTime - beginTime)*1.0/1000 + " seconds");
+                counter++;
                 writer.close();
+
 
 
             }
             int num = 1;
-            while(num < counter) {
-                Converter convert = new Converter(outputPath +"/query" + num);
-                convert.binaryToReadable();
-                num++;
-            }
+//            while(num < counter) {
+//                Converter convert = new Converter(outputPath +"/query" + num);
+//                convert.binaryToReadable();
+//                num++;
+//            }
 
 
 

@@ -241,6 +241,7 @@ import java.util.Random.*;
 /**
  * External Merge Sort Algoritms sorts file in multi passes
  * and combine final result in "id_result" file
+ * @author Yao Xiao
  */
 public class ExternalSort extends SortOperator{
     /**
@@ -343,7 +344,6 @@ public class ExternalSort extends SortOperator{
             Collections.sort(listToSort, compare);
             try {
                // System.out.println("Pass 0 file: " + setName(0, run));
-
                 TupleWriter tw = new TupleWriter(setName(0, run));
                 for(Tuple t : listToSort) {
                     tw.write(t);
@@ -377,33 +377,20 @@ public class ExternalSort extends SortOperator{
         while(totalPass > 1) {
            // System.out.println("Pass number " + totalPass);
             int nextRun = 0;
-
-
-
-
             List<TupleReader> buffer = new ArrayList<>();
             int num = Math.min(outCount, bufferPages);
 
             for(int i = 0; i < totalPass; i+= bufferPages) {
                 outCount = i/bufferPages;
                 num = Math.min(totalPass - i, bufferPages);
-
-
                 try {
                     for (int j = i; j < i + num; j++) {
-
                         buffer.add(new TupleReader(new File(setName(pass, j))));
-
                     }
-
-
                    // System.out.println("output file name is adding file: " + setName(pass + 1, outCount));
                     TupleWriter outputPage = new TupleWriter(setName(pass + 1, outCount));
-
-
                     PriorityQueue<Tuple> pq = new PriorityQueue<>(compare);
                     Tuple tuple = null;
-
                     for (TupleReader tr : buffer) {
                         Tuple tp = tr.read();
                         if (tp != null) {
@@ -416,7 +403,7 @@ public class ExternalSort extends SortOperator{
                     while (!pq.isEmpty()) {
                         Tuple tp = pq.poll();
                         outputPage.write(tp);
-                      //  System.out.println(tp.toString());
+                        //  System.out.println(tp.toString());
                         TupleReader tr = tp.tupleReader;
                         tp = tr.read();
                         if (tp != null) {
@@ -424,10 +411,6 @@ public class ExternalSort extends SortOperator{
                             pq.add(tp);
                         }
                     }
-
-
-
-
                     for (int j = i; j < i + num; j++) {
                         File file = new File(setName(pass , j));
                     //    System.out.println("detleting " + setName(pass, j));
@@ -437,8 +420,6 @@ public class ExternalSort extends SortOperator{
                     buffer.clear();
                     outputPage.close();
                     nextRun++;
-
-
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -450,9 +431,6 @@ public class ExternalSort extends SortOperator{
 
             totalPass = nextRun;
         }
-
-        //if(pass == 0) pass++;
-
         try {
             File orig = new  File(setName(pass, 0));
             File result = new File(tempout + id + "_result");

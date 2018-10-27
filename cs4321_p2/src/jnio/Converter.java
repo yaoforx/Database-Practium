@@ -6,7 +6,7 @@ import util.Tuple;
 import static org.junit.Assert.*;
 
 import java.io.*;
-
+//import org.apache.commons.io.*;
 /**
  * Utils Class for converting binary to humanreadable
  */
@@ -15,14 +15,14 @@ public class Converter {
     private BufferedWriter writer;
     private TupleWriter bwriter;
     private NormalTupleReader breader;
-    String input = "/Users/yaoxiao/Database-Practium/cs4321_p2/samples/input/db/data/temp/";
-    String output = "/Users/yaoxiao/Database-Practium/cs4321_p2/samples/input/db/data/temp/";
+    String input = "/Users/yaoxiao/Database-Practium/cs4321_p2/samples/input/db/data/";
+    String output = "/Users/yaoxiao/Database-Practium/cs4321_p2/samples/input/db/data/";
     File in;
-    public Converter (String path) throws IOException {
-        in  = new File(path + "/");
-        writer = new BufferedWriter(new FileWriter(path  +  "_humanreadable"));
-       // binaryToReadable();
-    }
+//    public Converter (String path) throws IOException {
+//        in  = new File(path + "/");
+//        writer = new BufferedWriter(new FileWriter(path  +  "_humanreadable"));
+//       // binaryToReadable();
+//    }
     public void binaryToReadable() {
         Tuple tp;
 
@@ -41,8 +41,8 @@ public class Converter {
     }
 //    @Test
 //    public void ReadableToBinary() throws IOException {
-//        NormalTupleReader reader = new NormalTupleReader(input + "Boats");
-//        TupleWriter writer = new TupleWriter(output + "Boats1");
+//        NormalTupleReader reader = new NormalTupleReader(input + "Reserves_humanreadable");
+//        TupleWriter writer = new TupleWriter(output + "Reserves");
 //        Tuple t;
 //        while ((t = reader.read()) != null) {
 //            System.out.println(t.toString());
