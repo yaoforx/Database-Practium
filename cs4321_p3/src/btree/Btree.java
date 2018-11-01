@@ -14,6 +14,7 @@ import java.util.*;
 public class Btree {
     private boolean clustered;
     private File indexfile;
+    private File input;
     private int order;
     private BTreeNode root;
     public ArrayList<ArrayList<BTreeNode>> layers;
@@ -30,7 +31,7 @@ public class Btree {
      * @param cluster true if it is a cluster tree
      * @param order order of the tree
      */
-    public Btree(Table table, String colName, int cluster, int order, File indexfile) {
+    public Btree(Table table, String colName, int cluster, int order, File indexfile, File input) {
         this.table = table;
         this.indexedCol = colName;
         this.clustered = cluster == 1;
@@ -38,6 +39,7 @@ public class Btree {
         this.root = null;
         this.indexfile = indexfile;
         layers = new ArrayList<ArrayList<BTreeNode>> ();
+        this.input = input;
 
     }
     public BTreeNode getRoot(){

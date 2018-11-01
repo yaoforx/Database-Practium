@@ -28,9 +28,10 @@ public class BulkLoader {
     private TupleReader tr;
 
     public BulkLoader(int clustered, File indexfile, Integer lowKey, Integer highKey, Table table, String IndexedCol, int order, File input) {
-        this.btree = new Btree(table, IndexedCol, clustered, order,indexfile);
-        this.indexScan = new IndexScanOperator(table, lowKey, highKey, btree, indexfile);
         this.indexfile = indexfile;
+        this.btree = new Btree(table, IndexedCol, clustered, order,indexfile, input);
+        this.indexScan = new IndexScanOperator(table, lowKey, highKey, btree, indexfile);
+
         this.IndexedCol = IndexedCol;
 
     }
