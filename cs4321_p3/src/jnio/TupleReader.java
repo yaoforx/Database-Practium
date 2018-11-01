@@ -1,11 +1,9 @@
 package jnio;
 
 import util.Tuple;
+import util.TupleIdentifier;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
@@ -110,6 +108,31 @@ public class TupleReader {
 
 
         newPage = false;
+    }
+
+
+    public Tuple read(TupleIdentifier tpi) throws IOException {
+        // precondition: rid is not null
+        if (tpi == null) return null;
+        int pageId = tpi.getPageNum();
+        int tupleId = tpi.getTupleNum();
+        // precondition: the index should not exceed the number of tuples buffered
+        if (pageId < 0 || tupleId < 0) {
+            throw new IndexOutOfBoundsException("Index out of bound");
+        }
+        setZeros();
+        newPage = true;
+        eof = false;
+        // load the page
+
+        long position = size * (long) pageId;
+        fc.position(position);
+        setPage();
+
+
+        int newPos = (tupleId * colIntuple + 2) * 4;
+        page.position(newPos);
+        return read();
     }
 
 

@@ -16,7 +16,7 @@ import util.*;
 public class ScanOperator extends Operator {
 
     Table tb;
-    private TupleReader lines;
+    protected TupleReader lines;
     //private BufferedReader lines;
 
     /**

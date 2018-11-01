@@ -5,6 +5,7 @@ import util.TupleIdentifier;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -16,10 +17,11 @@ public class Btree {
     private int order;
     private BTreeNode root;
     private ArrayList<ArrayList<BTreeNode>> layers;
-    private int numOfLeaves;
+    public int numOfLeaves;
     private Table table;
     private String indexedCol;
     private int pageSize = 4096;
+
 
     /**
      * Constructor for the B+ tree
@@ -28,12 +30,13 @@ public class Btree {
      * @param cluster true if it is a cluster tree
      * @param order order of the tree
      */
-    public Btree(Table table, String colName, int cluster, int order) {
+    public Btree(Table table, String colName, int cluster, int order, File indexfile) {
         this.table = table;
         this.indexedCol = colName;
         this.clustered = cluster == 1;
         this.order = order;
         this.root = null;
+        this.indexfile = indexfile;
         layers = new ArrayList<ArrayList<BTreeNode>> ();
 
     }
@@ -45,6 +48,46 @@ public class Btree {
     }
     public String getIndexedCol(){
         return indexedCol;
+    }
+
+    /**
+     * Serializes
+     */
+    public void serialize() {
+        if(root == null) {
+            throw new RuntimeException("The tree does not exists");
+
+        }
+        try{
+            FileOutputStream fos = new FileOutputStream(indexfile);
+            FileChannel fc = fos.getChannel();
+            ByteBuffer buf = ByteBuffer.allocate(pageSize);
+            setZeros(buf);
+            buf.putInt(0, root.getSize());
+            buf.putInt(4, root.leafNum());
+            buf.putInt(8, order);
+            fc.write(buf);
+            for(ArrayList<BTreeNode> layer : layers) {
+                serializeLayer(layer,buf, fc);
+            }
+            fc.close();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+    private void serializeLayer(ArrayList<BTreeNode> layer, ByteBuffer buf, FileChannel fc) {
+        for(BTreeNode node : layer) {
+            setZeros(buf);
+            node.serialize(buf);
+            try {
+                fc.write(buf);
+            } catch (IOException e) {
+                System.err.println("Serializing failed on node " + node.addr);
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -65,7 +108,7 @@ public class Btree {
             e.printStackTrace();
         }
     }
-    private BTreeNode deserializeNode(FileChannel fc, ByteBuffer buffer, int page, Integer traversekey) {
+    public BTreeNode deserializeNode(FileChannel fc, ByteBuffer buffer, int page, Integer traversekey) {
         read(fc, buffer, page);
         boolean isIndexNode = buffer.getInt(0) == 1;
         if(isIndexNode) {
@@ -180,6 +223,13 @@ public class Btree {
         return new BtreeLeafNode(currentAddr, keys, entries, order);
 
     }
+
+    /**
+     * Create an index nodes layer
+     * @param currentAddr
+     * @param childlayer
+     * @return a list of Btree nodes
+     */
     public List<BTreeNode> createIndexLayer(int currentAddr, List<BTreeNode> childlayer) {
         int childrenSize = childlayer.size();
         int childRemain = childrenSize;
@@ -204,6 +254,14 @@ public class Btree {
         return indexes;
     }
 
+    /**
+     * Helper function to create a index node based on index and size of a node
+     * @param size
+     * @param idx
+     * @param childlayer
+     * @param addr
+     * @return a index node
+     */
     private BtreeIndexNode createIndexNodes(int size, int idx, List<BTreeNode> childlayer, int addr) {
         List<Integer> keys = new ArrayList<>();
         List<BTreeNode> children = new ArrayList<>();
@@ -217,6 +275,13 @@ public class Btree {
         }
         return new BtreeIndexNode(keys, children, addr, order);
     }
+
+    /**
+     * Read a page(node) at specific page number
+     * @param fc
+     * @param buffer
+     * @param pageNum
+     */
     private void read(FileChannel fc, ByteBuffer buffer, int pageNum) {
         setZeros(buffer);
         try {
@@ -257,6 +322,47 @@ public class Btree {
             nextLayer = new LinkedList<BTreeNode>();
         }
         return sb.toString();
+    }
+    public BTreeNode getLeafNode(int idx) {
+        //smallest lead node will always on page 1
+        int page = idx;
+        try {
+            FileInputStream fis = new FileInputStream(indexfile);
+            FileChannel channel = fis.getChannel();
+            ByteBuffer buffer = ByteBuffer.allocate(4096);
+            channel.read(buffer);
+            numOfLeaves = buffer.getInt(4);
+            //smallest lead node will always on page 1
+            BTreeNode res = deserializeNode(channel, buffer, page, null);
+            fis.close();
+            return res;
+        } catch (IOException e) {
+
+            e.printStackTrace();
+            return null;
+        }
+    }
+    /**
+     * A helper function to deserialize an index file.
+     * @param targetKey
+     * @return BTreeLeafNode
+     */
+    public BtreeLeafNode deserializeTraversal(Integer targetKey) {
+        try {
+            FileInputStream fis = new FileInputStream(indexfile);
+            FileChannel channel = fis.getChannel();
+            ByteBuffer buffer = ByteBuffer.allocate(4096);
+            numOfLeaves = buffer.getInt(4);
+            channel.read(buffer);
+            int rootAddress = buffer.getInt(0);
+            BtreeLeafNode res = (BtreeLeafNode)deserializeNode(channel, buffer, rootAddress, targetKey);
+            fis.close();
+            return res;
+        } catch (IOException e) {
+
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
