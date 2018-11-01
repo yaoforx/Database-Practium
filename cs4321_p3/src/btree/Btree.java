@@ -16,7 +16,7 @@ public class Btree {
     private File indexfile;
     private int order;
     private BTreeNode root;
-    private ArrayList<ArrayList<BTreeNode>> layers;
+    public ArrayList<ArrayList<BTreeNode>> layers;
     public int numOfLeaves;
     private Table table;
     private String indexedCol;
@@ -175,7 +175,7 @@ public class Btree {
      * @param sortedMap
      * @return a list of leaf nodes
      */
-    public List<BTreeNode> createLeafLayer(TreeMap<Integer, ArrayList<TupleIdentifier>> sortedMap) {
+    public ArrayList<BTreeNode> createLeafLayer(TreeMap<Integer, ArrayList<TupleIdentifier>> sortedMap) {
         List<BTreeNode> leaves = new ArrayList<>();
         int totalKeys = sortedMap.size();
         int currentAddr = 1;
@@ -200,7 +200,7 @@ public class Btree {
             currentAddr++;
             leaves.add(createLeafNodes(onRight, keyPos, sortedMap, currentAddr));
         }
-        return leaves;
+        return (ArrayList<BTreeNode>) leaves;
 
     }
 
@@ -230,7 +230,7 @@ public class Btree {
      * @param childlayer
      * @return a list of Btree nodes
      */
-    public List<BTreeNode> createIndexLayer(int currentAddr, List<BTreeNode> childlayer) {
+    public ArrayList<BTreeNode> createIndexLayer(int currentAddr, List<BTreeNode> childlayer) {
         int childrenSize = childlayer.size();
         int childRemain = childrenSize;
         int childPos = 0;
@@ -251,7 +251,7 @@ public class Btree {
             indexes.add(createIndexNodes(onRight, childPos, childlayer, currentAddr));
 
         }
-        return indexes;
+        return (ArrayList<BTreeNode>) indexes;
     }
 
     /**
@@ -364,6 +364,7 @@ public class Btree {
             return null;
         }
     }
+    public void setRoot(BTreeNode node) {root = node;}
 
 
 

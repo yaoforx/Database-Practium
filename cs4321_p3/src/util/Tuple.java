@@ -14,6 +14,7 @@ public class Tuple{
     public List<Integer> tuple = new ArrayList<>();
     private int cols;
     public TupleReader tupleReader = null;
+    public TupleIdentifier rid;
 
 
     /**
@@ -27,6 +28,21 @@ public class Tuple{
 
 
     }
+    /**
+     * Set the RID of this Tuple to the page number
+     * it was read from, and the tuple number on that page.
+     * @param id Record id representing its location
+     * 				in page number, tuple number in
+     * 				binary format
+     */
+    public void setRID(TupleIdentifier id) {
+        rid = id;
+    }
+
+    public TupleIdentifier getRID() {
+        return rid;
+    }
+
 
     /**
      * @return the number of columns in this tuple

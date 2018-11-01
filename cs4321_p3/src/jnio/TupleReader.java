@@ -92,6 +92,37 @@ public class TupleReader {
     }
 
     /**
+     * Read a page
+     */
+    /**
+     * Function: Read tuples from bufferpage with bounded state
+     * @return tuple
+     * @throws IOException
+     */
+    public ArrayList<Tuple> readNextPage() throws IOException {
+        ArrayList<Tuple> tps = new ArrayList<Tuple>();
+        while (!eof) {
+            if (newPage) {
+                eof = (fc.read(page) <= 0);
+                if (eof) return null;
+                setPage();
+            }
+            if (page.hasRemaining()) {
+                List<Integer> tuple = new ArrayList<>();
+                for (int i = 0; i < colIntuple; i++) {
+                    tuple.add(Integer.valueOf(page.getInt()));
+                }
+                Tuple tp = new Tuple(tuple);
+                tps.add(tp);
+            }
+            newPage = true;
+            setZeros();
+        }
+        return null;
+    }
+
+
+    /**
      * Function: setPage
      * Set a new page whenever a previous page is exhausted
      */
