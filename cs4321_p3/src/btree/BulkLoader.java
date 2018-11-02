@@ -3,6 +3,7 @@ package btree;
 
 import jnio.TupleReader;
 import jnio.TupleWriter;
+import net.sf.jsqlparser.statement.create.table.Index;
 import operators.IndexScanOperator;
 import operators.Operator;
 import operators.SortInMemory;
@@ -18,25 +19,46 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
+/**
+ * Bulk load Class to load input file and process it as an index file
+ * @author Yao Xiao
+ */
 public class BulkLoader {
     private File indexfile;
     private static final int pageSize = 4096;
     private Operator indexScan;
     private Btree btree;
-    private String IndexedCol;
+    private Integer IndexedCol;
     private File input;
     private TupleReader tr;
+    private boolean isclustered;
 
-    public BulkLoader(int clustered, File indexfile, Integer lowKey, Integer highKey, Table table, String IndexedCol, int order, File input) {
+    /**
+     * Constructor for BulkLoader
+     * @param clustered if it should be indexed
+     * @param indexfile out put indexed file
+     *
+     * @param IndexedCol the column that indexed on/
+     *                  one table only has one coln
+     * @param order B+ tree order
+     * @param input input file
+     */
+    public BulkLoader(boolean clustered, File indexfile, Integer IndexedCol, int order, File input) {
         this.indexfile = indexfile;
-        this.btree = new Btree(table, IndexedCol, clustered, order,indexfile, input);
-        this.indexScan = new IndexScanOperator(table, lowKey, highKey, btree, indexfile);
-
+        this.btree = new Btree(IndexedCol, clustered, order,indexfile, input);
+        //this.indexScan = new IndexScanOperator(table, lowKey, highKey, btree, indexfile);
+        this.isclustered = clustered;
         this.IndexedCol = IndexedCol;
 
     }
+
+    /**
+     * bulk load function which to process indexed tuples and assign pageId and tupleId
+     * also Calling Btree class to construct b+tree
+     */
     private void bulkLoad() {
         TreeMap<Integer, ArrayList<TupleIdentifier>> entryMap = new TreeMap<>();
+
         try {
             // tuples in this page.
             ArrayList<Tuple> tps;
@@ -44,7 +66,7 @@ public class BulkLoader {
             while ((tps = tr.readNextPage()) != null) {
                 for (int currTupleId = 0; currTupleId < tps.size(); currTupleId++) {
                     Tuple currTuple = tps.get(currTupleId);
-                    int key = currTuple.tuple.get(getColIdx(IndexedCol, indexScan.schema));
+                    int key = currTuple.tuple.get(IndexedCol);
                     if (entryMap.containsKey(key)) {
                         ArrayList<TupleIdentifier> target = entryMap.get(key);
                         target.add(new TupleIdentifier(currPageId, currTupleId));
@@ -80,6 +102,16 @@ public class BulkLoader {
 
 
     }
+    public Btree getBtree(){
+        return btree;
+    }
+
+    /**
+     * Helper function to find the index of the column
+     * @param element
+     * @param schema
+     * @return the index of the column
+     */
 
     static public int getColIdx(String element, List<String> schema) {
         int idx = schema.indexOf(element);
@@ -94,7 +126,7 @@ public class BulkLoader {
                 String col = schema.get(i);
                 col = col.split("\\.")[1];
 
-                if (col.equals(element.toString().split("\\.")[1])) {
+                if (col.equals(element.split("\\.")[1])) {
                     return i;
                 }
             }

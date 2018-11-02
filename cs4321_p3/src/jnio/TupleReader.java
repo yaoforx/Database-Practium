@@ -95,7 +95,7 @@ public class TupleReader {
      * Read a page
      */
     /**
-     * Function: Read tuples from bufferpage with bounded state
+     * Function: Read tuples from buffer page with bounded state
      * @return tuple
      * @throws IOException
      */
@@ -107,7 +107,7 @@ public class TupleReader {
                 if (eof) return null;
                 setPage();
             }
-            if (page.hasRemaining()) {
+            while (page.hasRemaining()) {
                 List<Integer> tuple = new ArrayList<>();
                 for (int i = 0; i < colIntuple; i++) {
                     tuple.add(Integer.valueOf(page.getInt()));
@@ -115,8 +115,10 @@ public class TupleReader {
                 Tuple tp = new Tuple(tuple);
                 tps.add(tp);
             }
+
             newPage = true;
             setZeros();
+            if(!tps.isEmpty()) return tps;
         }
         return null;
     }

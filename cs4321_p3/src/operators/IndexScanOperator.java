@@ -43,38 +43,9 @@ public class IndexScanOperator extends ScanOperator {
         }
         tupPos = 0;
         tpi = ((BtreeLeafNode)currentLeafNode).getTupleInfo(keyPos, tupPos);
-        indexedCol = getColIdx(btree.getIndexedCol(), schema);
+        indexedCol = btree.getIndexedCol();
 
     }
-
-    /**
-     *
-     * @param element The element to order by
-     * @param schema the schema this element is using
-     * @return the column index
-     */
-    static public int getColIdx(String element, List<String> schema) {
-        int idx = schema.indexOf(element);
-
-        if (idx != -1) {
-            return idx;
-        }
-
-        else {
-
-            for (int i = 0; i < schema.size(); i++) {
-                String col = schema.get(i);
-                col = col.split("\\.")[1];
-
-                if (col.equals(element.toString().split("\\.")[1])) {
-                    return i;
-                }
-            }
-
-        }
-        return -1;
-    }
-
 
     @Override
     public Table getTable() {

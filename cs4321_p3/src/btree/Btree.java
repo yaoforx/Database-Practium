@@ -11,6 +11,10 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.*;
 
+/**
+ * Constructs a b+tree and output indexed file
+ * @author Yao Xiao
+ */
 public class Btree {
     private boolean clustered;
     private File indexfile;
@@ -19,22 +23,22 @@ public class Btree {
     private BTreeNode root;
     public ArrayList<ArrayList<BTreeNode>> layers;
     public int numOfLeaves;
-    private Table table;
-    private String indexedCol;
+
+    private Integer indexedCol;
     private int pageSize = 4096;
 
 
     /**
      * Constructor for the B+ tree
-     * @param table the table to build the index tree
+     *
      * @param colName the column name for indexing
      * @param cluster true if it is a cluster tree
      * @param order order of the tree
      */
-    public Btree(Table table, String colName, int cluster, int order, File indexfile, File input) {
-        this.table = table;
+    public Btree( Integer colName, boolean cluster, int order, File indexfile, File input) {
+
         this.indexedCol = colName;
-        this.clustered = cluster == 1;
+        this.clustered = cluster;
         this.order = order;
         this.root = null;
         this.indexfile = indexfile;
@@ -48,12 +52,12 @@ public class Btree {
     public boolean isClustered(){
         return clustered;
     }
-    public String getIndexedCol(){
+    public Integer getIndexedCol(){
         return indexedCol;
     }
 
     /**
-     * Serializes
+     * Serializes a b+tree
      */
     public void serialize() {
         if(root == null) {
@@ -79,6 +83,13 @@ public class Btree {
         }
 
     }
+
+    /**
+     * Helper function to serialize each layer of b+tree
+     * @param layer a layer that needs to be serialized
+     * @param buf buffer to read from
+     * @param fc FileChannel to write to
+     */
     private void serializeLayer(ArrayList<BTreeNode> layer, ByteBuffer buf, FileChannel fc) {
         for(BTreeNode node : layer) {
             setZeros(buf);
@@ -110,6 +121,15 @@ public class Btree {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Helper function to serialize a node in B+tree
+     * @param fc
+     * @param buffer
+     * @param page
+     * @param traversekey
+     * @return a B+tree node that has been deserialized
+     */
     public BTreeNode deserializeNode(FileChannel fc, ByteBuffer buffer, int page, Integer traversekey) {
         read(fc, buffer, page);
         boolean isIndexNode = buffer.getInt(0) == 1;
@@ -119,6 +139,16 @@ public class Btree {
         else return deserializeLeafNode(page, buffer);
 
     }
+
+
+    /**
+     * Helper function called by deserializeNode() to serialize a index node in B+tree
+     * @param fc
+     * @param buffer
+     * @param page
+     * @param traversekey
+     * @return a B+tree node that has been deserialized
+     */
     private BTreeNode deserializeIndexNode(FileChannel fc, ByteBuffer buffer, int page, Integer traversekey) {
         int numKeys = buffer.getInt(4);
         List<Integer> keys = new ArrayList<>(numKeys);
@@ -148,6 +178,14 @@ public class Btree {
             return deserializeNode(fc, buffer, pointers.get(traverseIdx), traversekey);
         }
     }
+
+    /**
+     * Helper function called by deserializeNode() to serialize a leaf node in B+tree
+     * @param buffer
+     * @param page
+     *
+     * @return a B+tree node that has been deserialized
+     */
     private BTreeNode deserializeLeafNode(int page, ByteBuffer buffer) {
         int numDataEntry = buffer.getInt(4);
         int pos = 8;

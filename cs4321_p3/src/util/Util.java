@@ -1,8 +1,11 @@
 package util;
 
 import net.sf.jsqlparser.expression.Expression;
+import net.sf.jsqlparser.expression.LongValue;
 import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
-import net.sf.jsqlparser.expression.operators.relational.EqualsTo;
+import net.sf.jsqlparser.expression.operators.relational.*;
+import net.sf.jsqlparser.expression.BinaryExpression;
+import net.sf.jsqlparser.schema.Column;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,19 +96,107 @@ public class Util {
     public static String getColName(String tabCol) {
         return tabCol.split("\\.")[1];
     }
+    public static Integer[] getLowAndHeigh(String idxCol, Expression expression) {
+        if (expression == null) return null;
+        List<Expression> conds = getAndExpressions(expression);
 
-    /**
-     * Obtain the tuple's attribute.
-     * @param tp the tuple
-     * @param attr the attribute
-     * @param schema the tuple's schema
-     * @return the long value of the attribute
-     */
-    public static Long getAttrVal(Tuple tp, String attr, List<String> schema) {
-        int idx = getAttrIdx(attr, schema);
-        if (idx != -1) return (long) tp.getValue(idx);
-        return null;
+        Integer[] ret = new Integer[2]; // low and high
+
+        for (Expression expr : conds) {
+            Expression left =
+                    ((BinaryExpression) expr).getLeftExpression();
+            Expression right =
+                    ((BinaryExpression) expr).getRightExpression();
+
+            String attr = null;
+            Integer val = null;
+            if (left instanceof Column) {
+                attr = left.toString();
+                val = Integer.parseInt(right.toString());
+            }
+            else {
+                attr = right.toString();
+                val = Integer.parseInt(left.toString());
+            }
+            if (attr.indexOf('.') != -1)
+                attr = attr.split("\\.")[1];
+            if (!idxCol.equals(attr)) continue;
+            // TODO
+            // update low key and high key
+            //update low key
+            if(expr instanceof GreaterThan){ // inclusive low key
+                if(ret[0] == null){
+                    ret[0] = val+1;
+                } else{
+                    ret[0] = Math.max(ret[0], val+1);
+                }
+
+            } else if (expr instanceof GreaterThanEquals) {
+                if(ret[0] == null){
+                    ret[0] = val;
+                } else{
+                    ret[0] = Math.max(ret[0], val);
+                }
+            }else if(expr instanceof MinorThan){
+                if(ret[1] == null){
+                    ret[1] = val;
+                } else {
+                    ret[1] = Math.min(ret[1],val);
+                }
+            } else if(expr instanceof MinorThanEquals){ // exclusive high key
+                if(ret[1] == null){
+                    ret[1] = val+1;
+                } else {
+                    ret[1] = Math.min(ret[1], val+1);
+                }
+            } else if (expr instanceof EqualsTo){
+                ret[0] = val;
+                ret[1] = val;
+            }
+        }
+        return ret;
     }
+    public static boolean withIndexed(String tab, Expression expression) {
+        indexInfo ii = DBCatalog.getindexInfo(tab);
+        if (expression == null || ii == null) return false;
+        List<Expression> conds = getAndExpressions(expression);
+
+        for (Expression expr : conds) {
+            Expression left =
+                    ((BinaryExpression) expr).getLeftExpression();
+            Expression right =
+                    ((BinaryExpression) expr).getRightExpression();
+
+            String str = null;
+
+            if (left instanceof Column && right instanceof LongValue
+                    || left instanceof LongValue && right instanceof Column) {
+                if (   expr instanceof EqualsTo
+                        || expr instanceof GreaterThan
+                        || expr instanceof GreaterThanEquals
+                        || expr instanceof MinorThan
+                        || expr instanceof MinorThanEquals ) {
+
+                    str = (left instanceof Column) ? left.toString() :
+                            right.toString();
+                    if (str.indexOf('.') != -1)
+                        str = str.split("\\.")[1];
+                    if (ii.indexCol.equals(str)) return true;
+                }
+
+            }
+            str = (left instanceof Column) ? left.toString() :
+                    right.toString();
+            if (str.indexOf('.') != -1)
+                str = str.split("\\.")[1];
+
+            if (ii.indexCol.equals(str)) return true;
+        }
+
+        return false;
+
+    }
+
 
 
 

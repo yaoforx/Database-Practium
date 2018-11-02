@@ -26,6 +26,9 @@ public class DBCatalog {
     public static String querydir;
     public static Configure config;
     public static String tempdir;
+    public static String indexdir;
+    public static String indexInfo;
+    public static indexConfig idxConfig;
 
 
     /**
@@ -37,6 +40,7 @@ public class DBCatalog {
     //alias key is alia, value is table
     public static HashMap<String,String> alias = new HashMap<>();
 
+    public static HashMap<String, indexInfo> indexes = new HashMap<>();
     /**
      * sets the DBCatalog with the given input and output directories
      *
@@ -50,8 +54,12 @@ public class DBCatalog {
         schemadir = input + "/db/" + "schema.txt";
         querydir = inputdir + "/queries.sql";
        tempdir = temp + "/";
-        createSchema();
         config = new Configure(inputdir + "plan_builder_config.txt");
+        indexdir = dbdir + "indexes/";
+        indexInfo = dbdir + "index_info.txt";
+        createSchema();
+        createIndexInfo();
+        idxConfig = new indexConfig();
 
     }
 
@@ -74,6 +82,28 @@ public class DBCatalog {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public static void createIndexInfo(){
+        indexes.clear();
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(indexInfo));
+            String line = null;
+            while((line = br.readLine()) != null) {
+                String[] info = line.split(" ");
+                if(info.length != 4) {
+                    throw new RuntimeException("indexed has wrong attributes");
+                }
+                String tab = info[0];
+                String col = info[1];
+                boolean cluster = (info[2].equals("1"));
+                int order = Integer.valueOf(info[3]);
+                indexes.put(tab, new indexInfo(tab,col,cluster,order));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -143,6 +173,10 @@ public class DBCatalog {
             e.printStackTrace();
         }
         return null;
+    }
+    public static indexInfo getindexInfo(String tableName) {
+        if(alias.containsKey(tableName)) tableName = alias.get(tableName);
+        return indexes.get(tableName);
     }
 
 

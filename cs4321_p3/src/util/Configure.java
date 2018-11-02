@@ -15,6 +15,7 @@ public class Configure {
     public int externalSort = 0;
     public int sortPage = 0;
     public int joinPage = 0;
+    public boolean idxSelect = false;
     private BufferedReader tr = null;
     public Configure(String path) {
         config = new File(path);
@@ -25,7 +26,7 @@ public class Configure {
         try{
             tr = new BufferedReader(new FileReader(config));
             String[] num = new String[2];
-            for(int i = 0; i < 2; i++) {
+            for(int i = 0; i < 3; i++) {
                 String tp = tr.readLine();
                 num = tp.split(" ");
                 if(i == 0) {
@@ -47,6 +48,8 @@ public class Configure {
 
 
                     }
+                } else {
+                    idxSelect = num.equals("1");
                 }
             }
             tr.close();

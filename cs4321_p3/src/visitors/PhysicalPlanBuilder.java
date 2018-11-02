@@ -1,5 +1,6 @@
 package visitors;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -8,6 +9,7 @@ import operators.*;
 import util.Configure;
 import util.DBCatalog;
 import util.Util;
+import util.indexInfo;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
@@ -38,8 +40,28 @@ public class PhysicalPlanBuilder {
     }
 
     public void visit(LogicalSelect logSelect)  {
-        logSelect.scan.accept(this);
-        root = new SelectOperator(logSelect.exp, (ScanOperator)root);
+
+        ScanOperator scanner = null;
+        if(DBCatalog.config.idxSelect) {
+            String tabName = logSelect.scan.table.tableName;
+            indexInfo info = DBCatalog.getindexInfo(tabName);
+            boolean idxSelect = Util.withIndexed(tabName, logSelect.exp);
+            if(idxSelect) {
+                System.out.println("============= Building Index Scan operator==============");
+
+                Integer[] range
+                        = Util.getLowAndHeigh(info.indexCol, logSelect.exp);
+                System.out.println("The range is " + range[0] + ", " + range[1]);
+                System.out.println("============= End Building Index Scan operator==============");
+                String idxPath = DBCatalog.indexdir + info.tab + '.' + info.indexCol;
+                File idxFile = new File(idxPath);
+                int attrIdx = DBCatalog.schemas.get(info.tab).indexOf(info.indexCol);
+                scanner = new IndexScanOperator(logSelect.scan.table, range[0], range[1], DBCatalog.idxConfig.bulkLoader.getBtree(),idxFile);
+            }
+
+        }
+        if(scanner == null) scanner = new ScanOperator(logSelect.scan.table);
+        root = new SelectOperator(logSelect.exp, scanner);
     }
 
     public void visit(LogicalProject logProj) {
@@ -89,6 +111,8 @@ public class PhysicalPlanBuilder {
                 }
                 root = new SortMergeJoin(logJoin.expression, child[0], child[1], outIdxs, inIdxs);
 
+            } else {
+                root = new BlockNestedJoin(logJoin.expression, child[0], child[1]);
             }
 
 
@@ -100,4 +124,7 @@ public class PhysicalPlanBuilder {
 
 
     }
+
+
+
 }
