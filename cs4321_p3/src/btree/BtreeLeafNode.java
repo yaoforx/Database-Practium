@@ -98,25 +98,21 @@ public class BtreeLeafNode extends BTreeNode {
 
     }
 
-    @Override
-    public void printTree(StringBuilder sb) {
-        sb.append(String.format("| Leaf@%d ", addr));
-        for(int i = 0; i < keys.size(); i++) {
-            sb.append(String.format("<%d[", keys.get(i)));
-            for(TupleIdentifier entry : dataEntries.get(i)) {
-                sb.append(String.format("(%d,%d)", entry.getPageNum(), entry.getTupleNum()));
-            }
-            sb.append("]>");
-        }
-        sb.append(" |");
-    }
+
+
+
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("LeafNode[\n");
-        for (ArrayList<TupleIdentifier> data : dataEntries) {
-            sb.append(data.toString() + "\n");
+        for(Integer key :  keys) {
+            sb.append("<[" + key +":");
+            for (ArrayList<TupleIdentifier> data : dataEntries) {
+                sb.append(data.toString() + "\n");
+
+            }
+            sb.append("]>");
         }
         sb.append("]\n");
         return sb.toString();

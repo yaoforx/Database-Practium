@@ -1,19 +1,19 @@
-Header Page info: tree has order 15, a root at address 220 and 225 leaf nodes 
+Header Page info: tree has order 15, a root at address 220 and 212 leaf nodes 
 
-Root node is: IndexNode with keys] and child addresses [213, 213, 213, 213, 213, 213, 213]
+Root node is: IndexNode with keys [1444, 2933, 4420, 5845, 7314, 8766] and child addresses [213, 214, 215, 216, 217, 218, 219]
 
 ---------Next layer is index nodes---------
-IndexNode with keys] and child addresses]
+IndexNode with keys [55, 112, 157, 202, 249, 289, 334, 374, 420, 469, 513, 555, 596, 645, 701, 751, 794, 835, 888, 939, 991, 1040, 1081, 1123, 1166, 1210, 1257, 1305, 1354, 1402] and child addresses]
 
-IndexNode with keys] and child addresses]
+IndexNode with keys [1495, 1541, 1585, 1630, 1689, 1747, 1802, 1848, 1895, 1938, 1983, 2025, 2072, 2120, 2166, 2219, 2262, 2313, 2365, 2409, 2460, 2507, 2546, 2591, 2637, 2698, 2737, 2787, 2840, 2891] and child addresses]
 
-IndexNode with keys] and child addresses]
+IndexNode with keys [2971, 3014, 3064, 3107, 3161, 3215, 3265, 3314, 3360, 3401, 3451, 3499, 3549, 3594, 3638, 3694, 3737, 3794, 3838, 3881, 3922, 3968, 4009, 4062, 4116, 4158, 4204, 4264, 4316, 4361] and child addresses]
 
-IndexNode with keys] and child addresses]
+IndexNode with keys [4457, 4497, 4545, 4587, 4636, 4682, 4729, 4777, 4822, 4869, 4912, 4945, 4993, 5045, 5092, 5138, 5190, 5239, 5291, 5341, 5387, 5431, 5471, 5516, 5562, 5615, 5658, 5704, 5749, 5801] and child addresses]
 
-IndexNode with keys] and child addresses]
+IndexNode with keys [5883, 5926, 5977, 6028, 6084, 6125, 6182, 6239, 6280, 6323, 6368, 6415, 6463, 6503, 6553, 6598, 6649, 6701, 6739, 6783, 6832, 6892, 6939, 6984, 7032, 7086, 7132, 7181, 7218, 7266] and child addresses]
 
-IndexNode with keys] and child addresses]
+IndexNode with keys [7362, 7402, 7448, 7491, 7531, 7573, 7625, 7670, 7715, 7761, 7805, 7850, 7890, 7935, 7983, 8037, 8096, 8144, 8192, 8233, 8276, 8324, 8372, 8423, 8470, 8516, 8568, 8615, 8670, 8715] and child addresses]
 
-IndexNode with keys] and child addresses]
+IndexNode with keys [8809, 8861, 8911, 8961, 9004, 9045, 9103, 9149, 9194, 9246, 9291, 9347, 9390, 9451, 9497, 9542, 9590, 9635, 9679, 9739, 9789, 9844, 9889, 9937, 9969] and child addresses]
 

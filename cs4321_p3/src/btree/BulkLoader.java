@@ -89,6 +89,7 @@ public class BulkLoader {
             e.printStackTrace();
         }
         ArrayList<BTreeNode> leaves = btree.createLeafLayer(entryMap);
+        //System.out.println("Leaf layer: "+leaves.toString());
         btree.layers.add(leaves);
         if(leaves.size() == 1) {
             btree.setRoot(leaves.get(0));
@@ -100,8 +101,10 @@ public class BulkLoader {
         btree.layers.add(indexLayer);
         currentNodeAddr += indexLayer.size();
         while(indexLayer.size() > 1) {
+           // System.out.println("adding index layer: "+indexLayer.toString());
             indexLayer = btree.createIndexLayer(currentNodeAddr, indexLayer);
             btree.layers.add(indexLayer);
+           // System.out.print(indexLayer.toString());
         }
         btree.setRoot(indexLayer.get(0));
 

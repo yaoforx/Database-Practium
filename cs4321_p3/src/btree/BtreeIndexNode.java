@@ -78,18 +78,7 @@ public class BtreeIndexNode extends BTreeNode {
 
     }
 
-    @Override
-    public void printTree(StringBuilder sb) {
-        sb.append(String.format("| Index@%d <", addr));
-        sb.append(String.format("c%d, ", children.get(0).addr));
-        for(int i = 0; i < keys.size(); i++) {
-            sb.append(String.format("k%d, ", keys.get(0)));
-            sb.append(String.format("c%d, ", children.get(i + 1).addr));
-        }
-        int size = sb.length();
-        sb.delete(size-2, size);
-        sb.append("> |");
-    }
+
 
     @Override
     public String toString() {
@@ -100,8 +89,9 @@ public class BtreeIndexNode extends BTreeNode {
         }
         sb.setLength(sb.length() - 2);
         sb.append("] and child addresses [");
-        for (BTreeNode child : children) {
-            sb.append(child.addr + ", ");
+        for (BTreeNode child : this.children) {
+
+            sb.append(Integer.valueOf(child.addr) + ", ");
         }
         sb.setLength(sb.length() - 2);
         sb.append("]\n");

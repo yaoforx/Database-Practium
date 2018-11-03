@@ -45,5 +45,5 @@ public abstract class BTreeNode {
      */
     public abstract int leafNum();
     public abstract void serialize(ByteBuffer buffer);
-    public abstract void printTree(StringBuilder sb);
+
 }

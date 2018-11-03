@@ -8,10 +8,12 @@ package util;
 public class TupleIdentifier {
     private final int pageNum;
     private final int tupleNum;
+   // private final int key;
 
     public TupleIdentifier(int page, int tuple) {
         this.pageNum = page;
         this.tupleNum = tuple;
+      //  this.key = key;
     }
 
     /**
@@ -32,7 +34,8 @@ public class TupleIdentifier {
 
     @Override
     public String toString() {
-       String sb = "< " + pageNum + ", " + tupleNum+" >";
-        return sb;
+        StringBuilder sb = new StringBuilder();
+        sb.append( "(" + pageNum + "," + tupleNum + ")" );
+        return sb.toString();
     }
 }

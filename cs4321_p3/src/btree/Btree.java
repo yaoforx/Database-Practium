@@ -148,6 +148,7 @@ public class Btree {
      */
     private BTreeNode deserializeIndexNode(FileChannel fc, ByteBuffer buffer, int page, Integer traversekey) {
         int numKeys = buffer.getInt(4);
+        numOfLeaves = buffer.getInt(4);
         List<Integer> keys = new ArrayList<>(numKeys);
         List<Integer> pointers = new ArrayList<>(numKeys + 1);
         int pos = 8;
@@ -276,6 +277,8 @@ public class Btree {
         while(childRemain > 0 && !(childRemain > 2 * order + 1 && childRemain < 3 * order + 2)) {
             int size = Math.min(2 * order + 1, childRemain);
             indexes.add(createIndexNodes(size, childPos, childlayer, currentAddr));
+            String temp = indexes.get(indexes.size() - 1).toString();
+
             currentAddr++;
             childPos += size;
             childRemain -= size;
@@ -305,8 +308,10 @@ public class Btree {
         List<BTreeNode> children = new ArrayList<>();
         for(int i = 0; i < size; i++) {
             children.add(childlayer.get(idx));
+            //addr++;
+            idx++;
         }
-        for(int i = 0; i < keys.size(); i++) {
+        for(int i = 0; i < size - 1; i++) {
             if(children.get(i+1) != null) {
                 keys.add(children.get(i + 1).getSmallest());
             }
@@ -326,6 +331,7 @@ public class Btree {
             int pos = pageSize * pageNum;
             fc.position(pos);
             fc.read(buffer);
+            buffer.flip();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -393,7 +399,10 @@ public class Btree {
             BTreeNode newRoot = deserializeNode(fc, buffer, root.addr, null);
             printer.println("Header Page info: tree has order "
                     + order +", a root at address " + root.getAddr() + " and "
-                    + root.getSize() + " leaf nodes ");
+                    + root.leafNum() + " leaf nodes ");
+            System.out.print("Header Page info: tree has order "
+                    + order +", a root at address " + root.getAddr() + " and "
+                    + root.leafNum() + " leaf nodes ");
             printer.println();
             printer.print("Root node is: ");
             printer.println(root.toString());
@@ -406,8 +415,10 @@ public class Btree {
             while (!nodeQueue.isEmpty()) {
                 int size = nodeQueue.size();
                 if (nodeQueue.peek() instanceof BtreeIndexNode) {
+                    System.out.println("---------Next layer is index nodes---------");
                     printer.println("---------Next layer is index nodes---------");
                 } else {
+                    System.out.println("---------Next layer is leaf nodes---------");
                     printer.println("---------Next layer is leaf nodes---------");
                 }
                 for (int i = 0; i < size; i++) {
