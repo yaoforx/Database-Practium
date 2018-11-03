@@ -3,10 +3,7 @@ package btree;
 import util.Table;
 import util.TupleIdentifier;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.*;
@@ -18,7 +15,6 @@ import java.util.*;
 public class Btree {
     private boolean clustered;
     private File indexfile;
-    private File input;
     private int order;
     private BTreeNode root;
     public ArrayList<ArrayList<BTreeNode>> layers;
@@ -42,8 +38,9 @@ public class Btree {
         this.order = order;
         this.root = null;
         this.indexfile = indexfile;
-        layers = new ArrayList<ArrayList<BTreeNode>> ();
-        this.input = input;
+        layers = new ArrayList<> ();
+
+
 
     }
     public BTreeNode getRoot(){
@@ -112,9 +109,9 @@ public class Btree {
             FileChannel fc = fis.getChannel();
             ByteBuffer buffer = ByteBuffer.allocate(pageSize);
             fc.read(buffer);
-            int rootAddr = buffer.getInt();
-            numOfLeaves = buffer.getInt();
-            int serialOrder = buffer.getInt();
+            int rootAddr = buffer.getInt(0);
+            numOfLeaves = buffer.getInt(4);
+            int serialOrder = buffer.getInt(8);
             if(serialOrder != order) throw new RuntimeException("Order does not match");
             root = deserializeNode(fc, buffer, rootAddr, null);
         } catch (IOException e) {
@@ -169,7 +166,7 @@ public class Btree {
             pos += 4;
         }
         if(traversekey == null) {// we arr only exploring current node and its children
-            List<BTreeNode> childs = new ArrayList<BTreeNode>(pointers.size());
+            List<BTreeNode> childs = new ArrayList<>(pointers.size());
 
             for(int i = 0; i < childs.size(); i++)
                 childs.add(deserializeNode(fc, buffer, pointers.get(i), traversekey));
@@ -190,7 +187,7 @@ public class Btree {
         int numDataEntry = buffer.getInt(4);
         int pos = 8;
         List<Integer> keys = new ArrayList<>();
-        List<ArrayList<TupleIdentifier>> entries = new ArrayList<ArrayList<TupleIdentifier>>();
+        List<ArrayList<TupleIdentifier>> entries = new ArrayList<>();
         for(int i = 0; i < numDataEntry; i++) {
             keys.add(buffer.getInt(pos));
             pos += 4;
@@ -223,7 +220,6 @@ public class Btree {
         int keyPos = 0;
         //There are more keys to process and we are not under-filling from second to last
         while(keyLeft > 0 && !(keyLeft > 2 * order && keyLeft < 3 * order)) {
-            List<ArrayList<TupleIdentifier>> entries = new ArrayList<>();
             int filling = Math.min(2 * order, keyLeft);
             leaves.add(createLeafNodes(filling,keyPos, sortedMap, currentAddr));
             keyPos += filling;
@@ -257,7 +253,9 @@ public class Btree {
         List<ArrayList<TupleIdentifier>> entries = new ArrayList<>();
         for(int i = 0; i < size; i++) {
             keys.add((Integer) sortedMap.keySet().toArray()[idx]);
-            entries.add(sortedMap.get(idx));
+
+            entries.add(sortedMap.get(keys.get(i)));
+
             idx++;
         }
         return new BtreeLeafNode(currentAddr, keys, entries, order);
@@ -339,30 +337,7 @@ public class Btree {
         buffer.put(new byte[pageSize]);
         buffer.clear();
     }
-    @Override
-    public String toString(){
-        StringBuilder sb = new StringBuilder();
-        sb.append(String.format("Index on %s\n", indexedCol));
-        Queue<BTreeNode> lastLayer = new LinkedList<BTreeNode>();
-        Queue<BTreeNode> nextLayer = new LinkedList<BTreeNode>();
-        BTreeNode current = null;
-        lastLayer.add(root);
-        while(lastLayer.peek() != null) {
-            while((current = lastLayer.poll()) != null) {
-                current.printTree(sb);
-                List<BTreeNode> children = current.getChildren();
-                if(children != null) {
-                    for(BTreeNode child : children) {
-                        nextLayer.add(child);
-                    }
-                }
-            }
-            sb.append("\n");
-            lastLayer = nextLayer;
-            nextLayer = new LinkedList<BTreeNode>();
-        }
-        return sb.toString();
-    }
+
     public BTreeNode getLeafNode(int idx) {
         //smallest lead node will always on page 1
         int page = idx;
@@ -405,6 +380,55 @@ public class Btree {
         }
     }
     public void setRoot(BTreeNode node) {root = node;}
+
+
+    public void dump(PrintStream printer) {
+        Queue<BTreeNode> nodeQueue = new LinkedList<>();
+        try {
+
+            FileInputStream fis = new FileInputStream(indexfile);
+            FileChannel fc = fis.getChannel();
+            ByteBuffer buffer = ByteBuffer.allocate(pageSize);
+            read(fc, buffer, root.addr);
+            BTreeNode newRoot = deserializeNode(fc, buffer, root.addr, null);
+            printer.println("Header Page info: tree has order "
+                    + order +", a root at address " + root.getAddr() + " and "
+                    + root.getSize() + " leaf nodes ");
+            printer.println();
+            printer.print("Root node is: ");
+            printer.println(root.toString());
+
+            for (BTreeNode addr : root.getChildren()) {
+
+                nodeQueue.offer(deserializeNode(fc, buffer, addr.getAddr(), null));
+            }
+
+            while (!nodeQueue.isEmpty()) {
+                int size = nodeQueue.size();
+                if (nodeQueue.peek() instanceof BtreeIndexNode) {
+                    printer.println("---------Next layer is index nodes---------");
+                } else {
+                    printer.println("---------Next layer is leaf nodes---------");
+                }
+                for (int i = 0; i < size; i++) {
+                    BTreeNode curr = nodeQueue.poll();
+                    printer.println(curr);
+                    if (curr instanceof BtreeIndexNode) {
+                        for (BTreeNode addr : curr.getChildren()) {
+                            nodeQueue.offer(deserializeNode(fc, buffer, addr.getAddr(),null));
+                        }
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
 
 
 

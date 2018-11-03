@@ -1,5 +1,5 @@
-/path/to/input
-/path/to/output
-/path/to/tempdir
+/Users/yaoxiao/Database-Practium/cs4321_p3/samples/input
+/Users/yaoxiao/Database-Practium/cs4321_p3/output
+/Users/yaoxiao/Database-Practium/cs4321_p3/tempdir
 1
 0

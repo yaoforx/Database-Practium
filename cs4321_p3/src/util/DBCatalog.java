@@ -55,8 +55,8 @@ public class DBCatalog {
         querydir = inputdir + "/queries.sql";
        tempdir = temp + "/";
         config = new Configure(inputdir + "plan_builder_config.txt");
-        indexdir = dbdir + "indexes/";
-        indexInfo = dbdir + "index_info.txt";
+        indexdir = input + "/db/" + "indexes/";
+        indexInfo = input + "/db/" + "index_info.txt";
         createSchema();
         createIndexInfo();
         idxConfig = new indexConfig();

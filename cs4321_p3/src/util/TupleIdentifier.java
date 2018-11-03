@@ -29,4 +29,10 @@ public class TupleIdentifier {
     public int getTupleNum(){
         return tupleNum;
     }
+
+    @Override
+    public String toString() {
+       String sb = "< " + pageNum + ", " + tupleNum+" >";
+        return sb;
+    }
 }

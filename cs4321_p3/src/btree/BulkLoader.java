@@ -15,9 +15,10 @@ import util.TupleIdentifier;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeMap;
+import java.io.PrintStream;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.util.*;
 
 /**
  * Bulk load Class to load input file and process it as an index file
@@ -43,12 +44,14 @@ public class BulkLoader {
      * @param order B+ tree order
      * @param input input file
      */
-    public BulkLoader(boolean clustered, File indexfile, Integer IndexedCol, int order, File input) {
+    public BulkLoader(boolean clustered, File indexfile, Integer IndexedCol, int order, File input) throws IOException {
         this.indexfile = indexfile;
         this.btree = new Btree(IndexedCol, clustered, order,indexfile, input);
         //this.indexScan = new IndexScanOperator(table, lowKey, highKey, btree, indexfile);
         this.isclustered = clustered;
         this.IndexedCol = IndexedCol;
+        this.tr = new TupleReader(input);
+        bulkLoad();
 
     }
 
@@ -66,9 +69,11 @@ public class BulkLoader {
             while ((tps = tr.readNextPage()) != null) {
                 for (int currTupleId = 0; currTupleId < tps.size(); currTupleId++) {
                     Tuple currTuple = tps.get(currTupleId);
+
                     int key = currTuple.tuple.get(IndexedCol);
                     if (entryMap.containsKey(key)) {
                         ArrayList<TupleIdentifier> target = entryMap.get(key);
+
                         target.add(new TupleIdentifier(currPageId, currTupleId));
                     } else {
                         ArrayList<TupleIdentifier> newEntry = new  ArrayList<>();
@@ -106,32 +111,5 @@ public class BulkLoader {
         return btree;
     }
 
-    /**
-     * Helper function to find the index of the column
-     * @param element
-     * @param schema
-     * @return the index of the column
-     */
 
-    static public int getColIdx(String element, List<String> schema) {
-        int idx = schema.indexOf(element);
-
-        if (idx != -1) {
-            return idx;
-        }
-
-        else {
-
-            for (int i = 0; i < schema.size(); i++) {
-                String col = schema.get(i);
-                col = col.split("\\.")[1];
-
-                if (col.equals(element.split("\\.")[1])) {
-                    return i;
-                }
-            }
-
-        }
-        return -1;
-    }
 }

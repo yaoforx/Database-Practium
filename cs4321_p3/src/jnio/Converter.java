@@ -14,7 +14,7 @@ public class Converter {
     private TupleReader reader;
     private BufferedWriter writer;
     private TupleWriter bwriter;
-    private NormalTupleReader breader;
+   // private NormalTupleReader breader;
     String input = "/Users/yaoxiao/Database-Practium/cs4321_p2/samples/input/db/data/";
     String output = "/Users/yaoxiao/Database-Practium/cs4321_p2/samples/input/db/data/";
     File in;

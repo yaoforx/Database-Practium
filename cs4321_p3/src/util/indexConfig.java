@@ -13,15 +13,17 @@ import visitors.PhysicalPlanBuilder;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Arrays;
 
 import net.sf.jsqlparser.schema.Table;
 public class indexConfig {
-    public BulkLoader bulkLoader;
-    public indexConfig(){
+    public static BulkLoader bulkLoader;
+
+    public static void buildIndex() throws IOException{
 
 
-        File idxFile = new File(DBCatalog.indexdir);
+      //  File idxFile = new File(DBCatalog.indexdir);
         for(String set : DBCatalog.indexes.keySet()) {
             String tabPath = DBCatalog.dbdir + set;
             indexInfo info = DBCatalog.indexes.get(set);
@@ -40,7 +42,7 @@ public class indexConfig {
                 log.accept(builder);
                 Operator root = builder.getRoot();
                 try{
-                    TupleWriter tw = new TupleWriter(tabPath);
+                    TupleWriter tw = new TupleWriter(tabPath + "_test");
                     root.dump(tw);
                     tw.close();
                 } catch (IOException e) {
@@ -48,9 +50,13 @@ public class indexConfig {
                 }
 
             }
+            System.out.println("Curretnly is building index for table "+ idxedPath);
 
             File indexout = new File(idxedPath);
             bulkLoader = new BulkLoader(info.clustered, indexout, idxCol, info.order, new File(tabPath));
+            bulkLoader.getBtree().serialize();
+            PrintStream ps = new PrintStream(new File(idxedPath + "_humanreadableTest"));
+           bulkLoader.getBtree().dump(ps);
 
         }
 

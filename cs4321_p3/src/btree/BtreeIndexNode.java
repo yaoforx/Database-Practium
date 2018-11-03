@@ -7,13 +7,14 @@ import java.util.TreeMap;
 public class BtreeIndexNode extends BTreeNode {
     List<BTreeNode> children;
 
-    List<Integer> pointers;
+    public List<Integer> pointers;
     int minElement;
 
 
     public BtreeIndexNode(List<Integer> keys, List<BTreeNode> children, int addr, int order) {
         super(addr, keys, order);
         this.children = children;
+
     }
     public void setPointers( List<Integer> pointers) {
         this.pointers  = pointers;
@@ -89,4 +90,22 @@ public class BtreeIndexNode extends BTreeNode {
         sb.delete(size-2, size);
         sb.append("> |");
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("IndexNode with keys [");
+        for (Integer key : keys) {
+            sb.append(key + ", ");
+        }
+        sb.setLength(sb.length() - 2);
+        sb.append("] and child addresses [");
+        for (BTreeNode child : children) {
+            sb.append(child.addr + ", ");
+        }
+        sb.setLength(sb.length() - 2);
+        sb.append("]\n");
+        return sb.toString();
+    }
+
 }

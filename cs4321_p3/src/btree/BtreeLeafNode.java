@@ -1,5 +1,6 @@
 package btree;
 
+import util.Tuple;
 import util.TupleIdentifier;
 
 import java.lang.reflect.Array;
@@ -8,11 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BtreeLeafNode extends BTreeNode {
-    List<ArrayList<TupleIdentifier>> dataEntries;
+    private List<ArrayList<TupleIdentifier>> dataEntries;
 
     public BtreeLeafNode(int addr, List<Integer> keys, List<ArrayList<TupleIdentifier>> data, int order) {
         super(addr, keys, order);
-        this.dataEntries = data;
+        this.dataEntries = new ArrayList<>(data);
+
     }
     @Override
     public boolean isLeafNode() {
@@ -79,11 +81,12 @@ public class BtreeLeafNode extends BTreeNode {
         buffer.putInt(0,0);//0 represents leaf node
         buffer.putInt(4, dataEntries.size());
         int index = 8;
+
         for(int i = 0; i < keys.size(); i++) {
             List<TupleIdentifier> entry = dataEntries.get(i);
             buffer.putInt(index, keys.get(i));
             index += 4;
-            buffer.putInt(4, entry.size());
+            buffer.putInt(index, entry.size());
             index += 4;
             for(TupleIdentifier info : entry) {
                 buffer.putInt(index, info.getPageNum());
@@ -106,5 +109,16 @@ public class BtreeLeafNode extends BTreeNode {
             sb.append("]>");
         }
         sb.append(" |");
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("LeafNode[\n");
+        for (ArrayList<TupleIdentifier> data : dataEntries) {
+            sb.append(data.toString() + "\n");
+        }
+        sb.append("]\n");
+        return sb.toString();
     }
 }
