@@ -169,7 +169,7 @@ public class Btree {
         if(traversekey == null) {// we arr only exploring current node and its children
             List<BTreeNode> childs = new ArrayList<>(pointers.size());
 
-            for(int i = 0; i < childs.size(); i++)
+            for(int i = 0; i < pointers.size(); i++)
                 childs.add(deserializeNode(fc, buffer, pointers.get(i), traversekey));
             return new BtreeIndexNode(keys, childs, page, order);
         } else {

@@ -32,6 +32,7 @@ public class indexConfig {
 
             //if the index is to be clustered, start by sorting the relation on the desired attribute and
             //replacing the old (unsorted) relation le with the new (sorted) relation le. Then build the index.
+
             if(info.clustered) {
                 PhysicalPlanBuilder builder = new PhysicalPlanBuilder();
                 Table table = new Table(null, set);
@@ -42,7 +43,8 @@ public class indexConfig {
                 log.accept(builder);
                 Operator root = builder.getRoot();
                 try{
-                    TupleWriter tw = new TupleWriter(tabPath + "_test");
+                    tabPath += "_clustered";
+                    TupleWriter tw = new TupleWriter(tabPath);
                     root.dump(tw);
                     tw.close();
                 } catch (IOException e) {

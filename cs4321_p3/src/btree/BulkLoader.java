@@ -73,7 +73,6 @@ public class BulkLoader {
                     int key = currTuple.tuple.get(IndexedCol);
                     if (entryMap.containsKey(key)) {
                         ArrayList<TupleIdentifier> target = entryMap.get(key);
-
                         target.add(new TupleIdentifier(currPageId, currTupleId));
                     } else {
                         ArrayList<TupleIdentifier> newEntry = new  ArrayList<>();

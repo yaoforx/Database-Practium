@@ -90,7 +90,6 @@ public class BtreeIndexNode extends BTreeNode {
         sb.setLength(sb.length() - 2);
         sb.append("] and child addresses [");
         for (BTreeNode child : this.children) {
-
             sb.append(Integer.valueOf(child.addr) + ", ");
         }
         sb.setLength(sb.length() - 2);

@@ -106,13 +106,11 @@ public class BtreeLeafNode extends BTreeNode {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("LeafNode[\n");
-        for(Integer key :  keys) {
-            sb.append("<[" + key +":");
-            for (ArrayList<TupleIdentifier> data : dataEntries) {
-                sb.append(data.toString() + "\n");
-
-            }
-            sb.append("]>");
+        for(int i = 0; i < keys.size(); i++) {
+            sb.append("<[" + keys.get(i) +":");
+            for(int j = 0; j < dataEntries.get(i).size(); j++)
+                sb.append(dataEntries.get(i).get(j));
+            sb.append("]>\n");
         }
         sb.append("]\n");
         return sb.toString();
