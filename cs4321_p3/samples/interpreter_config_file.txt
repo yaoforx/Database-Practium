@@ -2,4 +2,4 @@
 /Users/yaoxiao/Database-Practium/cs4321_p3/output
 /Users/yaoxiao/Database-Practium/cs4321_p3/tempdir
 1
-0
+1

@@ -31,7 +31,7 @@ public class Btree {
      * @param cluster true if it is a cluster tree
      * @param order order of the tree
      */
-    public Btree( Integer colName, boolean cluster, int order, File indexfile, File input) {
+    public Btree(Integer colName, boolean cluster, int order, File indexfile, File input) {
 
         this.indexedCol = colName;
         this.clustered = cluster;
@@ -396,11 +396,8 @@ public class Btree {
             FileChannel fc = fis.getChannel();
             ByteBuffer buffer = ByteBuffer.allocate(pageSize);
             read(fc, buffer, root.addr);
-            BTreeNode newRoot = deserializeNode(fc, buffer, root.addr, null);
+
             printer.println("Header Page info: tree has order "
-                    + order +", a root at address " + root.getAddr() + " and "
-                    + root.leafNum() + " leaf nodes ");
-            System.out.print("Header Page info: tree has order "
                     + order +", a root at address " + root.getAddr() + " and "
                     + root.leafNum() + " leaf nodes ");
             printer.println();
@@ -415,10 +412,10 @@ public class Btree {
             while (!nodeQueue.isEmpty()) {
                 int size = nodeQueue.size();
                 if (nodeQueue.peek() instanceof BtreeIndexNode) {
-                    System.out.println("---------Next layer is index nodes---------");
+
                     printer.println("---------Next layer is index nodes---------");
                 } else {
-                    System.out.println("---------Next layer is leaf nodes---------");
+
                     printer.println("---------Next layer is leaf nodes---------");
                 }
                 for (int i = 0; i < size; i++) {

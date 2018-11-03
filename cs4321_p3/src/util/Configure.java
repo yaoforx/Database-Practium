@@ -49,7 +49,7 @@ public class Configure {
 
                     }
                 } else {
-                    idxSelect = num.equals("1");
+                    idxSelect = num[0].equals("1");
                 }
             }
             tr.close();

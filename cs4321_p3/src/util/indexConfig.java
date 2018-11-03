@@ -15,10 +15,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import net.sf.jsqlparser.schema.Table;
 public class indexConfig {
-    public static BulkLoader bulkLoader;
+    public static HashMap<String, BulkLoader> loaders;
+    public indexConfig(){
+        loaders = new HashMap<>();
+    }
 
     public static void buildIndex() throws IOException{
 
@@ -55,10 +59,11 @@ public class indexConfig {
             System.out.println("Curretnly is building index for table "+ idxedPath);
 
             File indexout = new File(idxedPath);
-            bulkLoader = new BulkLoader(info.clustered, indexout, idxCol, info.order, new File(tabPath));
+            BulkLoader bulkLoader = new BulkLoader(info.clustered, indexout, idxCol, info.order, new File(tabPath));
+            if(!loaders.containsKey(set)) loaders.put(set, bulkLoader);
             bulkLoader.getBtree().serialize();
             PrintStream ps = new PrintStream(new File(idxedPath + "_humanreadableTest"));
-           bulkLoader.getBtree().dump(ps);
+            bulkLoader.getBtree().dump(ps);
 
         }
 

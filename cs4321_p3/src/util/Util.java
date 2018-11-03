@@ -96,6 +96,7 @@ public class Util {
     public static String getColName(String tabCol) {
         return tabCol.split("\\.")[1];
     }
+
     public static Integer[] getLowAndHeigh(String idxCol, Expression expression) {
         if (expression == null) return null;
         List<Expression> conds = getAndExpressions(expression);

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import btree.Btree;
 import net.sf.jsqlparser.expression.Expression;
 import operators.*;
 import util.Configure;
@@ -56,7 +57,8 @@ public class PhysicalPlanBuilder {
                 String idxPath = DBCatalog.indexdir + info.tab + '.' + info.indexCol;
                 File idxFile = new File(idxPath);
                 int attrIdx = DBCatalog.schemas.get(info.tab).indexOf(info.indexCol);
-                scanner = new IndexScanOperator(logSelect.scan.table, range[0], range[1], DBCatalog.idxConfig.bulkLoader.getBtree(),idxFile);
+                Btree btree =  DBCatalog.idxConfig.loaders.get(info.tab).getBtree();
+                scanner = new IndexScanOperator(logSelect.scan.table, range[0], range[1], btree,idxFile);
             }
 
         }
@@ -120,6 +122,8 @@ public class PhysicalPlanBuilder {
             root = new TupleNestedJoin(logJoin.expression, child[0], child[1]);
         } else if(DBCatalog.config.BNLJ == 1) {
             root = new BlockNestedJoin(logJoin.expression, child[0], child[1]);
+        } else {
+            root = new TupleNestedJoin(logJoin.expression, child[0], child[1]);
         }
 
 

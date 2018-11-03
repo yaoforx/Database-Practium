@@ -54,21 +54,18 @@ public class IndexScanOperator extends ScanOperator {
 
     @Override
     public Tuple getNextTuple() {
-        Tuple tuple = getNextTuple();
-        Tuple res = null;
+        Tuple tuple = null;
+
         while(true) {
             if(isClustered) {
-
+                tuple = super.getNextTuple();
                 if(tuple == null) {
                     return null;
                 }
                 if(highKey != null && tuple.tuple.get(indexedCol) > highKey) {
                     return null;
                 }
-                res = tuple;
-
-                if(res != null) return res;
-                tuple = getNextTuple();
+                return tuple;
             } else {
                 if(keyPos >= currentLeafNode.numOfKeys()) {
                     if(currentLeafNode.getAddr() + 1 > btree.numOfLeaves) return null;//explored all the leaves
@@ -86,11 +83,11 @@ public class IndexScanOperator extends ScanOperator {
                 TupleIdentifier curtpi = ((BtreeLeafNode) currentLeafNode).getTupleInfo(keyPos, tupPos);
                 tupPos++;
                 try {
-                    res = super.lines.read(curtpi);
+                    tuple = super.lines.read(curtpi);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                if(res != null) return res;
+                if(tuple != null) return tuple;
             }
         }
     }

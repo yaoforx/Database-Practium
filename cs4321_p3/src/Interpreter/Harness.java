@@ -23,31 +23,23 @@ import java.nio.file.Paths;
  */
 public class Harness {
 
-    private static class InterpreterConfig {
+    private static class HarnessConfig {
         private String inPath;
         private String outPath;
         private String tempPath;
-        private boolean shouldBuildIdx;
-        private boolean shouldEvaluate;
+        private boolean BuildIdx;
+        private boolean Evaluate;
 
-        public InterpreterConfig(String configPath) throws IOException {
+        public HarnessConfig(String configPath) throws IOException {
             BufferedReader br =  new BufferedReader(new FileReader(configPath));
             inPath = br.readLine();
             outPath = br.readLine();
             tempPath = br.readLine();
             int value = Integer.parseInt(br.readLine());
-            shouldBuildIdx = value == 0 ? false : true;
+            BuildIdx = value == 0 ? false : true;
             value = Integer.parseInt(br.readLine());
-            shouldEvaluate = value == 0 ? false : true;
+            Evaluate = value == 0 ? false : true;
             br.close();
-        }
-
-        private void print() {
-            System.out.println(this.inPath);
-            System.out.println(this.outPath);
-            System.out.println(this.tempPath);
-            System.out.println(this.shouldBuildIdx);
-            System.out.println(this.shouldEvaluate);
         }
 
     }
@@ -60,17 +52,17 @@ public class Harness {
      * @throws IOException If an I/O error occurs.
      */
     public void execute(String configPath) throws IOException {
-        InterpreterConfig config = new InterpreterConfig(configPath);
+        HarnessConfig config = new HarnessConfig(configPath);
         DBCatalog.setDBCatalog(config.inPath, config.outPath, config.tempPath);
         DBCatalog.getDB();
 
-        if (config.shouldBuildIdx) {
+        if (config.BuildIdx) {
             System.out.println("Building index");
             boolean withHumanReadable = true;
             indexConfig.buildIndex();
         }
 
-        if (config.shouldEvaluate) {
+        if (config.Evaluate) {
             System.out.println("Evaluating query");
             processQuery(config.inPath, config.outPath, config.tempPath);
         }
@@ -115,11 +107,11 @@ public class Harness {
 
             }
             int num = 1;
-//            while(num < counter) {
-//                Converter convert = new Converter(outputPath +"/query" + num);
-//                convert.binaryToReadable();
-//                num++;
-//            }
+            while(num < counter) {
+                Converter convert = new Converter(outputPath +"/query" + num);
+                convert.binaryToReadable();
+                num++;
+            }
 
 
 

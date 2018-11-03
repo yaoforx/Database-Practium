@@ -18,11 +18,11 @@ public class Converter {
     String input = "/Users/yaoxiao/Database-Practium/cs4321_p2/samples/input/db/data/";
     String output = "/Users/yaoxiao/Database-Practium/cs4321_p2/samples/input/db/data/";
     File in;
-//    public Converter (String path) throws IOException {
-//        in  = new File(path + "/");
-//        writer = new BufferedWriter(new FileWriter(path  +  "_humanreadable"));
-//       // binaryToReadable();
-//    }
+    public Converter (String path) throws IOException {
+        in  = new File(path + "/");
+        writer = new BufferedWriter(new FileWriter(path  +  "_humanreadable"));
+       // binaryToReadable();
+    }
     public void binaryToReadable() {
         Tuple tp;
 
