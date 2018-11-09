@@ -1,5 +1,9 @@
 package util;
 
+/**
+ * Class for every table to record its index information
+ * @author  Yao Xiao
+ */
 public class indexInfo {
     public String tab;
     public String indexCol;

@@ -101,7 +101,9 @@ public class Btree {
     }
 
     /**
-     * Deserialize the b+ tree and set up the root
+     * Deserialize the b+ tree and from the root
+     * Not in use because we need to match output format
+     * but can be used if want to deserialize a whole b+tree at a time
      */
     public void deserialize(){
         try {
@@ -254,9 +256,7 @@ public class Btree {
         List<ArrayList<TupleIdentifier>> entries = new ArrayList<>();
         for(int i = 0; i < size; i++) {
             keys.add((Integer) sortedMap.keySet().toArray()[idx]);
-
             entries.add(sortedMap.get(keys.get(i)));
-
             idx++;
         }
         return new BtreeLeafNode(currentAddr, keys, entries, order);
@@ -277,8 +277,6 @@ public class Btree {
         while(childRemain > 0 && !(childRemain > 2 * order + 1 && childRemain < 3 * order + 2)) {
             int size = Math.min(2 * order + 1, childRemain);
             indexes.add(createIndexNodes(size, childPos, childlayer, currentAddr));
-            String temp = indexes.get(indexes.size() - 1).toString();
-
             currentAddr++;
             childPos += size;
             childRemain -= size;

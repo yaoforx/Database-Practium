@@ -4,26 +4,42 @@ import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.TreeMap;
 
+/**
+ * Class for serializing and deserialize a B+tree Index Node
+ * @author Yao Xiao
+ */
 public class BtreeIndexNode extends BTreeNode {
     List<BTreeNode> children;
 
     public List<Integer> pointers;
-    int minElement;
-
 
     public BtreeIndexNode(List<Integer> keys, List<BTreeNode> children, int addr, int order) {
         super(addr, keys, order);
         this.children = children;
 
     }
+
+    /**
+     * A method to set up pointers, not in use
+     * @param pointers
+     */
     public void setPointers( List<Integer> pointers) {
         this.pointers  = pointers;
     }
+
+    /**
+     * True if this is a leaf Node
+     * @return always false;
+     */
     @Override
     public boolean isLeafNode() {
         return false;
     }
 
+    /**
+     * get all children of this index node
+     * @return a list of BtreeNode
+     */
     @Override
     public List<BTreeNode> getChildren() {
         return children;
@@ -36,7 +52,7 @@ public class BtreeIndexNode extends BTreeNode {
 
     /**
      * get the total size of the subtree including its children
-     * @return
+     * @return size
      */
     @Override
     public int getSize() {
@@ -49,7 +65,7 @@ public class BtreeIndexNode extends BTreeNode {
 
     /**
      * get the total size of the subtree leaves
-     * @return
+     * @return number of leaves under this node
      */
     @Override
     public int leafNum() {
@@ -60,6 +76,10 @@ public class BtreeIndexNode extends BTreeNode {
         return sum;
     }
 
+    /**
+     * serialize the Index node with buffer
+     * @param buffer
+     */
     @Override
     public void serialize(ByteBuffer buffer) {
         buffer.putInt(0, 1);
@@ -79,7 +99,10 @@ public class BtreeIndexNode extends BTreeNode {
     }
 
 
-
+    /**
+     * Method for matching with expected output format
+     * @return string format of Index node
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

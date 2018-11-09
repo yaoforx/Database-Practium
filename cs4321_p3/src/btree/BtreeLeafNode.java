@@ -8,7 +8,14 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class for serializing a Btree Leaf Node
+ * @author  Yao Xiao
+ */
 public class BtreeLeafNode extends BTreeNode {
+    /**
+     * A list of Rids under this leaf node
+     */
     private List<ArrayList<TupleIdentifier>> dataEntries;
 
     public BtreeLeafNode(int addr, List<Integer> keys, List<ArrayList<TupleIdentifier>> data, int order) {
@@ -56,7 +63,7 @@ public class BtreeLeafNode extends BTreeNode {
 
     /**
      * lead node size is 1
-     * @return
+     * @return 1
      */
     @Override
     public int getSize() {
@@ -65,7 +72,7 @@ public class BtreeLeafNode extends BTreeNode {
 
     /**
      * lead node has one leaf
-     * @return
+     * @return 1
      */
     @Override
     public int leafNum() {
@@ -100,7 +107,10 @@ public class BtreeLeafNode extends BTreeNode {
 
 
 
-
+    /**
+     * Method for matching with expected output format
+     * @return string format of Leaf node
+     */
 
     @Override
     public String toString() {

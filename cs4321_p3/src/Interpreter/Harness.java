@@ -57,13 +57,10 @@ public class Harness {
         DBCatalog.getDB();
 
         if (config.BuildIdx) {
-            System.out.println("Building index");
-            boolean withHumanReadable = true;
             indexConfig.buildIndex();
         }
 
         if (config.Evaluate) {
-            System.out.println("Evaluating query");
             processQuery(config.inPath, config.outPath, config.tempPath);
         }
 
@@ -121,18 +118,18 @@ public class Harness {
     }
 
 
-//    public static void main(String args[]) {
-//        if(args.length < 2) {
+//    public static void main(String args[]) throws IOException {
+//        if(args.length < 1) {
 //            throw new IllegalArgumentException("Not enough argument!");
 //        }
 //        Harness interpreter = new Harness();
-//        interpreter.harness(args[0],args[1], args[2]);
+//        interpreter.execute(args[0]);
 //
 //    }
     @Test
     public void main() throws IOException{
        Harness itpr = new Harness();
-        itpr.execute("/Users/yaoxiao/Database-Practium/cs4321_p3/samples/interpreter_config_file.txt");
+        itpr.execute("/Users/yaoxiao/cs4321/cs4321_p3/samples/interpreter_config_file.txt");
        // itpr.harness("/Users/yaoxiao/Database-Practium/cs4321_p2/samples/input","/Users/yaoxiao/Database-Practium/cs4321_p2", "/Users/yaoxiao/Database-Practium/cs4321_p2");
 
     }

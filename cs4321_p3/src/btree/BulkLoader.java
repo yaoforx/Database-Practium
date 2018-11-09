@@ -2,32 +2,22 @@ package btree;
 
 
 import jnio.TupleReader;
-import jnio.TupleWriter;
-import net.sf.jsqlparser.statement.create.table.Index;
-import operators.IndexScanOperator;
-import operators.Operator;
-import operators.SortInMemory;
-import operators.SortOperator;
-import util.DBCatalog;
-import util.Table;
+
 import util.Tuple;
 import util.TupleIdentifier;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
+
 import java.util.*;
 
 /**
  * Bulk load Class to load input file and process it as an index file
+ * Construct a b+tree
  * @author Yao Xiao
  */
 public class BulkLoader {
-    private File indexfile;
     private static final int pageSize = 4096;
-    private Operator indexScan;
     private Btree btree;
     private Integer IndexedCol;
     private File input;
@@ -45,12 +35,11 @@ public class BulkLoader {
      * @param input input file
      */
     public BulkLoader(boolean clustered, File indexfile, Integer IndexedCol, int order, File input) throws IOException {
-        this.indexfile = indexfile;
         this.btree = new Btree(IndexedCol, clustered, order,indexfile, input);
-        //this.indexScan = new IndexScanOperator(table, lowKey, highKey, btree, indexfile);
         this.isclustered = clustered;
         this.IndexedCol = IndexedCol;
         this.tr = new TupleReader(input);
+        this.input = input;
         bulkLoad();
 
     }

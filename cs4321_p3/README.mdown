@@ -9,6 +9,11 @@ Used **Nested Join Loop algorithms** to formulate tuples that satisfy conditions
 Used **Block Nested Loop Join algorithms** to simulate main memory size  defined by configuration file. Load outer relation into 'main memory' for every innner relation. Reset inner relation whenever it is exausted and outer relation has not finished. See operators/BlockNestedJoin.java. <br>
 Used **Sort Merge Join algorithms** to simulate main memory size  defined by configuration file. Assign sort operator to both left and right children. After two relations have been sorted, merge them by finding qualified tuple and reset inner relation by tuple index. See operators/SortMergeJoin.java. <br>
 Used **External sort algorithms** to simulate main memory size  defined by configuration file. Sort relation by multi passed and run. Renamed the combined result as 'id_result' where id is an random integer. See operators/ExternalSort.java. <br>
+**operators/IndexScanOperater.java** has been implemented for extending scan operator adapting B+ tree indexing, if configuration file specifies using indexscan, the **visitors/PhysicalPlanBuilder.java** will assign IndexScanOperator instead of full scan operator, otherwise default is full scan operator.
+## B+ tree implementation
+The B+ tree is built recursively based on its order. **btree/Btree.java** is the top class of building a B+ tree utilizing **bree/BtreeIndexNode.java, bree/BreeLeafNode.java** <br>
+Also, there is **bree/BulkLoader.java** class to handle calling **btree/Btree.java** to buld tree based on Index requirement. If it is not clustered, it will directly build B+tree by calling **btree/Btree.java**, otherwise(clustered), it will sort table first and then build the B+tree.<br>
+On the top of B+tree implementation, **util/IndexConfig.java** is responsible for storing information of every table's indexing. In this way, we can utilize this class to access every B+ tree, and it is useful for **visitors/PhysicalPlanBuilder.java**
 ## Input and Output
 Our interpreter program takes in 'input directory' as 'cs4321/project1/samples/input' and processes 'input directory' in 'util/DBCatalog.java'. If program having any trouble in finding correct path, please let us know.
 ##Logical Operator

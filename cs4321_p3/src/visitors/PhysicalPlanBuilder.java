@@ -1,18 +1,16 @@
 package visitors;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+
 
 import btree.Btree;
 import net.sf.jsqlparser.expression.Expression;
 import operators.*;
-import util.Configure;
+
 import util.DBCatalog;
 import util.Util;
 import util.indexInfo;
 
-import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +26,6 @@ public class PhysicalPlanBuilder {
     public PhysicalPlanBuilder() {
 
     }
-
-
     public operators.Operator getRoot() {
 
         return root;
@@ -48,15 +44,10 @@ public class PhysicalPlanBuilder {
             indexInfo info = DBCatalog.getindexInfo(tabName);
             boolean idxSelect = Util.withIndexed(tabName, logSelect.exp);
             if(idxSelect) {
-                System.out.println("============= Building Index Scan operator==============");
-
                 Integer[] range
                         = Util.getLowAndHeigh(info.indexCol, logSelect.exp);
-                System.out.println("The range is " + range[0] + ", " + range[1]);
-                System.out.println("============= End Building Index Scan operator==============");
                 String idxPath = DBCatalog.indexdir + info.tab + '.' + info.indexCol;
                 File idxFile = new File(idxPath);
-                int attrIdx = DBCatalog.schemas.get(info.tab).indexOf(info.indexCol);
                 Btree btree =  DBCatalog.idxConfig.loaders.get(info.tab).getBtree();
                 scanner = new IndexScanOperator(logSelect.scan.table, range[0], range[1], btree,idxFile);
             }
