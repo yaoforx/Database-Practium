@@ -199,6 +199,76 @@ public class Util {
     }
 
 
+    private static void updateRange(Integer[] range, int val,
+                                    boolean isLower, boolean inclusive, boolean oppo) {
+        if (oppo) {
+            updateRange(range, val, !isLower, inclusive, false);
+            return;
+        }
+
+        if (!inclusive)
+            val = (isLower) ? val + 1 : val - 1;
+
+        if (isLower)
+            range[0] = (range[0] == null) ? val :
+                    Math.max(range[0], val);
+        else
+            range[1] = (range[1] == null) ? val :
+                    Math.min(range[1], val);
+    }
+    /**
+     *
+     * @param exp
+     * @param attr
+     * @return int[]rst  rst[0] max, rst[1] min
+     */
+    public static Integer[] getSelRange(Expression exp, String[] attr) {
+        if (!isSelect(exp))
+            throw new IllegalArgumentException();
+
+        Expression left =
+                ((BinaryExpression) exp).getLeftExpression();
+        Expression right =
+                ((BinaryExpression) exp).getRightExpression();
+
+        Integer val = null;
+
+        System.out.println(left);
+        System.out.println(right);
+
+        if (left instanceof Column) {
+            attr[0] = left.toString();
+            val = Integer.parseInt(right.toString());
+        }
+        else {
+            attr[0] = right.toString();
+            val = Integer.parseInt(left.toString());
+        }
+
+        boolean oppo = !(left instanceof Column);
+        boolean inclusive = !(exp instanceof MinorThan) &&
+                !(exp instanceof GreaterThan);
+        boolean isUpper = (exp instanceof MinorThan ||
+                exp instanceof MinorThanEquals ||
+                exp instanceof EqualsTo);
+        boolean isLower = (exp instanceof GreaterThan ||
+                exp instanceof GreaterThan ||
+                exp instanceof EqualsTo);
+
+        if (!isLower && !isUpper)
+            throw new IllegalArgumentException();
+
+        Integer[] ret = new Integer[2];
+
+        if (isLower)
+            updateRange(ret, val, true, inclusive, oppo);
+        if (isUpper)
+            updateRange(ret, val, false, inclusive, oppo);
+
+        return ret;
+    }
+
+
     /**
      *
      * @param exp expression containing tables
@@ -223,6 +293,41 @@ public class Util {
 
         }
         return res;
+    }
+    public static boolean isSelect(Expression exp) {
+        List<String> tmp = getExpTabs(exp);
+        return (tmp != null && tmp.size() == 1);
+    }
+
+    public static boolean isJoin(Expression exp) {
+        List<String> tmp = getExpTabs(exp);
+        return (tmp != null && tmp.size() == 2);
+    }
+    public static List<String> getExpTabs(Expression exp) {
+        List<String> ret = new ArrayList<String>();
+        if (!(exp instanceof BinaryExpression))
+            return ret;
+
+        BinaryExpression be = (BinaryExpression) exp;
+        Expression left = be.getLeftExpression();
+        Expression right = be.getRightExpression();
+
+        Column col;
+        if (left instanceof Column) {
+            col = (Column) left;
+            if (col.getTable() == null) return null;
+            ret.add(col.getTable().toString());
+        }
+        if (right instanceof Column) {
+            col = (Column) right;
+            if (col.getTable() == null) return null;
+            ret.add(col.getTable().toString());
+        }
+
+        if (ret.size() == 2 && ret.get(0).equals(ret.get(1)))
+            ret.remove(1);
+
+        return ret;
     }
 
 

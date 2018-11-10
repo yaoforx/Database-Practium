@@ -23,6 +23,7 @@ public class DBCatalog {
     public static String outputdir;
     public static String schemadir;
     public static String dbdir;
+    public static String statDir;
     public static String querydir;
     public static Configure config;
     public static String tempdir;
@@ -41,16 +42,18 @@ public class DBCatalog {
     public static HashMap<String,String> alias = new HashMap<>();
 
     public static HashMap<String, indexInfo> indexes = new HashMap<>();
+    public static HashMap<String, TableStat> tablestats = new HashMap<>();
     /**
      * sets the DBCatalog with the given input and output directories
      *
      * @param input  the input directory
      * @param output the output directory
      */
-    public static void setDBCatalog(String input, String output, String temp) {
+    public static void setDBCatalog(String input, String output, String temp) throws IOException {
         inputdir = input + "/";
         outputdir = output + "/";
         dbdir = inputdir + "db/data/";
+        statDir  = input + "db/";
         schemadir = input + "/db/" + "schema.txt";
         querydir = inputdir + "/queries.sql";
        tempdir = temp + "/";
@@ -59,6 +62,9 @@ public class DBCatalog {
         indexInfo = input + "/db/" + "index_info.txt";
         createSchema();
         createIndexInfo();
+
+        tablestats = (new Stats()).stats;
+
         idxConfig = new indexConfig();
 
     }
