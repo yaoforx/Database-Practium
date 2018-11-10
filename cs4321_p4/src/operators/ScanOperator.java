@@ -92,4 +92,16 @@ public class ScanOperator extends Operator {
 
         }
     }
+
+    @Override
+    public String print() {
+        String tableName = DBCatalog.alias.containsKey(tb.tableName) ? DBCatalog.alias.get(tb.tableName) : tb.tableName;
+        return "TableScan[" + tableName + "]";
+    }
+
+    @Override
+    public void printTree(PrintStream ps, int lv) {
+        printIndent(ps, lv);
+        ps.println(print());
+    }
 }

@@ -7,11 +7,13 @@ import btree.Btree;
 import net.sf.jsqlparser.expression.Expression;
 import operators.*;
 
+import optimal.OptimalSelect;
 import util.DBCatalog;
 import util.Util;
 import util.indexInfo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -41,8 +43,8 @@ public class PhysicalPlanBuilder {
         ScanOperator scanner = null;
         if(DBCatalog.config.idxSelect) {
             String tabName = logSelect.scan.table.tableName;
-            indexInfo info = DBCatalog.getindexInfo(tabName);
-            boolean idxSelect = Util.withIndexed(tabName, logSelect.exp);
+            indexInfo info = OptimalSelect.calculateAndChoose(tabName, logSelect.exp);
+            boolean idxSelect = (info != null);
             if(idxSelect) {
                 Integer[] range
                         = Util.getLowAndHeigh(info.indexCol, logSelect.exp);
@@ -73,6 +75,15 @@ public class PhysicalPlanBuilder {
             root = new SortInMemory(root, logSort.order);
         else
             root = new ExternalSort(root, logSort.order);
+    }
+    public void visit(LogicalMassJoin logMass) {
+        List<LogicalOperator> children = logMass.children;
+        List<Operator> physical = new ArrayList<>();
+        for(LogicalOperator log : children) {
+            root = null;
+            log.accept(this);
+            physical.add(root);
+        }
     }
     public void visit(LogicalJoin logJoin) {
         Operator[] child = new operators.Operator[2];

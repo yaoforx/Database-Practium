@@ -6,6 +6,7 @@ import util.Tuple;
 import util.Util;
 import visitors.PhysicalPlanBuilder;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +31,29 @@ public class LogicalMassJoin extends LogicalOperator{
 
 
     }
+
+
+    @Override
+    public String print() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Join");
+        if (expression != null)
+            sb.append(String.format("[%s]", expression.toString()));
+        else
+            sb.append("[]");
+        sb.append(unionFind.toString());
+
+        return sb.toString();
+    }
+
+    @Override
+    public void printTree(PrintStream ps, int lv) {
+        printIndent(ps, lv);
+        ps.println(print());
+        for (LogicalOperator lop : children)
+            lop.printTree(ps, lv + 1);
+    }
+
 
 
     @Override

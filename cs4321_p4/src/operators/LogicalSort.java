@@ -1,5 +1,6 @@
 package operators;
 
+import java.io.PrintStream;
 import java.util.List;
 import net.sf.jsqlparser.statement.select.OrderByElement;
 import visitors.PhysicalPlanBuilder;
@@ -13,6 +14,16 @@ public class LogicalSort extends LogicalOperator
 {
     public List<OrderByElement> order;
     public LogicalOperator child;
+    @Override
+    public String print() {
+        return String.format("Sort%s",
+                ((order == null) ? "[null]" : order.toString()));
+    }
+
+    @Override
+    public void printTree(PrintStream ps, int lv) {
+
+    }
 
     public void accept(PhysicalPlanBuilder phyplan) { phyplan.visit(this); }
 

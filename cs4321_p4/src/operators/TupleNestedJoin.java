@@ -3,6 +3,7 @@ package operators;
 import net.sf.jsqlparser.expression.Expression;
 import util.Tuple;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,6 +85,17 @@ public class TupleNestedJoin extends JoinOperator{
         }
 
         return null;
+    }
+
+    @Override
+    public String print() {
+        String expression = (exp != null) ? exp.toString() : "";
+        return String.format("TNLJ[" + expression + "]");
+    }
+
+    @Override
+    public void printTree(PrintStream ps, int lv) {
+
     }
 
 

@@ -101,4 +101,15 @@ public class SelectOperator extends Operator {
         }
 
     }
+
+    @Override
+    public String print() {
+
+        return String.format("Select[" + expression.toString() + "]");
+    }
+
+    @Override
+    public void printTree(PrintStream ps, int lv) {
+
+    }
 }

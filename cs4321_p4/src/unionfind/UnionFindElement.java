@@ -21,6 +21,9 @@ public class UnionFindElement {
     public int getLow(){
         return low;
     }
+    public Column getCol(int j){
+        return columns.get(j);
+    }
 
     /**
      * Get the upper bound of the unionFind

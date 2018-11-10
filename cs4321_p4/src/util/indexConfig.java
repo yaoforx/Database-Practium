@@ -42,42 +42,48 @@ public class indexConfig {
       //  File idxFile = new File(DBCatalog.indexdir);
         for(String set : DBCatalog.indexes.keySet()) {
             String tabPath = DBCatalog.dbdir + set;
-            indexInfo info = DBCatalog.indexes.get(set);
-            int idxCol = DBCatalog.schemas.get(set).indexOf(info.indexCol);
-            String idxedPath = DBCatalog.indexdir + set + "." + info.indexCol;
+            HashMap<String, indexInfo> info = DBCatalog.indexes.get(set);
+            for(String indexedCol : info.keySet()) {
+                int idxCol = DBCatalog.schemas.get(set).indexOf(indexedCol);
+                String idxedPath = DBCatalog.indexdir + set + "." + indexedCol;
 
-            /**
-             * if the index is to be clustered, start by sorting the relation on the desired attribute and
-             * replacing the old (unsorted) relation le with the new (sorted) relation le. Then build the index.
-             */
+                /**
+                 * if the index is to be clustered, start by sorting the relation on the desired attribute and
+                 * replacing the old (unsorted) relation le with the new (sorted) relation le. Then build the index.
+                 */
 
-            if(info.clustered) {
-                PhysicalPlanBuilder builder = new PhysicalPlanBuilder();
-                Table table = new Table(null, set);
-                OrderByElement obe = new OrderByElement();
-                obe.setExpression(new Column(table, info.indexCol));
-                LogicalOperator log = new LogicalScan(DBCatalog.getTable(set));
-                log = new LogicalSort(Arrays.asList(obe),log);
-                log.accept(builder);
-                Operator root = builder.getRoot();
-                try{
-                    tabPath += "_clustered";
-                    TupleWriter tw = new TupleWriter(tabPath);
-                    root.dump(tw);
-                    tw.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (info.get(indexedCol).clustered) {
+                    PhysicalPlanBuilder builder = new PhysicalPlanBuilder();
+                    Table table = new Table(null, set);
+                    OrderByElement obe = new OrderByElement();
+                    obe.setExpression(new Column(table, indexedCol));
+                    LogicalOperator log = new LogicalScan(DBCatalog.getTable(set));
+                    log = new LogicalSort(Arrays.asList(obe), log);
+                    log.accept(builder);
+                    Operator root = builder.getRoot();
+                    try {
+                        tabPath += "_clustered";
+                        TupleWriter tw = new TupleWriter(tabPath);
+                        root.dump(tw);
+                        tw.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                 }
 
-            }
-            System.out.println("Curretnly is building index for table "+ idxedPath);
+                System.out.println("Curretnly is building index for table " + idxedPath);
 
-            File indexout = new File(idxedPath);
-            BulkLoader bulkLoader = new BulkLoader(info.clustered, indexout, idxCol, info.order, new File(tabPath));
-            if(!loaders.containsKey(set)) loaders.put(set, bulkLoader);
-            bulkLoader.getBtree().serialize();
-            PrintStream ps = new PrintStream(new File(idxedPath + "_humanreadable"));
-            bulkLoader.getBtree().dump(ps);
+                File indexout = new File(idxedPath);
+                indexInfo tableIndex = info.get(indexedCol);
+                BulkLoader bulkLoader = new BulkLoader(tableIndex.clustered, indexout, idxCol,
+                        tableIndex.order, new File(tabPath));
+                if (!loaders.containsKey(set)) loaders.put(set, bulkLoader);
+                bulkLoader.getBtree().serialize();
+                PrintStream ps = new PrintStream(new File(idxedPath + "_humanreadable"));
+                bulkLoader.getBtree().dump(ps);
+                info.get(indexedCol).setUpLeafNumber(bulkLoader.getBtree().numOfLeaves);
+            }
 
         }
 

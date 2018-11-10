@@ -3,6 +3,8 @@ package operators;
 import net.sf.jsqlparser.expression.Expression;
 import visitors.PhysicalPlanBuilder;
 
+import java.io.PrintStream;
+
 /**
  * Constructs Logical Join Operator
  */
@@ -11,6 +13,16 @@ public class LogicalJoin extends LogicalOperator
     public LogicalOperator left;
     public LogicalOperator right;
     public net.sf.jsqlparser.expression.Expression expression;
+
+    @Override
+    public String print() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void printTree(PrintStream ps, int lv) {
+        throw new UnsupportedOperationException();
+    }
 
     public void accept(PhysicalPlanBuilder phyplan) { phyplan.visit(this); }
 

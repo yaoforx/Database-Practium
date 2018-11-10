@@ -5,6 +5,7 @@ import btree.Btree;
 import btree.BtreeIndexNode;
 import btree.BtreeLeafNode;
 import net.sf.jsqlparser.statement.select.OrderByElement;
+import util.DBCatalog;
 import util.Table;
 import util.Tuple;
 import util.TupleIdentifier;
@@ -100,5 +101,10 @@ public class IndexScanOperator extends ScanOperator {
     @Override
     public void dump(PrintStream s) {
         super.dump(s);
+    }
+    @Override
+    public String print() {
+        String tableName = DBCatalog.alias.containsKey(tb.tableName) ? DBCatalog.alias.get(tb.tableName) : tb.tableName;
+        return "IndexScan[" + tableName + "]";
     }
 }

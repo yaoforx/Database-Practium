@@ -3,6 +3,7 @@ package operators;
 import net.sf.jsqlparser.statement.select.OrderByElement;
 import util.Tuple;
 
+import java.io.PrintStream;
 import java.util.*;
 
 public class SortInMemory extends SortOperator {
@@ -66,6 +67,16 @@ public class SortInMemory extends SortOperator {
     public Tuple getNextTuple() {
         if(cur >= this.inputs.size()) return null;
         return inputs.get(cur++);
+    }
+
+    @Override
+    public String print() {
+        return null;
+    }
+
+    @Override
+    public void printTree(PrintStream ps, int lv) {
+
     }
 
     @Override

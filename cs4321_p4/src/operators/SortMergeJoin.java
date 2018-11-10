@@ -5,6 +5,7 @@ import net.sf.jsqlparser.expression.Expression;
 import util.Tuple;
 
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -118,6 +119,17 @@ public class SortMergeJoin extends JoinOperator {
         }
 
         return null;
+    }
+
+    @Override
+    public String print() {
+        String expression = (exp != null) ? exp.toString() : "";
+        return String.format("SMJ[" + expression + "]");
+    }
+
+    @Override
+    public void printTree(PrintStream ps, int lv) {
+
     }
 
     @Override

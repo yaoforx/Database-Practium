@@ -91,6 +91,17 @@ public class ExternalSort extends SortOperator{
        return null;
     }
 
+    @Override
+    public String print() {
+        return String.format("EXternalSort%s",
+                ((sort == null) ? "[]" : sort.toString()));
+    }
+
+    @Override
+    public void printTree(PrintStream ps, int lv) {
+
+    }
+
     /**
      * sort sep in External Sort Algoritms
      */

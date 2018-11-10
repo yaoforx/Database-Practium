@@ -21,6 +21,10 @@ public class Configure {
         config = new File(path);
 
         setUp();
+       // manualSetUp();
+    }
+    private void manualSetUp(){
+
     }
     private void setUp() {
         try{

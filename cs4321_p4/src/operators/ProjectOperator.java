@@ -1,6 +1,7 @@
 package operators;
 
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -26,6 +27,7 @@ public class ProjectOperator extends Operator{
     protected SelectOperator selectChild = null;
     protected ScanOperator scanChild = null;
     protected Operator joinChild = null;
+    private List<SelectItem> items  = new ArrayList<>();
 
     /**
      * constructs a ProjectOperator
@@ -37,7 +39,7 @@ public class ProjectOperator extends Operator{
 
         //If this is all column
         //Do not do anything
-
+        items = selectItems;
 
         if(!selectItems.isEmpty() && (selectItems.get(0) instanceof AllColumns)) {
             if(scan instanceof SelectOperator) {
@@ -165,5 +167,17 @@ public class ProjectOperator extends Operator{
 
         }
         return null;
+    }
+
+
+    @Override
+    public String print() {
+        return String.format("Project%s",
+                ((items == null) ? "[null]" : items.toString()));
+    }
+
+    @Override
+    public void printTree(PrintStream ps, int lv) {
+
     }
 }

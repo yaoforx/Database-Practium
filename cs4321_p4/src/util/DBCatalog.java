@@ -40,8 +40,8 @@ public class DBCatalog {
     public static HashMap<String,List<String>> schemas =  new HashMap<String,List<String>>();
     //alias key is alia, value is table
     public static HashMap<String,String> alias = new HashMap<>();
-
-    public static HashMap<String, indexInfo> indexes = new HashMap<>();
+    //key is table name, value is <column Name, indexInfo>
+    public static HashMap<String, HashMap<String, indexInfo>> indexes = new HashMap<>();
     public static HashMap<String, TableStat> tablestats = new HashMap<>();
     /**
      * sets the DBCatalog with the given input and output directories
@@ -57,6 +57,7 @@ public class DBCatalog {
         schemadir = input + "/db/" + "schema.txt";
         querydir = inputdir + "/queries.sql";
        tempdir = temp + "/";
+
         config = new Configure(inputdir + "plan_builder_config.txt");
         indexdir = input + "/db/" + "indexes/";
         indexInfo = input + "/db/" + "index_info.txt";
@@ -104,7 +105,14 @@ public class DBCatalog {
                 String col = info[1];
                 boolean cluster = (info[2].equals("1"));
                 int order = Integer.valueOf(info[3]);
-                indexes.put(tab, new indexInfo(tab,col,cluster,order));
+                if(indexes.containsKey(tab)) {
+                    indexes.get(tab).put(col, new indexInfo(tab,col,cluster,order));
+                }
+                else {
+                    HashMap<String, indexInfo> map = new HashMap<>();
+                    map.put(col, new indexInfo(tab,col,cluster,order));
+                    indexes.put(tab, map);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -180,9 +188,19 @@ public class DBCatalog {
         }
         return null;
     }
-    public static indexInfo getindexInfo(String tableName) {
-        if(alias.containsKey(tableName)) tableName = alias.get(tableName);
+    public static HashMap<String, indexInfo> getindexInfo(String tableName) {
+
         return indexes.get(tableName);
+    }
+
+    public static indexInfo getindexInfo(String tableName, String colName) {
+        if(alias.containsKey(tableName)) tableName = alias.get(tableName);
+        if (indexes != null && indexes.containsKey(tableName)){
+            if (indexes.get(tableName).containsKey(colName)){
+                return indexes.get(tableName).get(colName);
+            }
+        }
+        return null;
     }
 
 

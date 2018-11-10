@@ -157,46 +157,46 @@ public class Util {
         }
         return ret;
     }
-    public static boolean withIndexed(String tab, Expression expression) {
-        indexInfo ii = DBCatalog.getindexInfo(tab);
-        if (expression == null || ii == null) return false;
-        List<Expression> conds = getAndExpressions(expression);
-
-        for (Expression expr : conds) {
-            Expression left =
-                    ((BinaryExpression) expr).getLeftExpression();
-            Expression right =
-                    ((BinaryExpression) expr).getRightExpression();
-
-            String str = null;
-
-            if (left instanceof Column && right instanceof LongValue
-                    || left instanceof LongValue && right instanceof Column) {
-                if (   expr instanceof EqualsTo
-                        || expr instanceof GreaterThan
-                        || expr instanceof GreaterThanEquals
-                        || expr instanceof MinorThan
-                        || expr instanceof MinorThanEquals ) {
-
-                    str = (left instanceof Column) ? left.toString() :
-                            right.toString();
-                    if (str.indexOf('.') != -1)
-                        str = str.split("\\.")[1];
-                    if (ii.indexCol.equals(str)) return true;
-                }
-
-            }
-            str = (left instanceof Column) ? left.toString() :
-                    right.toString();
-            if (str.indexOf('.') != -1)
-                str = str.split("\\.")[1];
-
-            if (ii.indexCol.equals(str)) return true;
-        }
-
-        return false;
-
-    }
+//    public static boolean withIndexed(String tab, Expression expression) {
+//        indexInfo ii = DBCatalog.getindexInfo(tab);
+//        if (expression == null || ii == null) return false;
+//        List<Expression> conds = getAndExpressions(expression);
+//
+//        for (Expression expr : conds) {
+//            Expression left =
+//                    ((BinaryExpression) expr).getLeftExpression();
+//            Expression right =
+//                    ((BinaryExpression) expr).getRightExpression();
+//
+//            String str = null;
+//
+//            if (left instanceof Column && right instanceof LongValue
+//                    || left instanceof LongValue && right instanceof Column) {
+//                if (   expr instanceof EqualsTo
+//                        || expr instanceof GreaterThan
+//                        || expr instanceof GreaterThanEquals
+//                        || expr instanceof MinorThan
+//                        || expr instanceof MinorThanEquals ) {
+//
+//                    str = (left instanceof Column) ? left.toString() :
+//                            right.toString();
+//                    if (str.indexOf('.') != -1)
+//                        str = str.split("\\.")[1];
+//                    if (ii.indexCol.equals(str)) return true;
+//                }
+//
+//            }
+//            str = (left instanceof Column) ? left.toString() :
+//                    right.toString();
+//            if (str.indexOf('.') != -1)
+//                str = str.split("\\.")[1];
+//
+//            if (ii.indexCol.equals(str)) return true;
+//        }
+//
+//        return false;
+//
+//    }
 
 
     private static void updateRange(Integer[] range, int val,

@@ -1,6 +1,7 @@
 package optimal;
 
 import btree.Btree;
+import btree.BtreeIndexNode;
 import net.sf.jsqlparser.expression.BinaryExpression;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.LongValue;
@@ -21,7 +22,7 @@ public class OptimalSelect {
         columnName = new ArrayList<>();
         scanCost = new ArrayList<>();
 
-        double curCost = 0.0;
+        double curCost = 1.0;
         List<Expression> exps = Util.getAndExpressions(expression);
 
         for(Expression exp : exps) {
@@ -48,7 +49,7 @@ public class OptimalSelect {
             }
             String[] s = {col};
             Integer[] range = Util.getSelRange(exp,s);
-            updateAttInfo(col,range);
+            updateInfo(col,range);
 
 
         }
@@ -57,8 +58,8 @@ public class OptimalSelect {
         int pageNum = (int)tupleNum/4096;
         Set<Map.Entry<String, Integer[]>> entries = columnInfo.entrySet();
         for(Map.Entry<String, Integer[]> entry : entries) {
-            indexInfo info = DBCatalog.indexes.get(tableName);
-            double localCost = 01;
+            indexInfo info = DBCatalog.indexes.get(tableName).get(entry.getKey());
+            double localCost = 0;
             if(info == null) localCost = pageNum;
             else {
                 int[] range = DBCatalog.tablestats.get(tableName).getRange(entry.getKey());
@@ -70,7 +71,7 @@ public class OptimalSelect {
                 double reductionFactor = (curHigh - curLow)/maxRange;
 
                 if(info.clustered) {
-                    // choose three has height
+                    // choose 3 as tree height
                     localCost = 3 + pageNum * reductionFactor;
                 } else {
                     Btree btree =  DBCatalog.idxConfig.loaders.get(info.tab).getBtree();
@@ -90,12 +91,14 @@ public class OptimalSelect {
                 minIndex = i;
             }
         }
-        return DBCatalog.indexes.get(tableName).indexCol.equals(DBCatalog.schemas.get(tableName).get(minIndex))?
-                DBCatalog.indexes.get(tableName) : null;
+        String colName = DBCatalog.schemas.get(tableName).get(minIndex);
+        indexInfo winner = DBCatalog.getindexInfo(tableName, colName);
+
+        return winner;
 
 
     }
-    public static void updateAttInfo(String attr, Integer[] range){
+    public static void updateInfo(String attr, Integer[] range){
         if(!columnInfo.containsKey(attr)){
             Integer[] r = new Integer[2];
             for(int i = 0; i < range.length; i++){

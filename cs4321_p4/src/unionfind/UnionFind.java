@@ -35,6 +35,26 @@ public class UnionFind {
         return element;
     }
 
+    public UnionFindElement find(String colName) {
+        for(int i = 0; i < unions.size(); i++)
+           for(int j = 0; j < unions.get(i).getColumns().size(); j++) {
+               if(colName.equals(unions.get(i).getCol(j))) return unions.get(i);
+           }
+
+
+        UnionFindElement element = new UnionFindElement();
+        Column column = new Column(null, colName);
+        element.addCol(column);
+        unions.add(element);
+        return element;
+    }
+
+    public void union(String attr1, String attr2) {
+        UnionFindElement p = find(attr1);
+        UnionFindElement q = find(attr2);
+        union(p, q);
+    }
+
     public UnionFindElement union(UnionFindElement e1, UnionFindElement e2) {
         UnionFindElement newElement = new UnionFindElement();
 
@@ -54,11 +74,13 @@ public class UnionFind {
         return newElement;
 
     }
-    @Override
+
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < unions.size(); i++) {
-            if(i > 0) sb.append("\n");
+        for (int i = 0; i < unions.size(); i++){
+            if (i > 0){
+                sb.append("\n");
+            }
             sb.append(unions.get(i).toString());
         }
         return sb.toString();

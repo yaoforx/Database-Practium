@@ -27,19 +27,18 @@ public class Harness {
         private String inPath;
         private String outPath;
         private String tempPath;
-        private boolean BuildIdx;
-        private boolean Evaluate;
+        private boolean BuildIdx = true;
+        private boolean Evaluate = true;
+        private boolean BuildStats = true;
 
         public HarnessConfig(String configPath) throws IOException {
             BufferedReader br =  new BufferedReader(new FileReader(configPath));
             inPath = br.readLine();
             outPath = br.readLine();
             tempPath = br.readLine();
-            int value = Integer.parseInt(br.readLine());
-            BuildIdx = value == 0 ? false : true;
-            value = Integer.parseInt(br.readLine());
-            Evaluate = value == 0 ? false : true;
             br.close();
+
+
         }
 
     }
@@ -88,9 +87,19 @@ public class Harness {
             while((statement = parser.Statement()) !=null ) {
                 String out  = DBCatalog.outputdir + "query" + counter;
                 TupleWriter writer = new TupleWriter(out);
+                File logicalPlan = new File(DBCatalog.outputdir
+                        + File.separator + "query" + counter + "_logicalplan");
+                File physicalPlan = new File(DBCatalog.outputdir
+                        + File.separator + "query" + counter + "_physicalplan");
+                PrintStream logicalPlanStream = new PrintStream(logicalPlan);
+                PrintStream physicalPlanStream = new PrintStream(physicalPlan);
                 System.out.println("Parsing: " + statement);
                 Selector select = new Selector(statement);
-
+                logicalPlanStream.print("logical plan printing \n");
+                select.logicalRoot.printTree(logicalPlanStream, 0);
+                logicalPlanStream.close();
+                select.root.printTree(physicalPlanStream, 0);
+                physicalPlanStream.close();
                 long beginTime = System.currentTimeMillis();
 
                 select.root.dump(writer);
@@ -129,7 +138,7 @@ public class Harness {
     @Test
     public void main() throws IOException{
        Harness itpr = new Harness();
-        itpr.execute("/Users/yaoxiao/cs4321/cs4321_p3/samples/interpreter_config_file.txt");
+        itpr.execute("/Users/yaoxiao/Database-Practium/cs4321_p4/samples/interpreter_config_file.txt");
        // itpr.harness("/Users/yaoxiao/Database-Practium/cs4321_p2/samples/input","/Users/yaoxiao/Database-Practium/cs4321_p2", "/Users/yaoxiao/Database-Practium/cs4321_p2");
 
     }

@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class TableStat {
     Table table;
-    HashMap<String, int[]> indexRange;
+    public HashMap<String, int[]> indexRange;
     int totalTuple;
     int attNum;
     public TableStat(String name, String[] cols, int[] low, int[] high) {
@@ -30,6 +30,7 @@ public class TableStat {
             return null;
         }
     }
+
 
     /**
      * return a list of attr names corresponding to this table

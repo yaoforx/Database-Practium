@@ -9,6 +9,7 @@ import java.util.Set;
 import net.sf.jsqlparser.expression.BinaryExpression;
 import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
+import net.sf.jsqlparser.expression.operators.relational.EqualsTo;
 import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.select.Distinct;
@@ -19,14 +20,9 @@ import net.sf.jsqlparser.statement.select.PlainSelect;
 import net.sf.jsqlparser.statement.select.Select;
 import net.sf.jsqlparser.statement.select.SelectBody;
 import net.sf.jsqlparser.statement.select.SelectItem;
-import operators.LogicalEliminator;
-import operators.LogicalJoin;
-import operators.LogicalOperator;
-import operators.LogicalProject;
-import operators.LogicalScan;
-import operators.LogicalSelect;
-import operators.LogicalSort;
-import operators.Operator;
+import operators.*;
+import unionfind.UnionFind;
+import unionfind.UnionFindElement;
 import util.DBCatalog;
 import util.Table;
 import visitors.PhysicalPlanBuilder;
@@ -40,6 +36,7 @@ import visitors.PhysicalPlanBuilder;
 public class Selector {
 
     public Operator root = null;
+    public LogicalOperator logicalRoot = null;
     public FromItem from;
     public List<SelectItem> selects;
     public PlainSelect plainsel;
@@ -63,6 +60,8 @@ public class Selector {
 
     public HashMap<String,Expression> selectCondition = new HashMap<>();
     public HashMap<String,Expression> joinCondition = new HashMap<>();
+    public UnionFind unionFind = new UnionFind();
+    private boolean selfJoin = false;
 
 
     /**
@@ -128,12 +127,49 @@ public class Selector {
             for (Expression exp : andExpressions) {
                 List<String> tables = tableInAnds(exp);
                 int idx = rightMost(tables);
-                if (tables == null)
+                if (tables == null) {
                     joinPlan.get(fromItems.get(fromItems.size() - 1)).add(exp);
-                else if (tables.size() <= 1)
-                    selectPlan.get(fromItems.get(idx)).add(exp);
-                else
-                    joinPlan.get(fromItems.get(idx)).add(exp);
+                    return;
+                }
+                switch (tables.size()) {
+                    case 0:
+                        selectPlan.get(fromItems.get(idx)).add(exp);
+                        break;
+                    case 1:
+                        if (selfJoin) {
+                            selectPlan.get(fromItems.get(idx)).add(exp);
+                            break;
+                        }
+                        String[] col = new String[1];
+                        Integer[] range = Util.getSelRange(exp, col);
+                        net.sf.jsqlparser.schema.Table table = new net.sf.jsqlparser.schema.Table(null, fromItems.get(idx));
+                        Column column = new Column(table, col[0]);
+                        UnionFindElement ufe = unionFind.find(column);
+                        if (range[0] != null && range[0].equals(range[1]))
+                            ufe.setEqual(range[0]);
+                        else {
+                            if (range[0] != null)
+                                ufe.setLow(range[0]);
+                            if (range[1] != null)
+                                ufe.setHigh(range[1]);
+                        }
+                        break;
+                    case 2:
+
+
+                        if (exp instanceof EqualsTo) {
+                            BinaryExpression be = (BinaryExpression) exp;
+
+                            unionFind.union(be.getLeftExpression().toString(),
+                                    be.getRightExpression().toString());
+                        }
+                        else
+                            joinPlan.get(fromItems.get(idx)).add(exp);
+                        break;
+
+
+                }
+
             }
         }
         for(String table : fromItems) {
@@ -158,9 +194,10 @@ public class Selector {
             }
 
         }
-
+        buildLogicTree();
 
         buildTree();
+
 
 
 
@@ -203,8 +240,43 @@ public class Selector {
         }
         return idx;
     }
+
     /**
-     * builds the operator tree based on the query
+     * Build a logical tree based on cost estimation
+     */
+    public void buildLogicTree() {
+        List<LogicalOperator> res = new ArrayList<>();
+        for (int i = 0; i < fromItems.size(); ++i) {
+            LogicalOperator table = new LogicalScan(getTable(i));
+            if (getSelectCondition(i) != null) {
+                table = new LogicalSelect(getSelectCondition(i), table);
+
+            }
+            res.add(table);
+        }
+
+        if (fromItems.size() > 1) {
+            logicalRoot = new LogicalMassJoin(fromItems, res, joinCondition, unionFind);
+        } else {
+            logicalRoot = res.get(0);
+        }
+        if (selects != null) {
+            logicalRoot = new LogicalProject(selects, logicalRoot);
+        }
+        if (sort != null) {
+            logicalRoot = new LogicalSort(sort, logicalRoot);
+        }
+        if (distinct != null) {
+            if (sort == null) {
+                logicalRoot = new LogicalSort(new ArrayList<>(), logicalRoot);
+            }
+            logicalRoot = new LogicalEliminator(logicalRoot);
+        }
+
+    }
+
+    /**
+     * builds the Physical operator tree based on the query
      */
     public void buildTree() throws IOException {
         LogicalOperator curRoot = new LogicalScan(this.getTable(0));
@@ -282,7 +354,10 @@ public class Selector {
             if(col.getTable() != null)
                 if(!res.isEmpty()) {
 
-                    if(col.getTable().getName().equals(res.get(0))) return res;
+                    if(col.getTable().getName().equals(res.get(0))) {
+                        selfJoin = true;
+                        return res;
+                    }
                     res.add(col.getTable().getName());
                 }
 

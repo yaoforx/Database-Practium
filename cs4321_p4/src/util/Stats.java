@@ -16,7 +16,7 @@ public class Stats {
     public Stats() throws IOException {
         outputDir = DBCatalog.statDir;
         inputDir = DBCatalog.dbdir;
-        stat = new File(outputDir + "stat.txt");
+        stat = new File(outputDir + "/stat.txt");
         bw = new BufferedWriter(new FileWriter(stat));
         createStats();
     }

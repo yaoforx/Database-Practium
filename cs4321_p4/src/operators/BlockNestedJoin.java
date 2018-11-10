@@ -4,6 +4,7 @@ import net.sf.jsqlparser.expression.Expression;
 import util.DBCatalog;
 import util.Tuple;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,6 +110,18 @@ public class BlockNestedJoin extends JoinOperator {
        }
 
     }
+
+    @Override
+    public String print() {
+        String expression = (exp != null) ? exp.toString() : "";
+        return String.format("BNLJ[" + expression + "]");
+    }
+
+    @Override
+    public void printTree(PrintStream ps, int lv) {
+
+    }
+
     private Tuple joinTuple(Tuple l, Tuple r) {
 
         List<Integer> newschema= new ArrayList<>();

@@ -2,6 +2,8 @@ package operators;
 
 import util.Tuple;
 
+import java.io.PrintStream;
+
 /**
  * DuplicateEliminationOperator assumes its child is a SortOperator. since the input from its child is in sorted order,
  * it reads the tuples from the child and only outputs non-duplicates. this operator is needed when there is a DISTINCT
@@ -37,6 +39,16 @@ public class DuplicateEliminationOperator extends Operator {
             return cur;
         }
         return null;
+    }
+
+    @Override
+    public String print() {
+        return "DupElim";
+    }
+
+    @Override
+    public void printTree(PrintStream ps, int lv) {
+
     }
 
 
