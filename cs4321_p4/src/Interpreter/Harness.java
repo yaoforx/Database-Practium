@@ -10,6 +10,7 @@ import net.sf.jsqlparser.statement.Statement;
 import org.junit.Test;
 import java.io.FilenameFilter;
 
+
 import util.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -107,6 +108,8 @@ public class Harness {
                         + counter + " took " + (endTime - beginTime)*1.0/1000 + " seconds");
                 counter++;
                 writer.close();
+                File temp = new File(tempdir);
+                deleteFolder(temp);
 
 
 
@@ -122,6 +125,18 @@ public class Harness {
 
         } catch(Exception e) {
             e.printStackTrace();
+        }
+    }
+    public static void deleteFolder(File folder) {
+        File[] files = folder.listFiles();
+        if(files!=null) {
+            for(File f: files) {
+                if(f.isDirectory()) {
+                    deleteFolder(f);
+                } else {
+                    f.delete();
+                }
+            }
         }
     }
 
