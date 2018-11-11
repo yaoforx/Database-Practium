@@ -43,12 +43,13 @@ public class DuplicateEliminationOperator extends Operator {
 
     @Override
     public String print() {
-        return "DupElim";
+        return "DupElim\n";
     }
 
     @Override
     public void printTree(PrintStream ps, int lv) {
-
+        ps.print(print());
+        child.printTree(ps,lv + 1);
     }
 
 

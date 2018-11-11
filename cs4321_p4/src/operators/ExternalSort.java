@@ -94,12 +94,14 @@ public class ExternalSort extends SortOperator{
     @Override
     public String print() {
         return String.format("EXternalSort%s",
-                ((sort == null) ? "[]" : sort.toString()));
+                ((sort == null) ? "[]" : sort.toString())) + "\n";
     }
 
     @Override
     public void printTree(PrintStream ps, int lv) {
-
+        printIndent(ps, lv);
+        ps.print(print());
+        child.printTree(ps, lv + 1);
     }
 
     /**

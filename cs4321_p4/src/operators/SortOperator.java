@@ -1,8 +1,10 @@
 package operators;
 
 import net.sf.jsqlparser.statement.select.OrderByElement;
+import util.DBCatalog;
 import util.Tuple;
 
+import java.beans.Expression;
 import java.util.*;
 
 
@@ -13,6 +15,7 @@ import java.util.*;
  */
 public abstract class SortOperator extends Operator {
     List<Integer> sort;
+    List<String> sortInEle;
 
     public Operator child;
 
@@ -66,6 +69,7 @@ public abstract class SortOperator extends Operator {
 
 
         sort = new ArrayList<>();
+        sortInEle  = new ArrayList<>();
         this.schema = child.schema;
         this.child = child;
 
@@ -73,12 +77,15 @@ public abstract class SortOperator extends Operator {
             if (orders.get(0) instanceof OrderByElement) {
                 for (Object obj : orders) {
                     OrderByElement obe = (OrderByElement) obj;
+                    sortInEle.add(obe.toString());
                     this.sort.add(getColIdx(
                             obe, this.child.schema));
                 }
             }
             else if (orders.get(0) instanceof Integer) {
                 this.sort = (List<Integer>) orders;
+                for(Integer i :this.sort)
+                    sortInEle.add(getElementByIndex(i));
             }
             else
                 throw new IllegalArgumentException();
@@ -114,10 +121,12 @@ public abstract class SortOperator extends Operator {
         }
         return -1;
     }
+    public String getElementByIndex(int idx){
 
-    /**
-     *
-     * @return next tuple in List
-     */
+        return child.schema.get(idx);
+
+    }
+
+
 
 }

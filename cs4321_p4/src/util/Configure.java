@@ -21,9 +21,13 @@ public class Configure {
         config = new File(path);
 
         setUp();
-       // manualSetUp();
+        manualSetUp();
     }
     private void manualSetUp(){
+
+            SMJ = 1;
+            joinPage = 3;
+            inMemSort = 1;
 
     }
     private void setUp() {

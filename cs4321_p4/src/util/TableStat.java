@@ -6,13 +6,19 @@ import java.util.Set;
 public class TableStat {
     Table table;
     public HashMap<String, int[]> indexRange;
+
     int totalTuple;
     int attNum;
     public TableStat(String name, String[] cols, int[] low, int[] high) {
         this.table = DBCatalog.getTable(name);
+        indexRange = new HashMap<>();
+
         for(int i = 0; i < cols.length; i++) {
             int[] range = {low[i], high[i]};
-            if(cols[i] != null) indexRange.put(cols[i], range);
+            if(cols[i] != null) {
+                indexRange.put(cols[i], range);
+
+            }
         }
         attNum = cols.length;
     }
@@ -23,13 +29,15 @@ public class TableStat {
         }
         return attNum;
     }
-    public int[]  getRange(String attrName){
+    public int[]  getIndexRange(String attrName){
         if(indexRange.containsKey(attrName)){
             return indexRange.get(attrName);
         } else {
             return null;
         }
     }
+
+
 
 
     /**
@@ -54,10 +62,13 @@ public class TableStat {
      */
     public void addCol(String attrName, int low, int high){
         if(indexRange.containsKey(attrName)){
+
             throw new IllegalArgumentException();
         } else {
             int[] range = {low, high};
             indexRange.put(attrName,range);
+
+
         }
     }
 

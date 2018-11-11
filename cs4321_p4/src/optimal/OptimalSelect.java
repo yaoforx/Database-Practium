@@ -8,6 +8,7 @@ import net.sf.jsqlparser.expression.LongValue;
 import net.sf.jsqlparser.expression.operators.relational.EqualsTo;
 import net.sf.jsqlparser.schema.Column;
 import util.DBCatalog;
+import util.TableStat;
 import util.Util;
 import util.indexInfo;
 
@@ -50,32 +51,39 @@ public class OptimalSelect {
             String[] s = {col};
             Integer[] range = Util.getSelRange(exp,s);
             updateInfo(col,range);
-
-
         }
+        tableName = Util.getFullTableName(tableName);
         long tupleNum = DBCatalog.tablestats.get(tableName).getAttNum() *
                 DBCatalog.tablestats.get(tableName).getTotoalTps() * 4;
-        int pageNum = (int)tupleNum/4096;
+        int pageNum = (int)tupleNum/4096 + 1;
         Set<Map.Entry<String, Integer[]>> entries = columnInfo.entrySet();
         for(Map.Entry<String, Integer[]> entry : entries) {
-            indexInfo info = DBCatalog.indexes.get(tableName).get(entry.getKey());
+            HashMap<String, indexInfo> tableInfo = DBCatalog.indexes.get(tableName);
             double localCost = 0;
-            if(info == null) localCost = pageNum;
+            if(tableInfo == null) localCost = pageNum;
             else {
-                int[] range = DBCatalog.tablestats.get(tableName).getRange(entry.getKey());
+                indexInfo info = tableInfo.get(entry.getKey());
+             //   int[] selectRange = DBCatalog.tablestats.get(tableName).getSelectRange(entry.getKey());
+                int[] range = DBCatalog.tablestats.get(tableName).getIndexRange(entry.getKey());
+                System.out.print(range[0]);
+                System.out.print(range[1]);
                 double maxRange = range[1] - range[0];
-                double curHigh = Double.MIN_VALUE;
-                double curLow = Double.MAX_VALUE;
-                if(entry.getValue()[0] == null) curHigh = range[1];
-                if(entry.getValue()[1] == null) curLow = range[0];
+                double curHigh = range[1];
+                double curLow = range[0];
+                if(entry.getValue()[1] != null) {
+                    curHigh = entry.getValue()[1];
+                }
+                if(entry.getValue()[0] != null) {
+                    curLow = entry.getValue()[0];
+                }
                 double reductionFactor = (curHigh - curLow)/maxRange;
-
+                if(reductionFactor <= 0) reductionFactor = 1.0;
                 if(info.clustered) {
-                    // choose 3 as tree height
-                    localCost = 3 + pageNum * reductionFactor;
+                    // choose 1 as tree height
+                    localCost = 1 + pageNum * reductionFactor;
                 } else {
                     Btree btree =  DBCatalog.idxConfig.loaders.get(info.tab).getBtree();
-                    localCost = 3 + (btree.numOfLeaves +  DBCatalog.tablestats.get(tableName).getTotoalTps()) * reductionFactor;
+                    localCost = 1 + (btree.numOfLeaves +  DBCatalog.tablestats.get(tableName).getTotoalTps()) * reductionFactor;
 
                 }
             }

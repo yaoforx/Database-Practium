@@ -17,12 +17,14 @@ public class LogicalSort extends LogicalOperator
     @Override
     public String print() {
         return String.format("Sort%s",
-                ((order == null) ? "[null]" : order.toString()));
+                ((order == null) ? "[null]" : order.toString()) + "\n");
     }
 
     @Override
     public void printTree(PrintStream ps, int lv) {
-
+        printIndent(ps, lv);
+        ps.print(print());
+        child.printTree(ps, lv + 1);
     }
 
     public void accept(PhysicalPlanBuilder phyplan) { phyplan.visit(this); }

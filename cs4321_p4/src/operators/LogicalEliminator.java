@@ -12,12 +12,14 @@ public class LogicalEliminator extends LogicalOperator {
 
     @Override
     public String print() {
-        return "DupElim";
+        return "DupElim\n";
     }
 
     @Override
     public void printTree(PrintStream ps, int lv) {
 
+        ps.print(print());
+        child.printTree(ps,lv + 1);
     }
 
     public void accept(PhysicalPlanBuilder phyplan) { phyplan.visit(this); }

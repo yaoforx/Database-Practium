@@ -71,12 +71,19 @@ public class SortInMemory extends SortOperator {
 
     @Override
     public String print() {
-        return null;
+        if(sort != null) {
+            System.out.println(sortInEle);
+            return String.format("InMemSort%s", sortInEle.toString()) + "\n";
+        } else {
+            return String.format("InMemSort[]") + "\n";
+        }
     }
 
     @Override
     public void printTree(PrintStream ps, int lv) {
-
+       printIndent(ps,lv);
+       ps.print(print());
+       child.printTree(ps, lv + 1);
     }
 
     @Override

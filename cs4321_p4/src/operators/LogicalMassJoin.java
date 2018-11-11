@@ -37,8 +37,10 @@ public class LogicalMassJoin extends LogicalOperator{
     public String print() {
         StringBuilder sb = new StringBuilder();
         sb.append("Join");
-        if (expression != null)
+        if (expression != null) {
             sb.append(String.format("[%s]", expression.toString()));
+            sb.append("\n");
+        }
         else
             sb.append("[]");
         sb.append(unionFind.toString());

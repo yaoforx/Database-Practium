@@ -20,9 +20,7 @@ public class LogicalJoin extends LogicalOperator
     }
 
     @Override
-    public void printTree(PrintStream ps, int lv) {
-        throw new UnsupportedOperationException();
-    }
+    public void printTree(PrintStream ps, int lv) { }
 
     public void accept(PhysicalPlanBuilder phyplan) { phyplan.visit(this); }
 

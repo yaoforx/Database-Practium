@@ -1,13 +1,13 @@
 package util;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.invoke.StringConcatFactory;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
 import net.sf.jsqlparser.expression.BinaryExpression;
 import net.sf.jsqlparser.expression.Expression;
+import net.sf.jsqlparser.expression.LongValue;
 import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
 import net.sf.jsqlparser.expression.operators.relational.EqualsTo;
 import net.sf.jsqlparser.schema.Column;
@@ -57,9 +57,12 @@ public class Selector {
     // table 2: table1.A = table2.B
     HashMap<String,List<Expression>> selectPlan;
     HashMap<String,List<Expression>> joinPlan;
+    HashMap<String, List<Expression>> oldJoinPlan = new HashMap<>();
 
     public HashMap<String,Expression> selectCondition = new HashMap<>();
     public HashMap<String,Expression> joinCondition = new HashMap<>();
+    public HashMap<String,Expression> oldJoinCons = new HashMap<>();
+
     public UnionFind unionFind = new UnionFind();
     private boolean selfJoin = false;
 
@@ -116,9 +119,13 @@ public class Selector {
 
         }
 
+        Collections.sort(fromItems, new Util.compareTable());
+
+
         for (String table : fromItems) {
             selectPlan.put(table, new ArrayList<>());
             joinPlan.put(table, new ArrayList<>());
+            oldJoinPlan.put(table, new ArrayList<>());
         }
 
         List<Expression> andExpressions = getAndExpressions(where);
@@ -126,6 +133,7 @@ public class Selector {
         if(where != null) {
             for (Expression exp : andExpressions) {
                 List<String> tables = tableInAnds(exp);
+
                 int idx = rightMost(tables);
                 if (tables == null) {
                     joinPlan.get(fromItems.get(fromItems.size() - 1)).add(exp);
@@ -136,32 +144,46 @@ public class Selector {
                         selectPlan.get(fromItems.get(idx)).add(exp);
                         break;
                     case 1:
-                        if (selfJoin) {
-                            selectPlan.get(fromItems.get(idx)).add(exp);
-                            break;
-                        }
+
+
+                        //selectPlan.get(fromItems.get(idx)).add(exp);
+                        if(selfJoin) break;
+
                         String[] col = new String[1];
                         Integer[] range = Util.getSelRange(exp, col);
-                        net.sf.jsqlparser.schema.Table table = new net.sf.jsqlparser.schema.Table(null, fromItems.get(idx));
-                        Column column = new Column(table, col[0]);
-                        UnionFindElement ufe = unionFind.find(column);
-                        if (range[0] != null && range[0].equals(range[1]))
+                        BinaryExpression bi = (BinaryExpression) exp;
+                        Column cols  =(Column) ((bi.getLeftExpression() instanceof LongValue) ? bi.getRightExpression() : bi.getLeftExpression());
+                        UnionFindElement ufe = unionFind.find(cols);
+
+
+                        if (range[0] != null && range[0].equals(range[1])) {
                             ufe.setEqual(range[0]);
+
+                        }
+
                         else {
-                            if (range[0] != null)
+                            if (range[0] != null) {
                                 ufe.setLow(range[0]);
-                            if (range[1] != null)
+
+                            }
+                            if (range[1] != null) {
                                 ufe.setHigh(range[1]);
+                            }
+
                         }
                         break;
                     case 2:
-
-
+                        oldJoinPlan.get(fromItems.get(idx)).add(exp);
                         if (exp instanceof EqualsTo) {
                             BinaryExpression be = (BinaryExpression) exp;
+                            Column left = (Column) be.getLeftExpression();
 
-                            unionFind.union(be.getLeftExpression().toString(),
-                                    be.getRightExpression().toString());
+                            Column right = (Column) be.getRightExpression();
+
+                            UnionFindElement leftE = unionFind.find(left);
+                            UnionFindElement rightE = unionFind.find(right);
+                            unionFind.union(leftE, rightE);
+
                         }
                         else
                             joinPlan.get(fromItems.get(idx)).add(exp);
@@ -172,15 +194,55 @@ public class Selector {
 
             }
         }
+        for(Expression exp : selectCondition.values()) {
+           // System.out.print(exp.toString());
+        }
+        // have to manually add tables that reside in union find
+        for (UnionFindElement uniEle: unionFind.getUnions()) {
+            for(Column column : uniEle.getColumns()) {
+                System.out.println(column.getWholeColumnName());
+                String tab = column.getWholeColumnName().split("\\.")[0];
+                String col = column.getColumnName();
+                List<Expression> lst = selectPlan.get(tab);
+
+                System.out.println("before " + lst.toString());
+                Integer eq = uniEle.getEqual();
+                Integer lower = uniEle.getLow();
+                Integer upper = uniEle.getHigh();
+
+                if (eq != null)
+                    lst.add(Util.createCondition(
+                            tab, col, eq, true, false));
+                else {
+                    if (lower != Integer.MIN_VALUE)
+                        lst.add(Util.createCondition(
+                                tab, col, lower, false, true));
+                    if (upper != Integer.MAX_VALUE)
+                        lst.add(Util.createCondition(
+                                tab, col, upper, false, false));
+                }
+                System.out.println("after " + lst.toString());
+            }
+
+        }
         for(String table : fromItems) {
             List<Expression> exps1 = joinPlan.get(table);
+            List<Expression> expsold = oldJoinPlan.get(table);
             if(!exps1.isEmpty()) {
             Expression res1 = exps1.get(0);
-
                 for (int i = 1; i < exps1.size(); i++) {
                     res1 = new AndExpression(res1, exps1.get(i));
+
                 }
                 joinCondition.put(table, res1);
+            }
+            if(!expsold.isEmpty()) {
+                Expression res1 = expsold.get(0);
+                for (int i = 1; i < expsold.size(); i++) {
+                    res1 = new AndExpression(res1, expsold.get(i));
+
+                }
+                oldJoinCons.put(table, res1);
             }
 
             List<Expression> exps2 = selectPlan.get(table);
@@ -194,7 +256,15 @@ public class Selector {
             }
 
         }
+
+
+
+
         buildLogicTree();
+        File logicalPlan = new File(DBCatalog.outputdir
+                + File.separator + "query" + 1 + "_logicalplan");
+        PrintStream logicalPlanStream = new PrintStream(logicalPlan);
+        logicalRoot.printTree(logicalPlanStream, 0);
 
         buildTree();
 
@@ -215,6 +285,9 @@ public class Selector {
     private Expression getSelectCondition(int idx) {
 
         return selectCondition.get(fromItems.get(idx));
+    }
+    private Expression getOldJoinCond(int idx) {
+        return oldJoinCons.get(fromItems.get(idx));
     }
 
     /**
@@ -288,7 +361,7 @@ public class Selector {
             if (getSelectCondition(i) != null) {
                 op = new LogicalSelect(getSelectCondition(i), op);
             }
-                curRoot = new LogicalJoin(getJoinCondition(i), curRoot, op);
+                curRoot = new LogicalJoin(getOldJoinCond(i), curRoot, op);
 
         }
             if (selects != null) {

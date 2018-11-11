@@ -90,7 +90,7 @@ public class TupleNestedJoin extends JoinOperator{
     @Override
     public String print() {
         String expression = (exp != null) ? exp.toString() : "";
-        return String.format("TNLJ[" + expression + "]");
+        return String.format("TNLJ[" + expression + "]") + "\n";
     }
 
     @Override

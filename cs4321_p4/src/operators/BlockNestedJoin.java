@@ -119,7 +119,10 @@ public class BlockNestedJoin extends JoinOperator {
 
     @Override
     public void printTree(PrintStream ps, int lv) {
-
+        printIndent(ps, lv);
+        ps.println(print());
+        left.printTree(ps, lv + 1);
+        right.printTree(ps, lv + 1);
     }
 
     private Tuple joinTuple(Tuple l, Tuple r) {

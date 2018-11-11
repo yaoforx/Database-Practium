@@ -19,7 +19,7 @@ public class Vvalues {
         for(String tb : baseTable) {
             String tabName = tb.split("\\,")[0];
             String attName = tb.split("\\.")[1];
-            int[] range = tablestats.get(tabName).getRange(attName);
+            int[] range = tablestats.get(tabName).getIndexRange(attName);
 
             Vvalues.put(tabName, range[1] - range[0] + 1);
         }
@@ -72,7 +72,7 @@ public class Vvalues {
             //reduction factor
             String tabName = left.toString().split("\\.")[0];
             String colName = left.toString().split("\\.")[1];
-            int[] range = tablestats.get(tabName).getRange(colName);
+            int[] range = tablestats.get(tabName).getIndexRange(colName);
             double rf =((double)(range[1] - right)) /((double)(range[1] - range[0]));
 
             if(Vvalues.containsKey(tabName)){
@@ -101,9 +101,9 @@ public class Vvalues {
                     Vvalues.put(rightTabName, min);
                 } else { // both not exist in the selection condition
                     int[] leftRange =
-                            tablestats.get(leftTabName).getRange(left.toString().split("\\.")[1]);
+                            tablestats.get(leftTabName).getIndexRange(left.toString().split("\\.")[1]);
                     int[] rightRange =
-                            tablestats.get(rightTabName).getRange(right.toString().split("\\.")[1]);
+                            tablestats.get(rightTabName).getIndexRange(right.toString().split("\\.")[1]);
                     int leftVal = leftRange[1]-leftRange[0]+1;
                     int rightVal = rightRange[1] - rightRange[0]+1;
                     Vvalues.put(leftTabName,Math.min(leftVal,rightVal));

@@ -43,6 +43,7 @@ public class PhysicalPlanBuilder {
         ScanOperator scanner = null;
         if(DBCatalog.config.idxSelect) {
             String tabName = logSelect.scan.table.tableName;
+            tabName = Util.getFullTableName(tabName);
             indexInfo info = OptimalSelect.calculateAndChoose(tabName, logSelect.exp);
             boolean idxSelect = (info != null);
             if(idxSelect) {
@@ -86,9 +87,11 @@ public class PhysicalPlanBuilder {
         }
     }
     public void visit(LogicalJoin logJoin) {
+
         Operator[] child = new operators.Operator[2];
         root = null;
         logJoin.left.accept(this);
+
         child[0] = root;
         root = null;
         logJoin.right.accept(this);
@@ -96,6 +99,8 @@ public class PhysicalPlanBuilder {
         if(DBCatalog.config.SMJ == 1) {
             List<Integer> outIdxs = new ArrayList<Integer>();
             List<Integer> inIdxs = new ArrayList<Integer>();
+
+            boolean hasNoneEual = Util.checkEqual(logJoin.expression);
             Expression newExp = Util.procJoinConds(
                     logJoin.expression, child[0].schema,
                     child[1].schema, outIdxs, inIdxs);
@@ -103,7 +108,7 @@ public class PhysicalPlanBuilder {
             if (outIdxs.size() != inIdxs.size())
                 throw new IllegalArgumentException();
 
-            if (!outIdxs.isEmpty()) {
+            if (!outIdxs.isEmpty() && !hasNoneEual) {
                 logJoin.expression = newExp;
                 if (DBCatalog.config.externalSort == 0) {
                     child[0] = new SortInMemory(child[0], outIdxs);

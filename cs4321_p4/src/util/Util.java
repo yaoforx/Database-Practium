@@ -6,8 +6,9 @@ import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
 import net.sf.jsqlparser.expression.operators.relational.*;
 import net.sf.jsqlparser.expression.BinaryExpression;
 import net.sf.jsqlparser.schema.Column;
-
+import net.sf.jsqlparser.schema.Table;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Util {
@@ -24,6 +25,7 @@ public class Util {
         for (Expression e : exps) {
             if (!(e instanceof EqualsTo)) {
                 others.add(e);
+
                 continue;
             }
 
@@ -197,7 +199,11 @@ public class Util {
 //        return false;
 //
 //    }
+    public static String  getFullTableName(String name) {
+        name = DBCatalog.alias.containsKey(name) ? DBCatalog.alias.get(name) : name;
+        return name;
 
+    }
 
     private static void updateRange(Integer[] range, int val,
                                     boolean isLower, boolean inclusive, boolean oppo) {
@@ -252,7 +258,7 @@ public class Util {
                 exp instanceof MinorThanEquals ||
                 exp instanceof EqualsTo);
         boolean isLower = (exp instanceof GreaterThan ||
-                exp instanceof GreaterThan ||
+                exp instanceof GreaterThanEquals ||
                 exp instanceof EqualsTo);
 
         if (!isLower && !isUpper)
@@ -328,6 +334,41 @@ public class Util {
             ret.remove(1);
 
         return ret;
+    }
+
+    public static class compareTable implements Comparator<String> {
+
+        @Override
+        public int compare(String t1, String t2) {
+            t1 = Util.getFullTableName(t1);
+            t2 = Util.getFullTableName(t2);
+            int sz1 = DBCatalog.tablestats.get(t1).totalTuple;
+            int sz2 =  DBCatalog.tablestats.get(t2).totalTuple;
+            return Integer.compare(sz1, sz2);
+        }
+
+    }
+
+    public static Expression createCondition(String tab, String col,
+                                             int val, boolean isEq, boolean isGE) {
+        Table t = new Table(null, tab);
+        Column c = new Column(t, col);
+        LongValue v = new LongValue(String.valueOf(val));
+
+        if (isEq)
+            return new EqualsTo(c, v);
+        if (isGE)
+            return new GreaterThanEquals(c, v);
+        return new MinorThanEquals(c, v);
+    }
+    public static boolean checkEqual(Expression expression){
+        List<Expression> exps = getAndExpressions(expression);
+        for (Expression e : exps) {
+            if (!(e instanceof EqualsTo)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 

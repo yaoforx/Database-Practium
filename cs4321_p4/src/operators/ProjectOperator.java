@@ -60,6 +60,10 @@ public class ProjectOperator extends Operator{
         } else
             joinChild = scan;
 
+        projectChild = selectChild;
+        if(projectChild == null) projectChild = scanChild;
+        if(projectChild == null) projectChild = joinChild;
+
 
         List<String> proSchema = new ArrayList<>();
         List<String> childSchema = scan.schema;
@@ -173,11 +177,15 @@ public class ProjectOperator extends Operator{
     @Override
     public String print() {
         return String.format("Project%s",
-                ((items == null) ? "[null]" : items.toString()));
+                ((items == null) ? "[null]" : items.toString())) + "\n";
     }
 
     @Override
     public void printTree(PrintStream ps, int lv) {
+        printIndent(ps, lv + 1);
+        ps.print(print());
+
+        projectChild.printTree(ps, lv + 1);
 
     }
 }

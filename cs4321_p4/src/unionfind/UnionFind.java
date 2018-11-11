@@ -1,9 +1,13 @@
 package unionfind;
 
 import java.util.*;
+
+import javafx.scene.control.Tab;
 import net.sf.jsqlparser.schema.Column;
+import util.*;
+
 public class UnionFind {
-    private List<UnionFindElement> unions;
+    private static List<UnionFindElement> unions;
 
     public UnionFind(){
         unions = new ArrayList<>();
@@ -25,8 +29,9 @@ public class UnionFind {
     }
 
     public UnionFindElement find(Column col) {
-        for(int i = 0; i < unions.size(); i++)
-            if(unions.get(i).contains(col)) return unions.get(i);
+        for(int i = 0; i < unions.size(); i++) {
+            if (unions.get(i).contains(col)) return unions.get(i);
+        }
 
 
         UnionFindElement element = new UnionFindElement();
@@ -41,12 +46,23 @@ public class UnionFind {
                if(colName.equals(unions.get(i).getCol(j))) return unions.get(i);
            }
 
+         return createElement(colName);
 
-        UnionFindElement element = new UnionFindElement();
-        Column column = new Column(null, colName);
-        element.addCol(column);
-        unions.add(element);
-        return element;
+    }
+    private UnionFindElement createElement(String name) {
+        UnionFindElement ele = new UnionFindElement();
+        String[] names = name.split("\\.");
+        name = Util.getFullTableName(names[0]);
+        TableStat st = DBCatalog.tablestats.get(name);
+        int[] range = st.getIndexRange(names[1]);
+        ele.setLow(range[0]);
+        ele.setHigh(range[1]);
+        Column column = new Column(null, names[1]);
+        ele.addCol(column);
+        unions.add(ele);
+        return ele;
+
+
     }
 
     public void union(String attr1, String attr2) {
@@ -59,22 +75,24 @@ public class UnionFind {
         UnionFindElement newElement = new UnionFindElement();
 
         newElement.addColumns(e1.getColumns());
-        newElement.addColumns(e1.getColumns());
+        newElement.addColumns(e2.getColumns());
 
         int newLow = Math.min(e1.getLow(), e2.getHigh());
         int newHigh = Math.max(e1.getHigh(), e2.getHigh());
         newElement.setLow(newLow);
         newElement.setHigh(newHigh);
 
-        int equal = e1.getEqual() == null ? e2.getEqual() : e1.getEqual();
-        newElement.setEqual(equal);
+        Integer equal = e1.getEqual() == null ? e2.getEqual() : e1.getEqual();
+        if(equal != null) {
+            newElement.setEqual(equal);
+        }
         unions.remove(e1);
         unions.remove(e2);
         unions.add(newElement);
         return newElement;
 
     }
-
+    @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < unions.size(); i++){

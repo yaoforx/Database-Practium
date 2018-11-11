@@ -42,6 +42,7 @@ public class DBCatalog {
     public static HashMap<String,String> alias = new HashMap<>();
     //key is table name, value is <column Name, indexInfo>
     public static HashMap<String, HashMap<String, indexInfo>> indexes = new HashMap<>();
+    //tablestats key is tableFullName, TableStat contains column name only
     public static HashMap<String, TableStat> tablestats = new HashMap<>();
     /**
      * sets the DBCatalog with the given input and output directories
@@ -53,7 +54,7 @@ public class DBCatalog {
         inputdir = input + "/";
         outputdir = output + "/";
         dbdir = inputdir + "db/data/";
-        statDir  = input + "db/";
+        statDir  = inputdir + "db/";
         schemadir = input + "/db/" + "schema.txt";
         querydir = inputdir + "/queries.sql";
        tempdir = temp + "/";

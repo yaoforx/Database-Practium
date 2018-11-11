@@ -105,11 +105,13 @@ public class SelectOperator extends Operator {
     @Override
     public String print() {
 
-        return String.format("Select[" + expression.toString() + "]");
+        return String.format("Select[" + expression.toString() + "]")+ "\n";
     }
 
     @Override
     public void printTree(PrintStream ps, int lv) {
-
+        printIndent(ps, lv);
+        ps.print(print());
+        child.printTree(ps, lv + 1);
     }
 }

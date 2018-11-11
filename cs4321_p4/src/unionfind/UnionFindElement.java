@@ -6,13 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UnionFindElement {
-    private List<Column> columns;
+    private List<Column> columns = new ArrayList<>();
     private int low;
     private int high;
     private Integer equalNum = null;
 
     public UnionFindElement() {
-        columns = new ArrayList<>();
         low = Integer.MIN_VALUE;
         high = Integer.MAX_VALUE;
 

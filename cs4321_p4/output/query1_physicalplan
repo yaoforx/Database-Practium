@@ -1,0 +1,8 @@
+-Project[S.A]
+-SMJ[S.B = R.G]
+--InMemSort[S.B]
+---Select[S.A >= 100]
+----TableScan[Sailors]
+--InMemSort[R.G]
+---Select[R.H <= 99]
+----TableScan[Reserves]

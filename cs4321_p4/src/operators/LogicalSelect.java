@@ -25,12 +25,14 @@ public class LogicalSelect extends LogicalOperator
     @Override
     public String print() {
         return String.format("Select[%s]",
-                ((exp == null) ? "null" : exp.toString()));
+                ((exp == null) ? "null" : exp.toString())) + "\n";
     }
 
     @Override
     public void printTree(PrintStream ps, int lv) {
-
+        printIndent(ps, lv);
+        ps.print(print());
+        scan.printTree(ps, lv + 1);
     }
 
 }

@@ -11,18 +11,19 @@ public class Stats {
     String inputDir;
     private BufferedReader br;
     private BufferedWriter bw;
-    public HashMap<String, TableStat> stats;
+    public static HashMap<String, TableStat> stats;
 
     public Stats() throws IOException {
         outputDir = DBCatalog.statDir;
         inputDir = DBCatalog.dbdir;
-        stat = new File(outputDir + "/stat.txt");
+        stat = new File(inputDir + "/stat.txt");
         bw = new BufferedWriter(new FileWriter(stat));
+        stats = new HashMap<>();
         createStats();
     }
 
     public void createStats() throws IOException {
-        for(String table : DBCatalog.alias.values()) {
+        for(String table : DBCatalog.schemas.keySet()) {
             int num = DBCatalog.schemas.get(table).size();
             TableStat info = new TableStat(table, new String[num], new int[num], new int[num]);
             int curtps = 0;
@@ -44,9 +45,10 @@ public class Stats {
             bw.write(curtps + " ");
             for(int i = 0; i < num; i++){ // not count table name
                 bw.write(DBCatalog.schemas.get(table).get(i)+",");
-                bw.write(min[i-1]+",");
-                bw.write(max[i-1] + " ");
-                info.addCol(DBCatalog.schemas.get(table).get(i), min[i-1], max[i-1]);
+
+                bw.write(min[i]+",");
+                bw.write(max[i] + " ");
+                info.addCol(DBCatalog.schemas.get(table).get(i ), min[i], max[i]);
                 info.setTpNum(curtps);
             }
             stats.put(table, info);

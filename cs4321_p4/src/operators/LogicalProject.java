@@ -16,12 +16,14 @@ public class LogicalProject extends LogicalOperator {
     @Override
     public String print() {
         return String.format("Project%s",
-                ((selectItems == null) ? "[null]" : selectItems.toString()));
+                ((selectItems == null) ? "[null]" : selectItems.toString())) + "\n";
     }
 
     @Override
     public void printTree(PrintStream ps, int lv) {
-
+        printIndent(ps, lv);
+        ps.print(print());
+        child.printTree(ps, lv + 1);
     }
 
     public void accept(PhysicalPlanBuilder phyplan) {
