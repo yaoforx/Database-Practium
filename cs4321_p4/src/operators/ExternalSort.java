@@ -93,8 +93,8 @@ public class ExternalSort extends SortOperator{
 
     @Override
     public String print() {
-        return String.format("EXternalSort%s",
-                ((sort == null) ? "[]" : sort.toString())) + "\n";
+        return String.format("ExternalSort%s",
+                ((sort == null) ? "[]" : sortInEle.toString())) + "\n";
     }
 
     @Override

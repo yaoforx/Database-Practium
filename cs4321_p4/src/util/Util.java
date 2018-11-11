@@ -239,7 +239,7 @@ public class Util {
 
         Integer val = null;
 
-
+        if(!(left instanceof LongValue) && !(right instanceof LongValue)) return null;
         if (left instanceof Column) {
             attr[0] = left.toString();
             val = Integer.parseInt(right.toString());

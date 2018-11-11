@@ -27,7 +27,8 @@ public class Configure {
 
             SMJ = 1;
             joinPage = 3;
-            inMemSort = 1;
+            externalSort = 1;
+            sortPage = 3;
 
     }
     private void setUp() {

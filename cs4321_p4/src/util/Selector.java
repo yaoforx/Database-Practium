@@ -146,17 +146,14 @@ public class Selector {
                 switch (tables.size()) {
                     case 0:
                         selectPlan.get(fromItems.get(idx)).add(exp);
-                        oldSelectPlan.get(fromItems.get(idx)).add(exp);
                         break;
                     case 1:
-
-
-                        oldSelectPlan.get(fromItems.get(idx)).add(exp);
-
-                        if(selfJoin) break;
-
                         String[] col = new String[1];
                         Integer[] range = Util.getSelRange(exp, col);
+                        if(range == null && !(exp instanceof EqualsTo)) {
+                            selectPlan.get(fromItems.get(idx)).add(exp);
+                            break;
+                        }
                         BinaryExpression bi = (BinaryExpression) exp;
                         Column cols  =(Column) ((bi.getLeftExpression() instanceof LongValue) ? bi.getRightExpression() : bi.getLeftExpression());
                         UnionFindElement ufe = unionFind.find(cols);
@@ -214,12 +211,9 @@ public class Selector {
                 Integer eq = uniEle.getEqual();
                 Integer lower = uniEle.getLow();
                 Integer upper = uniEle.getHigh();
-
-
                 if (eq != null) {
                     lst.add(Util.createCondition(
                             tab, col, eq, true, false));
-
                 }
                 else {
                     if (lower != Integer.MIN_VALUE)
@@ -262,15 +256,15 @@ public class Selector {
                 }
                 selectCondition.put(table, res2);
             }
-            List<Expression> exps3 = oldSelectPlan.get(table);
-            if(!exps2.isEmpty()) {
-                Expression res3 = exps3.get(0);
-
-                for (int i = 1; i < exps2.size(); i++) {
-                    res3 = new AndExpression(res3, exps2.get(i));
-                }
-                oldSelectCons.put(table, res3);
-            }
+//            List<Expression> exps3 = oldSelectPlan.get(table);
+//            if(!exps2.isEmpty()) {
+//                Expression res3 = exps3.get(0);
+//
+//                for (int i = 1; i < exps2.size(); i++) {
+//                    res3 = new AndExpression(res3, exps2.get(i));
+//                }
+//                oldSelectCons.put(table, res3);
+//            }
 
         }
 
@@ -371,12 +365,12 @@ public class Selector {
     public void buildTree()  {
         LogicalOperator curRoot = new LogicalScan(this.getTable(0));
         if (getSelectCondition(0) != null) {
-            curRoot = new LogicalSelect(getOldSelectCond(0), curRoot);
+            curRoot = new LogicalSelect(getSelectCondition(0), curRoot);
         }
         for (int i = 1; i < fromItems.size(); ++i) {
             LogicalOperator op = new LogicalScan(getTable(i));
             if (getSelectCondition(i) != null) {
-                op = new LogicalSelect(getOldSelectCond(i), op);
+                op = new LogicalSelect(getSelectCondition(i), op);
             }
                 curRoot = new LogicalJoin(getOldJoinCond(i), curRoot, op);
 
