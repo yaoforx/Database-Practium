@@ -60,6 +60,7 @@ public class DuplicateEliminationOperator extends Operator {
      *               structure of the operator tree
      */
     public DuplicateEliminationOperator(Operator child) {
+
         this.child = (SortOperator) child;
 
     }

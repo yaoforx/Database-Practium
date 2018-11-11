@@ -16,6 +16,7 @@ import util.*;
 public class ScanOperator extends Operator {
 
     Table tb;
+
     protected TupleReader lines;
     //private BufferedReader lines;
 
@@ -26,7 +27,6 @@ public class ScanOperator extends Operator {
      * @see      Table
      */
     public ScanOperator(Table tb) {
-
         this.tb = tb;
         lines =  DBCatalog.tableReader(tb.tableName);
         schema = new ArrayList<>();
@@ -96,12 +96,14 @@ public class ScanOperator extends Operator {
     @Override
     public String print() {
         String tableName = DBCatalog.alias.containsKey(tb.tableName) ? DBCatalog.alias.get(tb.tableName) : tb.tableName;
-        return "TableScan[" + tableName + "]";
+        return "TableScan[" + tableName + "]" + "\n";
     }
 
     @Override
     public void printTree(PrintStream ps, int lv) {
         printIndent(ps, lv);
-        ps.println(print());
+        ps.print(print());
     }
+
+
 }

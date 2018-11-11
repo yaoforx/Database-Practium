@@ -160,6 +160,10 @@ public class TupleReader {
 
         long position = size * (long) pageId;
         fc.position(position);
+        if(fc.read(page) <= 0) {
+            eof = true;
+            return null;
+        }
         setPage();
 
 

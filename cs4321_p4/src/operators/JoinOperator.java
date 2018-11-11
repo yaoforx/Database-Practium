@@ -43,6 +43,7 @@ public abstract class JoinOperator extends Operator {
      * @param right the right child Operator
      */
     public JoinOperator(Expression exp, Operator left, Operator right) {
+
         this.exp = exp;
         this.left = left;
         this.right = right;

@@ -1,0 +1,12 @@
+DupElim
+-InMemSort[S.C]
+--Project[*]
+---SMJ[R.H = B.D]
+----InMemSort[R.H]
+-----SMJ[S.A = R.G]
+------InMemSort[S.A]
+-------TableScan[Sailors]
+------InMemSort[R.G]
+-------TableScan[Reserves]
+----InMemSort[B.D]
+-----TableScan[Boats]

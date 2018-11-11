@@ -23,6 +23,7 @@ import java.util.List;
  */
 public class PhysicalPlanBuilder {
     private Operator root = null;
+    private OptimalSelect optimalSelect = new OptimalSelect();
 
 
     public PhysicalPlanBuilder() {
@@ -40,11 +41,12 @@ public class PhysicalPlanBuilder {
 
     public void visit(LogicalSelect logSelect)  {
 
-        ScanOperator scanner = null;
+        Operator scanner = null;
         if(DBCatalog.config.idxSelect) {
+            Expression ex = logSelect.exp;
             String tabName = logSelect.scan.table.tableName;
             tabName = Util.getFullTableName(tabName);
-            indexInfo info = OptimalSelect.calculateAndChoose(tabName, logSelect.exp);
+            indexInfo info = optimalSelect.calculateAndChoose(tabName, logSelect.exp);
             boolean idxSelect = (info != null);
             if(idxSelect) {
                 Integer[] range
@@ -56,8 +58,12 @@ public class PhysicalPlanBuilder {
             }
 
         }
-        if(scanner == null) scanner = new ScanOperator(logSelect.scan.table);
+        if(scanner == null) {
+
+            scanner = new ScanOperator(logSelect.scan.table);
+        }
         root = new SelectOperator(logSelect.exp, scanner);
+
     }
 
     public void visit(LogicalProject logProj) {
@@ -89,11 +95,11 @@ public class PhysicalPlanBuilder {
     public void visit(LogicalJoin logJoin) {
 
         Operator[] child = new operators.Operator[2];
-        root = null;
+
         logJoin.left.accept(this);
 
         child[0] = root;
-        root = null;
+
         logJoin.right.accept(this);
         child[1] = root;
         if(DBCatalog.config.SMJ == 1) {
@@ -132,6 +138,7 @@ public class PhysicalPlanBuilder {
         } else {
             root = new TupleNestedJoin(logJoin.expression, child[0], child[1]);
         }
+       // System.out.println("Join" + child[0].toString() + " and "+ child[1].toString());
 
 
     }

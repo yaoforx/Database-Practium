@@ -1,9 +1,11 @@
-logical plan printing 
-Project[S.A]
--Join[][[S.A], equals null, min 100, max null]
+DupElim
+-Sort[S.A]
+--Project[S.A, R.G]
+---Join[R.H <> B.D]
 [[R.H], equals null, min null, max 99]
+[[S.A, B.D], equals null, min null, max null]
 [[S.B, R.G], equals null, min null, max null]
---Select[S.A >= 100]
----Leaf[Sailors]
---Select[R.H <= 99]
----Leaf[Reserves]
+----Leaf[Sailors]
+----Select[R.H <= 99]
+-----Leaf[Reserves]
+----Leaf[Boats]

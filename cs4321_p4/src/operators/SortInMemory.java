@@ -72,7 +72,6 @@ public class SortInMemory extends SortOperator {
     @Override
     public String print() {
         if(sort != null) {
-            System.out.println(sortInEle);
             return String.format("InMemSort%s", sortInEle.toString()) + "\n";
         } else {
             return String.format("InMemSort[]") + "\n";

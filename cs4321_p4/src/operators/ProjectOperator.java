@@ -39,6 +39,7 @@ public class ProjectOperator extends Operator{
 
         //If this is all column
         //Do not do anything
+
         items = selectItems;
 
         if(!selectItems.isEmpty() && (selectItems.get(0) instanceof AllColumns)) {
@@ -182,10 +183,14 @@ public class ProjectOperator extends Operator{
 
     @Override
     public void printTree(PrintStream ps, int lv) {
-        printIndent(ps, lv + 1);
+        printIndent(ps, lv);
         ps.print(print());
-
-        projectChild.printTree(ps, lv + 1);
+        if(projectChild != null)
+            projectChild.printTree(ps, lv + 1);
+        if(selectChild!= null)
+            selectChild.printTree(ps, lv + 1);
+        if(scanChild != null)
+            scanChild.printTree(ps, lv + 1);
 
     }
 }

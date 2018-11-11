@@ -30,6 +30,9 @@ public class TableStat {
         return attNum;
     }
     public int[]  getIndexRange(String attrName){
+        String tableName = Util.getFullTableName(attrName.split("\\.")[0]);
+        attrName = tableName +"." +  attrName.split("\\.")[1];
+
         if(indexRange.containsKey(attrName)){
             return indexRange.get(attrName);
         } else {

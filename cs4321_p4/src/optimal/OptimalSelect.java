@@ -17,13 +17,15 @@ import java.util.*;
 public class OptimalSelect {
     static List<String> columnName;
     static List<Double> scanCost;
-    static HashMap<String, Integer[]> columnInfo;
-    public static indexInfo calculateAndChoose(String tableName, Expression expression) {
-        columnInfo = new HashMap<>();
+    private static double plainScan;
+    public static HashMap<String, Integer[]> columnInfo;
+    public OptimalSelect(){
         columnName = new ArrayList<>();
         scanCost = new ArrayList<>();
-
-        double curCost = 1.0;
+        columnInfo = new HashMap<>();
+    }
+    public static indexInfo calculateAndChoose(String tableName, Expression expression) {
+        plainScan = -1;
         List<Expression> exps = Util.getAndExpressions(expression);
 
         for(Expression exp : exps) {
@@ -40,17 +42,17 @@ public class OptimalSelect {
             } else if(right instanceof Column && left instanceof Column){
                 //calculate plain cost
 
-                curCost =1.0* (DBCatalog.tablestats.get(tableName).getTotoalTps() *
+                plainScan =1.0* (DBCatalog.tablestats.get(tableName).getTotoalTps() *
                         DBCatalog.tablestats.get(tableName).getAttNum() * 4)/4096;
                 continue;
             }else if (exp instanceof EqualsTo){
-               curCost = 1.0*(DBCatalog.tablestats.get(tableName).getTotoalTps() *
+                plainScan = 1.0*(DBCatalog.tablestats.get(tableName).getTotoalTps() *
                         DBCatalog.tablestats.get(tableName).getAttNum() * 4)/4096;
                 continue;
             }
             String[] s = {col};
             Integer[] range = Util.getSelRange(exp,s);
-            updateInfo(col,range);
+            updateInfo(s[0],range);
         }
         tableName = Util.getFullTableName(tableName);
         long tupleNum = DBCatalog.tablestats.get(tableName).getAttNum() *
@@ -60,13 +62,18 @@ public class OptimalSelect {
         for(Map.Entry<String, Integer[]> entry : entries) {
             HashMap<String, indexInfo> tableInfo = DBCatalog.indexes.get(tableName);
             double localCost = 0;
-            if(tableInfo == null) localCost = pageNum;
+            if(tableInfo == null) {
+                localCost = pageNum;
+                plainScan = pageNum;
+            }
             else {
-                indexInfo info = tableInfo.get(entry.getKey());
-             //   int[] selectRange = DBCatalog.tablestats.get(tableName).getSelectRange(entry.getKey());
+                //tableName = Util.getFullTableName(tableName);
+
+                indexInfo info = tableInfo.get(tableName);
+
                 int[] range = DBCatalog.tablestats.get(tableName).getIndexRange(entry.getKey());
-                System.out.print(range[0]);
-                System.out.print(range[1]);
+                if(range == null) continue;
+
                 double maxRange = range[1] - range[0];
                 double curHigh = range[1];
                 double curLow = range[0];
@@ -78,11 +85,11 @@ public class OptimalSelect {
                 }
                 double reductionFactor = (curHigh - curLow)/maxRange;
                 if(reductionFactor <= 0) reductionFactor = 1.0;
-                if(info.clustered) {
+                if(info != null && info.clustered) {
                     // choose 1 as tree height
                     localCost = 1 + pageNum * reductionFactor;
                 } else {
-                    Btree btree =  DBCatalog.idxConfig.loaders.get(info.tab).getBtree();
+                    Btree btree =  DBCatalog.idxConfig.loaders.get(tableName).getBtree();
                     localCost = 1 + (btree.numOfLeaves +  DBCatalog.tablestats.get(tableName).getTotoalTps()) * reductionFactor;
 
                 }

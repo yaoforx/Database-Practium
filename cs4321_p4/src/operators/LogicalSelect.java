@@ -14,12 +14,11 @@ public class LogicalSelect extends LogicalOperator
     public LogicalScan scan;
 
     public void accept(PhysicalPlanBuilder phyplan) {
-
-            phyplan.visit(this);
-
+        phyplan.visit(this);
     }
 
-    public LogicalSelect(Expression expression, LogicalOperator scan) { exp = expression;
+    public LogicalSelect(Expression expression, LogicalOperator scan) {
+        exp = expression;
         this.scan = ((LogicalScan)scan);
     }
     @Override

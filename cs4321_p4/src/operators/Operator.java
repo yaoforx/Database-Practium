@@ -16,6 +16,7 @@ public abstract class Operator {
     public List<String> schema = null;
     public abstract void reset();
 
+
     public abstract Tuple getNextTuple();
    // public abstract void reset(int index);
 
@@ -24,6 +25,7 @@ public abstract class Operator {
      *
      * @param ps the PrintStream where the tuples will be printed
      */
+
     public void dump(PrintStream ps) {
         Tuple t;
         while((t = getNextTuple()) != null) {

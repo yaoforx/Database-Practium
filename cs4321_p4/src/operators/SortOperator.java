@@ -67,7 +67,6 @@ public abstract class SortOperator extends Operator {
      */
     public SortOperator(Operator child, List<?> orders) {
 
-
         sort = new ArrayList<>();
         sortInEle  = new ArrayList<>();
         this.schema = child.schema;

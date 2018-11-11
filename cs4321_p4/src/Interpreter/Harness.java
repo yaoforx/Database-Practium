@@ -95,11 +95,10 @@ public class Harness {
                 PrintStream physicalPlanStream = new PrintStream(physicalPlan);
                 System.out.println("Parsing: " + statement);
                 Selector select = new Selector(statement);
-                logicalPlanStream.print("logical plan printing \n");
-                select.logicalRoot.printTree(logicalPlanStream, 0);
-                logicalPlanStream.close();
                 select.root.printTree(physicalPlanStream, 0);
                 physicalPlanStream.close();
+                select.logicalRoot.printTree(logicalPlanStream, 0);
+                logicalPlanStream.close();
                 long beginTime = System.currentTimeMillis();
 
                 select.root.dump(writer);

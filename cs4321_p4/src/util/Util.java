@@ -239,8 +239,6 @@ public class Util {
 
         Integer val = null;
 
-        System.out.println(left);
-        System.out.println(right);
 
         if (left instanceof Column) {
             attr[0] = left.toString();

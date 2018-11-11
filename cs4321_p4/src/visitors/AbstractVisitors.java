@@ -128,6 +128,7 @@ public class AbstractVisitors implements ExpressionVisitor {
         greaterThanEquals.getRightExpression().accept(this);
 
         rightValue = value;
+        System.out.print(leftValue + " ? " + rightValue);
 
         condition = (leftValue >= rightValue);
 

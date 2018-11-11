@@ -40,8 +40,6 @@ public class indexConfig {
 
 
       //  File idxFile = new File(DBCatalog.indexdir);
-        System.out.println("FINd me here");
-        System.out.println(DBCatalog.indexes.keySet().size());
         for(String set : DBCatalog.indexes.keySet()) {
             String tabPath = DBCatalog.dbdir + set;
             HashMap<String, indexInfo> info = DBCatalog.indexes.get(set);

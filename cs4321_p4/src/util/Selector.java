@@ -58,10 +58,13 @@ public class Selector {
     HashMap<String,List<Expression>> selectPlan;
     HashMap<String,List<Expression>> joinPlan;
     HashMap<String, List<Expression>> oldJoinPlan = new HashMap<>();
+    HashMap<String, List<Expression>> oldSelectPlan = new HashMap<>();
+
 
     public HashMap<String,Expression> selectCondition = new HashMap<>();
     public HashMap<String,Expression> joinCondition = new HashMap<>();
     public HashMap<String,Expression> oldJoinCons = new HashMap<>();
+    public HashMap<String,Expression> oldSelectCons = new HashMap<>();
 
     public UnionFind unionFind = new UnionFind();
     private boolean selfJoin = false;
@@ -126,6 +129,7 @@ public class Selector {
             selectPlan.put(table, new ArrayList<>());
             joinPlan.put(table, new ArrayList<>());
             oldJoinPlan.put(table, new ArrayList<>());
+            oldSelectPlan.put(table, new ArrayList<>());
         }
 
         List<Expression> andExpressions = getAndExpressions(where);
@@ -142,11 +146,13 @@ public class Selector {
                 switch (tables.size()) {
                     case 0:
                         selectPlan.get(fromItems.get(idx)).add(exp);
+                        oldSelectPlan.get(fromItems.get(idx)).add(exp);
                         break;
                     case 1:
 
 
-                        //selectPlan.get(fromItems.get(idx)).add(exp);
+                        oldSelectPlan.get(fromItems.get(idx)).add(exp);
+
                         if(selfJoin) break;
 
                         String[] col = new String[1];
@@ -194,25 +200,27 @@ public class Selector {
 
             }
         }
-        for(Expression exp : selectCondition.values()) {
-           // System.out.print(exp.toString());
+        for(String exp : oldJoinPlan.keySet()) {
+            System.out.println("!!!!!");
+            System.out.println(exp.toString());
         }
         // have to manually add tables that reside in union find
         for (UnionFindElement uniEle: unionFind.getUnions()) {
             for(Column column : uniEle.getColumns()) {
-                System.out.println(column.getWholeColumnName());
+
                 String tab = column.getWholeColumnName().split("\\.")[0];
                 String col = column.getColumnName();
                 List<Expression> lst = selectPlan.get(tab);
-
-                System.out.println("before " + lst.toString());
                 Integer eq = uniEle.getEqual();
                 Integer lower = uniEle.getLow();
                 Integer upper = uniEle.getHigh();
 
-                if (eq != null)
+
+                if (eq != null) {
                     lst.add(Util.createCondition(
                             tab, col, eq, true, false));
+
+                }
                 else {
                     if (lower != Integer.MIN_VALUE)
                         lst.add(Util.createCondition(
@@ -221,7 +229,7 @@ public class Selector {
                         lst.add(Util.createCondition(
                                 tab, col, upper, false, false));
                 }
-                System.out.println("after " + lst.toString());
+
             }
 
         }
@@ -254,6 +262,15 @@ public class Selector {
                 }
                 selectCondition.put(table, res2);
             }
+            List<Expression> exps3 = oldSelectPlan.get(table);
+            if(!exps2.isEmpty()) {
+                Expression res3 = exps3.get(0);
+
+                for (int i = 1; i < exps2.size(); i++) {
+                    res3 = new AndExpression(res3, exps2.get(i));
+                }
+                oldSelectCons.put(table, res3);
+            }
 
         }
 
@@ -261,10 +278,7 @@ public class Selector {
 
 
         buildLogicTree();
-        File logicalPlan = new File(DBCatalog.outputdir
-                + File.separator + "query" + 1 + "_logicalplan");
-        PrintStream logicalPlanStream = new PrintStream(logicalPlan);
-        logicalRoot.printTree(logicalPlanStream, 0);
+
 
         buildTree();
 
@@ -288,6 +302,9 @@ public class Selector {
     }
     private Expression getOldJoinCond(int idx) {
         return oldJoinCons.get(fromItems.get(idx));
+    }
+    private Expression getOldSelectCond(int idx){
+        return oldSelectCons.get(fromItems.get(idx));
     }
 
     /**
@@ -351,15 +368,15 @@ public class Selector {
     /**
      * builds the Physical operator tree based on the query
      */
-    public void buildTree() throws IOException {
+    public void buildTree()  {
         LogicalOperator curRoot = new LogicalScan(this.getTable(0));
         if (getSelectCondition(0) != null) {
-            curRoot = new LogicalSelect(this.getSelectCondition(0), curRoot);
+            curRoot = new LogicalSelect(getOldSelectCond(0), curRoot);
         }
         for (int i = 1; i < fromItems.size(); ++i) {
             LogicalOperator op = new LogicalScan(getTable(i));
             if (getSelectCondition(i) != null) {
-                op = new LogicalSelect(getSelectCondition(i), op);
+                op = new LogicalSelect(getOldSelectCond(i), op);
             }
                 curRoot = new LogicalJoin(getOldJoinCond(i), curRoot, op);
 

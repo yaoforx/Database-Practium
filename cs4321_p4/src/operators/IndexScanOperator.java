@@ -13,8 +13,6 @@ import util.TupleIdentifier;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class IndexScanOperator extends ScanOperator {
     private Integer lowKey;
@@ -84,7 +82,7 @@ public class IndexScanOperator extends ScanOperator {
                 TupleIdentifier curtpi = ((BtreeLeafNode) currentLeafNode).getTupleInfo(keyPos, tupPos);
                 tupPos++;
                 try {
-                    tuple = super.lines.read(curtpi);
+                    tuple = lines.read(curtpi);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -102,9 +100,17 @@ public class IndexScanOperator extends ScanOperator {
     public void dump(PrintStream s) {
         super.dump(s);
     }
+
     @Override
     public String print() {
         String tableName = DBCatalog.alias.containsKey(tb.tableName) ? DBCatalog.alias.get(tb.tableName) : tb.tableName;
-        return "IndexScan[" + tableName + "]";
+        return "IndexScan[" + tableName + "," + indexedCol + "," + lowKey + "," + highKey + "]\n";
+    }
+
+    @Override
+    public void printTree(PrintStream ps, int lv) {
+        printIndent(ps, lv);
+        ps.print(print());
+
     }
 }

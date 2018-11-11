@@ -48,7 +48,7 @@ public class Stats {
 
                 bw.write(min[i]+",");
                 bw.write(max[i] + " ");
-                info.addCol(DBCatalog.schemas.get(table).get(i ), min[i], max[i]);
+                info.addCol(table +"."+ DBCatalog.schemas.get(table).get(i ), min[i], max[i]);
                 info.setTpNum(curtps);
             }
             stats.put(table, info);

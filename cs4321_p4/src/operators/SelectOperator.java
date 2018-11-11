@@ -16,7 +16,7 @@ import java.io.PrintStream;
 public class SelectOperator extends Operator {
     Expression expression = null;
     SelectVisitors sv = null;
-    ScanOperator child;
+    Operator child;
     private List<SelectItem> items;
 
     /**
@@ -25,8 +25,8 @@ public class SelectOperator extends Operator {
      * @param expression the where condition of the Select statement. will be null if no where condition
      * @param scan       the child of the SelectOperator being constructed
      */
-    public SelectOperator(Expression expression, ScanOperator scan) {
-        child = new ScanOperator(scan.tb);
+    public SelectOperator(Expression expression, Operator scan) {
+        child = scan;
         schema = child.schema;
         this.expression = expression;
         sv = new SelectVisitors(child.schema);
@@ -38,7 +38,7 @@ public class SelectOperator extends Operator {
      * @return the child of this SelectOperator
      * @see    ScanOperator
      */
-    public ScanOperator getChild(){
+    public Operator getChild(){
         return child;
     }
 
