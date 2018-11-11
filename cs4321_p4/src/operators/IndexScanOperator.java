@@ -104,7 +104,8 @@ public class IndexScanOperator extends ScanOperator {
     @Override
     public String print() {
         String tableName = DBCatalog.alias.containsKey(tb.tableName) ? DBCatalog.alias.get(tb.tableName) : tb.tableName;
-        return "IndexScan[" + tableName + "," + indexedCol + "," + lowKey + "," + highKey + "]\n";
+        String colName = DBCatalog.getSchema(tableName).get(indexedCol);
+        return "IndexScan[" + tableName + "," + colName + "," + lowKey + "," + highKey + "]\n";
     }
 
     @Override
