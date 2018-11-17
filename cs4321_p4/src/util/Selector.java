@@ -27,6 +27,8 @@ import util.DBCatalog;
 import util.Table;
 import visitors.PhysicalPlanBuilder;
 
+import static visitors.PhysicalPlanBuilder.optimalJoin;
+
 
 /**
  * Selector parses SQL queries and builds the SQL operator tree
@@ -44,12 +46,13 @@ public class Selector {
     public Distinct distinct;
 
     public List<Join> joins;
-    public Expression where;
+    public static Expression where;
     public List<OrderByElement> sort;
 
-    public List<String> fromItems = new ArrayList<>();
+    public static List<String> fromItems;
     // exps storing every expression with AND
     public List<Expression> exps;
+
     //selectcondition key is table name, value is the expression
     //associated with the table name
     // "WHERE table1.A = table2.B"
@@ -58,15 +61,15 @@ public class Selector {
     HashMap<String,List<Expression>> selectPlan;
     HashMap<String,List<Expression>> joinPlan;
     HashMap<String, List<Expression>> oldJoinPlan = new HashMap<>();
-    HashMap<String, List<Expression>> oldSelectPlan = new HashMap<>();
 
 
-    public HashMap<String,Expression> selectCondition = new HashMap<>();
-    public HashMap<String,Expression> joinCondition = new HashMap<>();
-    public HashMap<String,Expression> oldJoinCons = new HashMap<>();
-    public HashMap<String,Expression> oldSelectCons = new HashMap<>();
 
-    public UnionFind unionFind = new UnionFind();
+    public static HashMap<String,Expression> selectCondition = new HashMap<>();
+    public static HashMap<String,Expression> joinCondition = new HashMap<>();
+    public static HashMap<String,Expression> oldJoinCons = new HashMap<>();
+
+
+    public static UnionFind unionFind = new UnionFind();
     private boolean selfJoin = false;
 
 
@@ -78,7 +81,7 @@ public class Selector {
     public Selector(Statement statement) throws IOException{
         sel = (Select) statement;
         PlainSelect ps = (PlainSelect) sel.getSelectBody();
-
+        fromItems = new ArrayList<>();
         from = ps.getFromItem();
         joins = ps.getJoins();
         selects = ps.getSelectItems();
@@ -121,15 +124,14 @@ public class Selector {
             }
 
         }
-
-        Collections.sort(fromItems, new Util.compareTable());
+        //put bigger table to inner relation
+       // Collections.sort(fromItems, new Util.compareTable());
 
 
         for (String table : fromItems) {
             selectPlan.put(table, new ArrayList<>());
             joinPlan.put(table, new ArrayList<>());
             oldJoinPlan.put(table, new ArrayList<>());
-            oldSelectPlan.put(table, new ArrayList<>());
         }
 
         List<Expression> andExpressions = getAndExpressions(where);
@@ -155,7 +157,8 @@ public class Selector {
                             break;
                         }
                         BinaryExpression bi = (BinaryExpression) exp;
-                        Column cols  =(Column) ((bi.getLeftExpression() instanceof LongValue) ? bi.getRightExpression() : bi.getLeftExpression());
+                        Column cols  =(Column) ((bi.getLeftExpression() instanceof LongValue) ?
+                                bi.getRightExpression() : bi.getLeftExpression());
                         UnionFindElement ufe = unionFind.find(cols);
 
 
@@ -197,10 +200,7 @@ public class Selector {
 
             }
         }
-        for(String exp : oldJoinPlan.keySet()) {
-            System.out.println("!!!!!");
-            System.out.println(exp.toString());
-        }
+
         // have to manually add tables that reside in union find
         for (UnionFindElement uniEle: unionFind.getUnions()) {
             for(Column column : uniEle.getColumns()) {
@@ -256,25 +256,16 @@ public class Selector {
                 }
                 selectCondition.put(table, res2);
             }
-//            List<Expression> exps3 = oldSelectPlan.get(table);
-//            if(!exps2.isEmpty()) {
-//                Expression res3 = exps3.get(0);
-//
-//                for (int i = 1; i < exps2.size(); i++) {
-//                    res3 = new AndExpression(res3, exps2.get(i));
-//                }
-//                oldSelectCons.put(table, res3);
-//            }
+
 
         }
-
-
-
 
         buildLogicTree();
 
 
         buildTree();
+
+
 
 
 
@@ -290,15 +281,12 @@ public class Selector {
      * @param idx
      * @return get select condition from queries
      */
-    private Expression getSelectCondition(int idx) {
+    public static Expression getSelectCondition(int idx) {
 
         return selectCondition.get(fromItems.get(idx));
     }
     private Expression getOldJoinCond(int idx) {
         return oldJoinCons.get(fromItems.get(idx));
-    }
-    private Expression getOldSelectCond(int idx){
-        return oldSelectCons.get(fromItems.get(idx));
     }
 
     /**
@@ -330,6 +318,8 @@ public class Selector {
      */
     public void buildLogicTree() {
         List<LogicalOperator> res = new ArrayList<>();
+        LogicalOperator op;
+        String state = fromItems.toString();
         for (int i = 0; i < fromItems.size(); ++i) {
             LogicalOperator table = new LogicalScan(getTable(i));
             if (getSelectCondition(i) != null) {
@@ -338,24 +328,31 @@ public class Selector {
             }
             res.add(table);
         }
-
         if (fromItems.size() > 1) {
-            logicalRoot = new LogicalMassJoin(fromItems, res, joinCondition, unionFind);
+            op = new LogicalMassJoin(fromItems, res, joinCondition, unionFind);
         } else {
-            logicalRoot = res.get(0);
+            op = res.get(0);
         }
         if (selects != null) {
-            logicalRoot = new LogicalProject(selects, logicalRoot);
+            op= new LogicalProject(selects, op);
         }
         if (sort != null) {
-            logicalRoot = new LogicalSort(sort, logicalRoot);
+            op= new LogicalSort(sort, op);
         }
         if (distinct != null) {
             if (sort == null) {
-                logicalRoot = new LogicalSort(new ArrayList<>(), logicalRoot);
+                op = new LogicalSort(new ArrayList<>(), op);
             }
-            logicalRoot = new LogicalEliminator(logicalRoot);
+            op = new LogicalEliminator(op);
         }
+        logicalRoot = op;
+        PhysicalPlanBuilder planBuilder = new PhysicalPlanBuilder();
+        logicalRoot.accept(planBuilder);
+
+
+
+
+
 
     }
 
@@ -393,6 +390,12 @@ public class Selector {
         PhysicalPlanBuilder planBuilder = new PhysicalPlanBuilder();
         curRoot.accept(planBuilder);
         root = planBuilder.getRoot();
+
+
+
+
+
+
     }
 
     /**
@@ -400,7 +403,7 @@ public class Selector {
      * @param idx
      * @return get Table from DBCatalog based sequence in fromItems
      */
-    private Table getTable(int idx) {
+    public static Table getTable(int idx) {
         return DBCatalog.getTable(fromItems.get(idx));
     }
 

@@ -1,6 +1,7 @@
 package util;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 public class TableStat {
@@ -30,8 +31,9 @@ public class TableStat {
         return attNum;
     }
     public int[]  getIndexRange(String attrName){
-        String tableName = Util.getFullTableName(attrName.split("\\.")[0]);
-        attrName = tableName +"." +  attrName.split("\\.")[1];
+        String tableName = Util.getFullTableName(table.tableName);
+        int idx = attrName.split("\\.").length == 2 ? 1 : 0;
+        attrName = tableName +"." +  attrName.split("\\.")[idx];
 
         if(indexRange.containsKey(attrName)){
             return indexRange.get(attrName);
@@ -51,6 +53,12 @@ public class TableStat {
         Set<String> attrName = indexRange.keySet();
         String[] list = (String[])(attrName.toArray());
         return list;
+    }
+
+    public String getColName(int idx){
+       List<String> colName = table.getSchema();
+      return colName.get(idx);
+
     }
     /**
      * return the table name

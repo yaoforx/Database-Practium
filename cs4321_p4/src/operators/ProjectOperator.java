@@ -24,8 +24,8 @@ import util.Tuple;
  */
 public class ProjectOperator extends Operator{
     protected Operator projectChild = null;
-    protected SelectOperator selectChild = null;
-    protected ScanOperator scanChild = null;
+    protected Operator selectChild = null;
+    protected Operator scanChild = null;
     protected Operator joinChild = null;
     private List<SelectItem> items  = new ArrayList<>();
 
@@ -67,7 +67,10 @@ public class ProjectOperator extends Operator{
 
 
         List<String> proSchema = new ArrayList<>();
+
         List<String> childSchema = scan.schema;
+        String ss = childSchema.toString();
+
         HashSet<String> allTabCols = new HashSet<String>();
 
 
@@ -151,6 +154,7 @@ public class ProjectOperator extends Operator{
      * @return corresponding value to the column
      */
     public static Long getValue(Tuple tp, String sche, List<String> schemas) {
+        String s  = schemas.toString();
         int idx = schemas.indexOf(sche);
 
         if (idx != -1) {

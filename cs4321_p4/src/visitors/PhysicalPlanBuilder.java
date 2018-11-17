@@ -7,14 +7,21 @@ import btree.Btree;
 import net.sf.jsqlparser.expression.Expression;
 import operators.*;
 
+import optimal.OptimalJoin;
 import optimal.OptimalSelect;
+import optimal.Vvalues;
 import util.DBCatalog;
+import util.Selector;
 import util.Util;
 import util.indexInfo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+
+import static util.Selector.fromItems;
+import static util.Selector.getSelectCondition;
 
 /**
  * PhysicalPlanBuilder is to construct Physical Operator tree
@@ -23,10 +30,15 @@ import java.util.List;
  */
 public class PhysicalPlanBuilder {
     private Operator root = null;
-    private OptimalSelect optimalSelect = new OptimalSelect();
+    public static OptimalSelect optimalSelect = new OptimalSelect();
+    public static OptimalJoin optimalJoin = new OptimalJoin();
+
 
 
     public PhysicalPlanBuilder() {
+
+
+
 
     }
     public operators.Operator getRoot() {
@@ -43,21 +55,20 @@ public class PhysicalPlanBuilder {
 
         Operator scanner = null;
         if(DBCatalog.config.idxSelect) {
-            Expression ex = logSelect.exp;
-            String tabName = logSelect.scan.table.tableName;
-            tabName = Util.getFullTableName(tabName);
-            indexInfo info = optimalSelect.calculateAndChoose(tabName, logSelect.exp);
-            boolean idxSelect = (info != null);
-            if(idxSelect) {
-                Integer[] range
-                        = Util.getLowAndHeigh(info.indexCol, logSelect.exp);
-                String idxPath = DBCatalog.indexdir + info.tab + '.' + info.indexCol;
-                File idxFile = new File(idxPath);
-                Btree btree =  DBCatalog.idxConfig.loaders.get(info.tab).getBtree();
-                scanner = new IndexScanOperator(logSelect.scan.table, range[0], range[1], btree,idxFile);
+
+            if(logSelect.idxSelect) {
+                if(logSelect.info != null) {
+                    Integer[] range
+                            = Util.getLowAndHeigh(logSelect.info.indexCol, logSelect.exp);
+                    String idxPath = DBCatalog.indexdir + logSelect.info.tab + '.' + logSelect.info.indexCol;
+                    File idxFile = new File(idxPath);
+                    Btree btree = DBCatalog.idxConfig.loaders.get(logSelect.info.tab).getBtree();
+                    scanner = new IndexScanOperator(logSelect.scan.table, range[0], range[1], btree, idxFile);
+                }
             }
 
         }
+
         if(scanner == null) {
 
             scanner = new ScanOperator(logSelect.scan.table);
@@ -84,13 +95,72 @@ public class PhysicalPlanBuilder {
             root = new ExternalSort(root, logSort.order);
     }
     public void visit(LogicalMassJoin logMass) {
-        List<LogicalOperator> children = logMass.children;
+
         List<Operator> physical = new ArrayList<>();
-        for(LogicalOperator log : children) {
-            root = null;
-            log.accept(this);
-            physical.add(root);
+
+
+        List<LogicalOperator> res = new ArrayList<>();
+        String ss = logMass.tables.toString();
+        optimalJoin.decomposeJoinAndCalculate(logMass.tables);
+        List<String> optimalTable = optimalJoin.getOptimalJoin();
+        String s = optimalTable.toString();
+
+
+
+        Selector.fromItems = optimalTable;
+        res.clear();
+        for (int i = 0; i < optimalTable.size(); ++i) {
+            String ta = Selector.getTable(i).tableName;
+            LogicalOperator table = new LogicalScan(Selector.getTable(i));
+            if (getSelectCondition(i) != null) {
+                String tt = Selector.getTable(i).tableName;
+                String saaa = getSelectCondition(i).toString();
+                table = new LogicalSelect(getSelectCondition(i), table);
+
+            }
+            res.add(table);
         }
+        logMass.children = res;
+        logMass.tables = optimalTable;
+
+        Operator[] child = new operators.Operator[logMass.children.size()];
+        logMass.children.get(0).accept(this);
+        child[0] = root;
+        String fff = child[0].schema.toString();
+        for(int i = 1; i < logMass.children.size(); i++) {
+            logMass.children.get(i).accept(this);
+            child[i] = root;
+            String ct = child[i].schema.toString();
+            if (DBCatalog.config.SMJ == 1) {
+                List<Integer> outIdxs = new ArrayList<Integer>();
+                List<Integer> inIdxs = new ArrayList<Integer>();
+
+                boolean hasNoneEual = Util.checkEqual(Selector.where);
+                Expression newExp = Util.procJoinConds(
+                        Selector.where, child[i - 1].schema,
+                        child[i].schema, outIdxs, inIdxs);
+
+                if (outIdxs.size() != inIdxs.size())
+                    throw new IllegalArgumentException();
+
+                if (!outIdxs.isEmpty() && !hasNoneEual) {
+
+                    if (DBCatalog.config.externalSort == 0) {
+                        child[i - 1] = new SortInMemory(child[i - 1], outIdxs);
+                        child[i] = new SortInMemory(child[i], inIdxs);
+                    } else {
+                        child[i - 1] = new ExternalSort(child[i - 1], outIdxs);
+                        child[i] = new ExternalSort(child[i], inIdxs);
+                    }
+                    root = new SortMergeJoin(newExp, child[i - 1], child[i], outIdxs, inIdxs);
+
+                } else {
+                    root = new BlockNestedJoin(Selector.where, child[i - 1], child[i]);
+                }
+
+            }
+        }
+
     }
     public void visit(LogicalJoin logJoin) {
 

@@ -7,6 +7,8 @@ import jnio.TupleWriter;
 import net.sf.jsqlparser.parser.CCJSqlParser;
 import net.sf.jsqlparser.statement.Statement;
 
+import operators.Operator;
+import optimal.OptimalJoin;
 import org.junit.Test;
 import java.io.FilenameFilter;
 
@@ -108,10 +110,11 @@ public class Harness {
                         + counter + " took " + (endTime - beginTime)*1.0/1000 + " seconds");
                 counter++;
                 writer.close();
+                /**
+                 * Clear temperary folder
+                 */
                 File temp = new File(tempdir);
                 deleteFolder(temp);
-
-
 
             }
             int num = 1;
@@ -127,6 +130,11 @@ public class Harness {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Helper function to clear folder recursively
+     * @param folder
+     */
     public static void deleteFolder(File folder) {
         File[] files = folder.listFiles();
         if(files!=null) {

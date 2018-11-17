@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static visitors.PhysicalPlanBuilder.optimalJoin;
+
 public class LogicalMassJoin extends LogicalOperator{
-    private Expression expression;
+    public Expression expression;
     public UnionFind unionFind;
     public HashMap<String, Expression> conditions;
     public List<String> tables;
@@ -21,6 +23,8 @@ public class LogicalMassJoin extends LogicalOperator{
 
 
     public LogicalMassJoin(List<String> froms, List<LogicalOperator> jointables, HashMap<String, Expression> conditions, UnionFind uf){
+
+
         this.unionFind = uf;
         this.conditions = conditions;
         this.tables = froms;
@@ -61,7 +65,7 @@ public class LogicalMassJoin extends LogicalOperator{
 
 
     @Override
-    public void accept(PhysicalPlanBuilder paramPhysicalPlanBuilder) {
-
+    public void accept(PhysicalPlanBuilder physicalPlanBuilder) {
+            physicalPlanBuilder.visit(this);
     }
 }

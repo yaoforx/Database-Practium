@@ -12,7 +12,7 @@ public class LogicalJoin extends LogicalOperator
 {
     public LogicalOperator left;
     public LogicalOperator right;
-    public net.sf.jsqlparser.expression.Expression expression;
+    public Expression expression;
 
     @Override
     public String print() {

@@ -127,6 +127,7 @@ public class DBCatalog {
      *                  null if tableName does not refer to a table in DBCatalog
      */
     public static List<String> getSchema(String tableName) {
+        tableName = Util.getFullTableName(tableName);
         if(!schemas.containsKey(tableName)) return null;
         return schemas.get(tableName);
     }

@@ -18,11 +18,16 @@ public class OptimalSelect {
     static List<String> columnName;
     static List<Double> scanCost;
     private static double plainScan;
+    public static Vsets vvalues = new Vsets();
+
     public static HashMap<String, Integer[]> columnInfo;
+
     public OptimalSelect(){
         columnName = new ArrayList<>();
         scanCost = new ArrayList<>();
         columnInfo = new HashMap<>();
+
+
     }
     public static indexInfo calculateAndChoose(String tableName, Expression expression) {
         plainScan = -1;
@@ -52,8 +57,12 @@ public class OptimalSelect {
             }
             String[] s = {col};
             Integer[] range = Util.getSelRange(exp,s);
-            updateInfo(s[0],range);
+            updateInfo(tableName + "." + col,range);
+
         }
+
+
+
         tableName = Util.getFullTableName(tableName);
         long tupleNum = DBCatalog.tablestats.get(tableName).getAttNum() *
                 DBCatalog.tablestats.get(tableName).getTotoalTps() * 4;
@@ -97,6 +106,7 @@ public class OptimalSelect {
             columnName.add(entry.getKey());
             scanCost.add(localCost);
         }
+
         if(scanCost.isEmpty()) return null;
         int minIndex = 0;
         double minCost = scanCost.get(0);
@@ -106,6 +116,12 @@ public class OptimalSelect {
                 minIndex = i;
             }
         }
+        if(!vvalues.contains(tableName)) {
+            vvalues.sets.add(new Vvalues(tableName));
+        }
+
+
+
         String colName = DBCatalog.schemas.get(tableName).get(minIndex);
         indexInfo winner = DBCatalog.getindexInfo(tableName, colName);
 
