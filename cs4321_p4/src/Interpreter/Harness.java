@@ -160,7 +160,7 @@ public class Harness {
     @Test
     public void main() throws IOException{
        Harness itpr = new Harness();
-        itpr.execute("/Users/yaoxiao/Database-Practium/cs4321_p4/samples/interpreter_config_file.txt");
+        itpr.execute("samples/interpreter_config_file.txt");
        // itpr.harness("/Users/yaoxiao/Database-Practium/cs4321_p2/samples/input","/Users/yaoxiao/Database-Practium/cs4321_p2", "/Users/yaoxiao/Database-Practium/cs4321_p2");
 
     }

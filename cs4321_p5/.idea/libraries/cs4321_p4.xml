@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="cs4321_p4">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/cs4321_p4.jar!/" />
+      <root url="jar://$USER_HOME$/Documents/jsqlparser/jsqlparser.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

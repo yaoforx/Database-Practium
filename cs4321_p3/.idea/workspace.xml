@@ -7,13 +7,47 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fcb12f86-c58e-4352-bcd1-3af4e719f1dd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../cs4321_p2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p2/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../cs4321_p2/cs4321_p2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p2/cs4321_p2.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Interpreter/Harness.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Interpreter/Harness.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/btree/Btree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/btree/Btree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/btree/BulkLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/btree/BulkLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/visitors/PhysicalPlanBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/visitors/PhysicalPlanBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../cs4321_p4/.idea/artifacts/cs4321_p4_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../cs4321_p4/src/META-INF/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p4/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/desired/query1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/desired/query1_humanreadable" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/desired/query2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/desired/query2_humanreadable" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/desired/query3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/desired/query3_humanreadable" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/output/query1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/output/query1_humanreadable" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/output/query1_logicalplan" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/output/query1_physicalplan" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/output/query2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/output/query2_humanreadable" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/output/query2_logicalplan" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/output/query2_physicalplan" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/output/query3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/output/query3_humanreadable" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/output/query3_logicalplan" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/output/query3_physicalplan" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/samples/expected_indexes/Boats.E" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/samples/expected_indexes/Boats.E_humanreadable" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/samples/expected_indexes/Sailors.A" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/samples/expected_indexes/Sailors.A_humanreadable" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/samples/input/db/data/Reserves_clustered" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p4/samples/input/db/data/Reserves_clustered" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/samples/input/db/index_info.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p4/samples/input/db/index_info.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/samples/input/queries.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p4/samples/input/queries.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/src/Interpreter/Harness.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p4/src/Interpreter/Harness.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/src/optimal/OptimalJoin.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p4/src/optimal/OptimalJoin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/src/optimal/OptimalSelect.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p4/src/optimal/OptimalSelect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/src/optimal/Vsets.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p4/src/optimal/Vsets.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/src/optimal/Vvalues.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p4/src/optimal/Vvalues.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/src/unionfind/UnionFind.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p4/src/unionfind/UnionFind.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/src/unionfind/UnionFindElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p4/src/unionfind/UnionFindElement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/src/util/Configure.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p4/src/util/Configure.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/src/util/DBCatalog.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p4/src/util/DBCatalog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/src/util/Selector.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p4/src/util/Selector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/src/util/Stats.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p4/src/util/Stats.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/src/util/TableStat.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p4/src/util/TableStat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../cs4321_p4/src/visitors/PhysicalPlanBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/../cs4321_p4/src/visitors/PhysicalPlanBuilder.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -53,14 +87,33 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="26393040">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.2" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="java" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="JAVA" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/btree/BulkLoader.java">
+        <entry file="file://$PROJECT_DIR$/src/Interpreter/Harness.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-802">
-              <caret line="30" column="6" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
+            <state relative-caret-position="690">
+              <caret line="130" selection-start-line="130" selection-end-line="130" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -69,13 +122,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Interpreter/Harness.java">
+        <entry file="file://$PROJECT_DIR$/src/util/Selector.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="478">
-              <caret line="133" selection-start-line="133" selection-end-line="133" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="475">
+              <caret line="223" column="13" lean-forward="true" selection-start-line="223" selection-start-column="13" selection-end-line="223" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -92,7 +142,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/util/TupleIdentifier.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-261">
+            <state relative-caret-position="133">
               <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
             </state>
           </provider>
@@ -101,7 +151,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/btree/BTreeNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-90">
+            <state relative-caret-position="152">
               <caret line="9" column="22" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -113,7 +163,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/btree/BtreeLeafNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
+            <state relative-caret-position="152">
               <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -125,7 +175,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/btree/BtreeIndexNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1209">
+            <state relative-caret-position="152">
               <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -137,7 +187,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/btree/Btree.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="137">
+            <state relative-caret-position="6308">
               <caret line="344" column="25" selection-start-line="344" selection-start-column="25" selection-end-line="344" selection-end-column="25" />
             </state>
           </provider>
@@ -146,7 +196,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/operators/IndexScanOperator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-242">
+            <state relative-caret-position="1064">
               <caret line="71" column="44" selection-start-line="71" selection-start-column="44" selection-end-line="71" selection-end-column="44" />
             </state>
           </provider>
@@ -155,7 +205,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/visitors/PhysicalPlanBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-312">
+            <state relative-caret-position="171">
               <caret line="21" column="34" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -180,10 +230,11 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="y" value="23" />
-    <option name="width" value="1440" />
-    <option name="height" value="788" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="1440" />
+    <option name="y" value="5" />
+    <option name="width" value="1920" />
+    <option name="height" value="1057" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -191,6 +242,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -249,7 +301,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -258,6 +309,7 @@
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541632785979" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -382,9 +434,10 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="788" extended-state="0" />
+    <frame x="1440" y="-45" width="1920" height="1057" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25679544" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19382322" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -420,9 +473,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
           <caret line="6" selection-start-line="6" selection-end-line="6" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -430,9 +480,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
           <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -440,6 +487,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-148">
           <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/btree/BulkLoader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="23" column="6" selection-start-line="23" selection-start-column="6" selection-end-line="23" selection-end-column="6" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -455,34 +509,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/util/TupleIdentifier.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-261">
+        <state relative-caret-position="133">
           <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/visitors/PhysicalPlanBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-312">
-          <caret line="21" column="34" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/btree/BulkLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-802">
-          <caret line="30" column="6" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/btree/BTreeNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-90">
+        <state relative-caret-position="152">
           <caret line="9" column="22" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -492,7 +526,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/btree/BtreeLeafNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
+        <state relative-caret-position="152">
           <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -502,7 +536,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/btree/BtreeIndexNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1209">
+        <state relative-caret-position="152">
           <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -512,25 +546,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/btree/Btree.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="137">
+        <state relative-caret-position="6308">
           <caret line="344" column="25" selection-start-line="344" selection-start-column="25" selection-end-line="344" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/operators/IndexScanOperator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-242">
+        <state relative-caret-position="1064">
           <caret line="71" column="44" selection-start-line="71" selection-start-column="44" selection-end-line="71" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/visitors/PhysicalPlanBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="21" column="34" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Interpreter/Harness.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="478">
-          <caret line="133" selection-start-line="133" selection-end-line="133" />
+        <state relative-caret-position="690">
+          <caret line="130" selection-start-line="130" selection-end-line="130" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/util/Selector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="223" column="13" lean-forward="true" selection-start-line="223" selection-start-column="13" selection-end-line="223" selection-end-column="13" />
         </state>
       </provider>
     </entry>
