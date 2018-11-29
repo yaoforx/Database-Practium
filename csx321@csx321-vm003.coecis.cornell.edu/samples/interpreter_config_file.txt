@@ -1,5 +1,0 @@
-/Users/yaoxiao/Database-Practium/cs4321_p4/samples/input
-/Users/yaoxiao/Database-Practium/cs4321_p4/output
-/Users/yaoxiao/Database-Practium/cs4321_p4/tempdir
-1
-0
