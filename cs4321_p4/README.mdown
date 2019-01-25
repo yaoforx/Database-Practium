@@ -17,7 +17,7 @@ On the top of B+tree implementation, **util/IndexConfig.java** is responsible fo
 ## Optimization
 In order to optimize the query runtime, this program has collected the table statistics and pre-calculated each possible query plan by using dynamic programming and union find algorithms. Please see **optimal/** and **unionfind/** for details. This program is able to select the best query plan and process queries based on this plan to minimum the I/O cost.
 ## Parallel Optimization
-To further optimize this program, this project is implemented in multithread to enhance the performance, including parallel computing join operators, parallel collecting statistics, etc.
+To further optimize this program, this project is implemented in parallel using multi-thread to enhance the performance, including parallel computing join operators, parallel collecting statistics, etc.
 ## Input and Output
 Our interpreter program takes in 'input directory' as 'cs4321/project1/samples/input' and processes 'input directory' in 'util/DBCatalog.java'. If program having any trouble in finding correct path, please let us know.
 ##Logical Operator
